@@ -52,6 +52,18 @@ pnpm validate                   # numbering, running scores, totals and stadium 
 node scripts/geocode-venues.ts  # propose coordinates for new stadiums
 ```
 
+### Adding a new goal by hand
+
+Until the automatic updater is in place, three commands bring the dataset up to date after a match:
+
+```bash
+node scripts/build-history.ts --only=alnassr   # re-read this season from the feed
+pnpm data                                      # rebuild data/goals.json
+pnpm validate                                  # confirm it is sound
+```
+
+The feed does not carry the Saudi Super Cup. A goal there goes into `data/manual-goals.json` with its source.
+
 ### What counts
 
 A goal counts when the organiser of the competition credits it to him in an official senior match: league, cup and continental games for his clubs, and full internationals for Portugal, friendlies included. Club friendlies, exhibition trophies, youth and B-team games and penalty shoot-out kicks do not count.
