@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  /* Night */
+  --ink: #04060b;
+  --ink-2: #080c15;
+  --ink-3: #0e1422;
+  --line: rgba(214, 190, 138, 0.16);
+  --text: #f4efe4;
+  --text-dim: rgba(244, 239, 228, 0.62);
+  --text-faint: rgba(244, 239, 228, 0.38);
+
+  /* Gold: the one hero colour */
+  --gold-hi: #fff1c2;
+  --gold: #f2c14e;
+  --gold-deep: #b9862c;
+  --ember: #ff9d3c;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-dim: var(--text-dim);
+  --color-faint: var(--text-faint);
+  --color-gold: var(--gold);
+  --color-gold-hi: var(--gold-hi);
+  --color-gold-deep: var(--gold-deep);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
+}
+
+html {
+  background: var(--ink);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+/* Gold that reads as metal rather than yellow. */
+.text-gilded {
+  background: linear-gradient(178deg, var(--gold-hi) 8%, var(--gold) 46%, var(--gold-deep) 78%, #e9c876 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.numerals {
+  font-family: var(--font-display), var(--font-geist-sans), sans-serif;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  line-height: 0.86;
+}
+
+/* MapLibre chrome we do not want on the globe. */
+.maplibregl-ctrl-logo,
+.maplibregl-ctrl-attrib {
+  display: none !important;
+}
+.maplibregl-canvas {
+  outline: none;
+}

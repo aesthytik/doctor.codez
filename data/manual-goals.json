@@ -1,0 +1,542 @@
+{
+  "note": "Goals the match feed does not carry, entered by hand from the sources listed. Scores are his team first, straight after the goal. A goal is marked as a penalty only where the source marks it.",
+  "goals": [
+    {
+      "date": "2002-10-07",
+      "team": "sporting",
+      "opponent": "Moreirense",
+      "comp": "Primeira Liga",
+      "compKey": "por.1",
+      "round": "Matchday 6",
+      "designated": "home",
+      "venue": {
+        "name": "Estádio José Alvalade (1956)",
+        "city": "Lisbon",
+        "country": "Portugal"
+      },
+      "minute": 34,
+      "penalty": false,
+      "score": [
+        2,
+        0
+      ],
+      "final": [
+        3,
+        0
+      ],
+      "src": [
+        "wikipedia:2002–03_Sporting_CP_season"
+      ]
+    },
+    {
+      "date": "2002-10-07",
+      "team": "sporting",
+      "opponent": "Moreirense",
+      "comp": "Primeira Liga",
+      "compKey": "por.1",
+      "round": "Matchday 6",
+      "designated": "home",
+      "venue": {
+        "name": "Estádio José Alvalade (1956)",
+        "city": "Lisbon",
+        "country": "Portugal"
+      },
+      "minute": 90,
+      "added": 5,
+      "penalty": false,
+      "score": [
+        3,
+        0
+      ],
+      "final": [
+        3,
+        0
+      ],
+      "src": [
+        "wikipedia:2002–03_Sporting_CP_season"
+      ]
+    },
+    {
+      "date": "2002-10-26",
+      "team": "sporting",
+      "opponent": "Boavista",
+      "comp": "Primeira Liga",
+      "compKey": "por.1",
+      "round": "Matchday 8",
+      "designated": "away",
+      "venue": {
+        "name": "Estádio do Bessa",
+        "city": "Porto",
+        "country": "Portugal"
+      },
+      "minute": 88,
+      "penalty": false,
+      "score": [
+        2,
+        1
+      ],
+      "final": [
+        2,
+        1
+      ],
+      "src": [
+        "wikipedia:2002–03_Sporting_CP_season"
+      ]
+    },
+    {
+      "date": "2002-11-24",
+      "team": "sporting",
+      "opponent": "Estarreja",
+      "comp": "Taça de Portugal",
+      "compKey": "por.taca",
+      "round": "Fourth round",
+      "designated": "home",
+      "venue": {
+        "name": "Estádio José Alvalade (1956)",
+        "city": "Lisbon",
+        "country": "Portugal"
+      },
+      "venueNote": "The source gives Lisbon without naming the ground; Sporting's home ground that season is assumed.",
+      "minute": 67,
+      "penalty": false,
+      "score": [
+        3,
+        1
+      ],
+      "final": [
+        4,
+        1
+      ],
+      "src": [
+        "wikipedia:2002–03_Sporting_CP_season"
+      ]
+    },
+    {
+      "date": "2002-12-18",
+      "team": "sporting",
+      "opponent": "Oliveira do Hospital",
+      "comp": "Taça de Portugal",
+      "compKey": "por.taca",
+      "round": "Fifth round",
+      "designated": "home",
+      "venue": {
+        "name": "Estádio José Alvalade (1956)",
+        "city": "Lisbon",
+        "country": "Portugal"
+      },
+      "venueNote": "The source gives Lisbon without naming the ground; Sporting's home ground that season is assumed.",
+      "minute": 13,
+      "penalty": false,
+      "score": [
+        3,
+        0
+      ],
+      "final": [
+        8,
+        1
+      ],
+      "src": [
+        "wikipedia:2002–03_Sporting_CP_season"
+      ]
+    },
+    {
+      "date": "2009-02-11",
+      "team": "portugal",
+      "opponent": "Finland",
+      "comp": "International friendly",
+      "compKey": "fifa.friendly",
+      "designated": "home",
+      "venue": {
+        "name": "Estádio Algarve",
+        "city": "Faro",
+        "country": "Portugal"
+      },
+      "minute": 78,
+      "penalty": true,
+      "score": [
+        1,
+        0
+      ],
+      "final": [
+        1,
+        0
+      ],
+      "why": "The feed lists the match but has no goal events for it.",
+      "src": [
+        "wikipedia:Portugal_national_football_team_results_(2000–2019)",
+        "wikipedia:List_of_international_goals_scored_by_Cristiano_Ronaldo"
+      ]
+    },
+    {
+      "date": "2011-08-17",
+      "team": "realmadrid",
+      "opponent": "Barcelona",
+      "comp": "Supercopa de España",
+      "compKey": "esp.super_cup",
+      "round": "Second leg",
+      "designated": "away",
+      "venue": {
+        "name": "Camp Nou",
+        "city": "Barcelona",
+        "country": "Spain"
+      },
+      "minute": 20,
+      "penalty": false,
+      "score": [
+        1,
+        1
+      ],
+      "final": [
+        2,
+        3
+      ],
+      "why": "The feed lists the match but has no goal events for it.",
+      "src": [
+        "wikipedia:2011_Supercopa_de_España"
+      ]
+    },
+    {
+      "date": "2012-01-07",
+      "team": "realmadrid",
+      "opponent": "Granada",
+      "comp": "La Liga",
+      "compKey": "esp.1",
+      "round": "Matchday 18",
+      "designated": "home",
+      "venue": {
+        "name": "Santiago Bernabéu",
+        "city": "Madrid",
+        "country": "Spain"
+      },
+      "minute": 89,
+      "penalty": false,
+      "score": [
+        5,
+        1
+      ],
+      "final": [
+        5,
+        1
+      ],
+      "why": "The feed records this 5–1 win as 0–0 with no goal events.",
+      "src": [
+        "wikipedia:2011–12_Real_Madrid_CF_season"
+      ]
+    },
+    {
+      "date": "2013-06-10",
+      "team": "portugal",
+      "opponent": "Croatia",
+      "comp": "International friendly",
+      "compKey": "fifa.friendly",
+      "designated": "away",
+      "neutral": true,
+      "venue": {
+        "name": "Stade de Genève",
+        "city": "Geneva",
+        "country": "Switzerland"
+      },
+      "minute": 36,
+      "penalty": false,
+      "score": [
+        1,
+        0
+      ],
+      "final": [
+        1,
+        0
+      ],
+      "why": "The match is not in the feed.",
+      "src": [
+        "wikipedia:Portugal_national_football_team_results_(2000–2019)",
+        "wikipedia:List_of_international_goals_scored_by_Cristiano_Ronaldo"
+      ]
+    },
+    {
+      "date": "2023-07-31",
+      "team": "alnassr",
+      "opponent": "US Monastir",
+      "comp": "Arab Club Champions Cup",
+      "compKey": "uafa.club_champions",
+      "round": "Group stage",
+      "designated": "away",
+      "neutral": true,
+      "venue": {
+        "name": "King Fahd Stadium",
+        "city": "Taif",
+        "country": "Saudi Arabia"
+      },
+      "minute": 74,
+      "penalty": false,
+      "score": [
+        2,
+        1
+      ],
+      "final": [
+        4,
+        1
+      ],
+      "src": [
+        "wikipedia:2023_Arab_Club_Champions_Cup"
+      ]
+    },
+    {
+      "date": "2023-08-03",
+      "team": "alnassr",
+      "opponent": "Zamalek",
+      "comp": "Arab Club Champions Cup",
+      "compKey": "uafa.club_champions",
+      "round": "Group stage",
+      "designated": "away",
+      "neutral": true,
+      "venue": {
+        "name": "King Fahd Stadium",
+        "city": "Taif",
+        "country": "Saudi Arabia"
+      },
+      "minute": 87,
+      "penalty": false,
+      "score": [
+        1,
+        1
+      ],
+      "final": [
+        1,
+        1
+      ],
+      "src": [
+        "wikipedia:2023_Arab_Club_Champions_Cup"
+      ]
+    },
+    {
+      "date": "2023-08-06",
+      "team": "alnassr",
+      "opponent": "Raja CA",
+      "comp": "Arab Club Champions Cup",
+      "compKey": "uafa.club_champions",
+      "round": "Quarter-final",
+      "designated": "away",
+      "neutral": true,
+      "venue": {
+        "name": "Prince Sultan bin Abdul Aziz Stadium",
+        "city": "Abha",
+        "country": "Saudi Arabia"
+      },
+      "minute": 19,
+      "penalty": false,
+      "score": [
+        1,
+        0
+      ],
+      "final": [
+        3,
+        1
+      ],
+      "src": [
+        "wikipedia:2023_Arab_Club_Champions_Cup"
+      ]
+    },
+    {
+      "date": "2023-08-09",
+      "team": "alnassr",
+      "opponent": "Al-Shorta",
+      "comp": "Arab Club Champions Cup",
+      "compKey": "uafa.club_champions",
+      "round": "Semi-final",
+      "designated": "away",
+      "neutral": true,
+      "venue": {
+        "name": "Prince Sultan bin Abdul Aziz Stadium",
+        "city": "Abha",
+        "country": "Saudi Arabia"
+      },
+      "minute": 75,
+      "penalty": true,
+      "score": [
+        1,
+        0
+      ],
+      "final": [
+        1,
+        0
+      ],
+      "src": [
+        "wikipedia:2023_Arab_Club_Champions_Cup"
+      ]
+    },
+    {
+      "date": "2023-08-12",
+      "team": "alnassr",
+      "opponent": "Al-Hilal",
+      "comp": "Arab Club Champions Cup",
+      "compKey": "uafa.club_champions",
+      "round": "Final",
+      "designated": "away",
+      "neutral": true,
+      "venue": {
+        "name": "King Fahd Stadium",
+        "city": "Taif",
+        "country": "Saudi Arabia"
+      },
+      "minute": 74,
+      "penalty": false,
+      "score": [
+        1,
+        1
+      ],
+      "final": [
+        2,
+        1
+      ],
+      "decided": "aet",
+      "src": [
+        "wikipedia:2023_Arab_Club_Champions_Cup_final"
+      ]
+    },
+    {
+      "date": "2023-08-12",
+      "team": "alnassr",
+      "opponent": "Al-Hilal",
+      "comp": "Arab Club Champions Cup",
+      "compKey": "uafa.club_champions",
+      "round": "Final",
+      "designated": "away",
+      "neutral": true,
+      "venue": {
+        "name": "King Fahd Stadium",
+        "city": "Taif",
+        "country": "Saudi Arabia"
+      },
+      "minute": 98,
+      "penalty": false,
+      "score": [
+        2,
+        1
+      ],
+      "final": [
+        2,
+        1
+      ],
+      "decided": "aet",
+      "src": [
+        "wikipedia:2023_Arab_Club_Champions_Cup_final"
+      ]
+    },
+    {
+      "date": "2024-08-14",
+      "team": "alnassr",
+      "opponent": "Al-Taawoun",
+      "comp": "Saudi Super Cup",
+      "compKey": "ksa.super_cup",
+      "round": "Semi-final",
+      "designated": "away",
+      "neutral": true,
+      "venue": {
+        "name": "Prince Sultan bin Abdul Aziz Stadium",
+        "city": "Abha",
+        "country": "Saudi Arabia"
+      },
+      "minute": 57,
+      "penalty": false,
+      "score": [
+        2,
+        0
+      ],
+      "final": [
+        2,
+        0
+      ],
+      "src": [
+        "wikipedia:2024_Saudi_Super_Cup"
+      ]
+    },
+    {
+      "date": "2024-08-17",
+      "team": "alnassr",
+      "opponent": "Al-Hilal",
+      "comp": "Saudi Super Cup",
+      "compKey": "ksa.super_cup",
+      "round": "Final",
+      "designated": "home",
+      "neutral": true,
+      "venue": {
+        "name": "Prince Sultan bin Abdul Aziz Stadium",
+        "city": "Abha",
+        "country": "Saudi Arabia"
+      },
+      "minute": 44,
+      "penalty": false,
+      "score": [
+        1,
+        0
+      ],
+      "final": [
+        1,
+        4
+      ],
+      "src": [
+        "wikipedia:2024_Saudi_Super_Cup_final"
+      ]
+    },
+    {
+      "date": "2025-08-23",
+      "team": "alnassr",
+      "opponent": "Al-Ahli",
+      "comp": "Saudi Super Cup",
+      "compKey": "ksa.super_cup",
+      "round": "Final",
+      "designated": "home",
+      "neutral": true,
+      "venue": {
+        "name": "Hong Kong Stadium",
+        "city": "Hong Kong",
+        "country": "Hong Kong"
+      },
+      "minute": 41,
+      "penalty": true,
+      "score": [
+        1,
+        0
+      ],
+      "final": [
+        2,
+        2
+      ],
+      "decided": "pens",
+      "src": [
+        "wikipedia:2025_Saudi_Super_Cup_final"
+      ]
+    },
+    {
+      "date": "2026-10-23",
+      "team": "alnassr",
+      "opponent": "Al Faisaly",
+      "comp": "Saudi Pro League",
+      "compKey": "ksa.1",
+      "designated": "away",
+      "venue": {
+        "name": "Al Majma'ah Sports City Stadium",
+        "city": "Al Majma'ah",
+        "country": "Saudi Arabia"
+      },
+      "minute": 49,
+      "penalty": false,
+      "score": [
+        2,
+        0
+      ],
+      "final": [
+        3,
+        1
+      ],
+      "why": "The feed records this goal as an own goal by Andrei Girotto.",
+      "disputed": "Credited to Ronaldo by the referee's report and the Saudi Pro League. Opta, SofaScore, FotMob and Flashscore record an own goal by Al-Faisaly's Andrei Girotto, off whom the ball went in after Ronaldo challenged for a João Félix free kick. Counts that follow those providers are one lower than this one.",
+      "src": [
+        "espn:401900444",
+        "news:worldsoccertalk-2026-10-28",
+        "news:goal-2026-10-23",
+        "news:yahoo-sports-2026-10-28"
+      ]
+    }
+  ]
+}

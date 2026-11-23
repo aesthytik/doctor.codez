@@ -1,0 +1,875 @@
+{
+ "source": "martj42/international_results, goalscorers.csv (CC0 1.0)",
+ "retrieved": "2026-11-23",
+ "note": "Competitive internationals only; friendlies are not in this file. Used only to cross-check the dataset.",
+ "goals": [
+  {
+   "date": "2004-06-12",
+   "home": "Portugal",
+   "away": "Greece",
+   "minute": "90",
+   "penalty": false
+  },
+  {
+   "date": "2004-06-30",
+   "home": "Portugal",
+   "away": "Netherlands",
+   "minute": "26",
+   "penalty": false
+  },
+  {
+   "date": "2004-09-04",
+   "home": "Latvia",
+   "away": "Portugal",
+   "minute": "57",
+   "penalty": false
+  },
+  {
+   "date": "2004-09-08",
+   "home": "Portugal",
+   "away": "Estonia",
+   "minute": "75",
+   "penalty": false
+  },
+  {
+   "date": "2004-10-13",
+   "home": "Portugal",
+   "away": "Russia",
+   "minute": "39",
+   "penalty": false
+  },
+  {
+   "date": "2004-10-13",
+   "home": "Portugal",
+   "away": "Russia",
+   "minute": "69",
+   "penalty": false
+  },
+  {
+   "date": "2004-11-17",
+   "home": "Luxembourg",
+   "away": "Portugal",
+   "minute": "28",
+   "penalty": false
+  },
+  {
+   "date": "2005-06-04",
+   "home": "Portugal",
+   "away": "Slovakia",
+   "minute": "42",
+   "penalty": false
+  },
+  {
+   "date": "2005-06-08",
+   "home": "Estonia",
+   "away": "Portugal",
+   "minute": "32",
+   "penalty": false
+  },
+  {
+   "date": "2006-06-17",
+   "home": "Portugal",
+   "away": "Iran",
+   "minute": "80",
+   "penalty": true
+  },
+  {
+   "date": "2006-10-07",
+   "home": "Portugal",
+   "away": "Azerbaijan",
+   "minute": "25",
+   "penalty": false
+  },
+  {
+   "date": "2006-10-07",
+   "home": "Portugal",
+   "away": "Azerbaijan",
+   "minute": "63",
+   "penalty": false
+  },
+  {
+   "date": "2006-11-15",
+   "home": "Portugal",
+   "away": "Kazakhstan",
+   "minute": "30",
+   "penalty": false
+  },
+  {
+   "date": "2007-03-24",
+   "home": "Portugal",
+   "away": "Belgium",
+   "minute": "55",
+   "penalty": false
+  },
+  {
+   "date": "2007-03-24",
+   "home": "Portugal",
+   "away": "Belgium",
+   "minute": "75",
+   "penalty": false
+  },
+  {
+   "date": "2007-08-22",
+   "home": "Armenia",
+   "away": "Portugal",
+   "minute": "37",
+   "penalty": false
+  },
+  {
+   "date": "2007-09-08",
+   "home": "Portugal",
+   "away": "Poland",
+   "minute": "73",
+   "penalty": false
+  },
+  {
+   "date": "2007-10-17",
+   "home": "Kazakhstan",
+   "away": "Portugal",
+   "minute": "90",
+   "penalty": false
+  },
+  {
+   "date": "2008-06-11",
+   "home": "Czech Republic",
+   "away": "Portugal",
+   "minute": "63",
+   "penalty": false
+  },
+  {
+   "date": "2010-06-21",
+   "home": "Portugal",
+   "away": "North Korea",
+   "minute": "87",
+   "penalty": false
+  },
+  {
+   "date": "2010-10-08",
+   "home": "Portugal",
+   "away": "Denmark",
+   "minute": "85",
+   "penalty": false
+  },
+  {
+   "date": "2010-10-12",
+   "home": "Iceland",
+   "away": "Portugal",
+   "minute": "3",
+   "penalty": false
+  },
+  {
+   "date": "2011-09-02",
+   "home": "Cyprus",
+   "away": "Portugal",
+   "minute": "35",
+   "penalty": true
+  },
+  {
+   "date": "2011-09-02",
+   "home": "Cyprus",
+   "away": "Portugal",
+   "minute": "83",
+   "penalty": false
+  },
+  {
+   "date": "2011-10-11",
+   "home": "Denmark",
+   "away": "Portugal",
+   "minute": "90",
+   "penalty": false
+  },
+  {
+   "date": "2011-11-15",
+   "home": "Portugal",
+   "away": "Bosnia and Herzegovina",
+   "minute": "8",
+   "penalty": false
+  },
+  {
+   "date": "2011-11-15",
+   "home": "Portugal",
+   "away": "Bosnia and Herzegovina",
+   "minute": "53",
+   "penalty": false
+  },
+  {
+   "date": "2012-06-17",
+   "home": "Portugal",
+   "away": "Netherlands",
+   "minute": "28",
+   "penalty": false
+  },
+  {
+   "date": "2012-06-17",
+   "home": "Portugal",
+   "away": "Netherlands",
+   "minute": "74",
+   "penalty": false
+  },
+  {
+   "date": "2012-06-21",
+   "home": "Czech Republic",
+   "away": "Portugal",
+   "minute": "79",
+   "penalty": false
+  },
+  {
+   "date": "2012-09-07",
+   "home": "Luxembourg",
+   "away": "Portugal",
+   "minute": "28",
+   "penalty": false
+  },
+  {
+   "date": "2013-09-06",
+   "home": "Northern Ireland",
+   "away": "Portugal",
+   "minute": "68",
+   "penalty": false
+  },
+  {
+   "date": "2013-09-06",
+   "home": "Northern Ireland",
+   "away": "Portugal",
+   "minute": "77",
+   "penalty": false
+  },
+  {
+   "date": "2013-09-06",
+   "home": "Northern Ireland",
+   "away": "Portugal",
+   "minute": "83",
+   "penalty": false
+  },
+  {
+   "date": "2013-11-15",
+   "home": "Portugal",
+   "away": "Sweden",
+   "minute": "82",
+   "penalty": false
+  },
+  {
+   "date": "2013-11-19",
+   "home": "Sweden",
+   "away": "Portugal",
+   "minute": "50",
+   "penalty": false
+  },
+  {
+   "date": "2013-11-19",
+   "home": "Sweden",
+   "away": "Portugal",
+   "minute": "77",
+   "penalty": false
+  },
+  {
+   "date": "2013-11-19",
+   "home": "Sweden",
+   "away": "Portugal",
+   "minute": "79",
+   "penalty": false
+  },
+  {
+   "date": "2014-06-26",
+   "home": "Portugal",
+   "away": "Ghana",
+   "minute": "80",
+   "penalty": false
+  },
+  {
+   "date": "2014-10-14",
+   "home": "Denmark",
+   "away": "Portugal",
+   "minute": "90",
+   "penalty": false
+  },
+  {
+   "date": "2014-11-14",
+   "home": "Portugal",
+   "away": "Armenia",
+   "minute": "72",
+   "penalty": false
+  },
+  {
+   "date": "2015-06-13",
+   "home": "Armenia",
+   "away": "Portugal",
+   "minute": "29",
+   "penalty": true
+  },
+  {
+   "date": "2015-06-13",
+   "home": "Armenia",
+   "away": "Portugal",
+   "minute": "55",
+   "penalty": false
+  },
+  {
+   "date": "2015-06-13",
+   "home": "Armenia",
+   "away": "Portugal",
+   "minute": "58",
+   "penalty": false
+  },
+  {
+   "date": "2016-06-22",
+   "home": "Hungary",
+   "away": "Portugal",
+   "minute": "50",
+   "penalty": false
+  },
+  {
+   "date": "2016-06-22",
+   "home": "Hungary",
+   "away": "Portugal",
+   "minute": "62",
+   "penalty": false
+  },
+  {
+   "date": "2016-07-06",
+   "home": "Portugal",
+   "away": "Wales",
+   "minute": "50",
+   "penalty": false
+  },
+  {
+   "date": "2016-10-07",
+   "home": "Portugal",
+   "away": "Andorra",
+   "minute": "2",
+   "penalty": false
+  },
+  {
+   "date": "2016-10-07",
+   "home": "Portugal",
+   "away": "Andorra",
+   "minute": "4",
+   "penalty": false
+  },
+  {
+   "date": "2016-10-07",
+   "home": "Portugal",
+   "away": "Andorra",
+   "minute": "47",
+   "penalty": false
+  },
+  {
+   "date": "2016-10-07",
+   "home": "Portugal",
+   "away": "Andorra",
+   "minute": "68",
+   "penalty": false
+  },
+  {
+   "date": "2016-10-10",
+   "home": "Faroe Islands",
+   "away": "Portugal",
+   "minute": "65",
+   "penalty": false
+  },
+  {
+   "date": "2016-11-13",
+   "home": "Portugal",
+   "away": "Latvia",
+   "minute": "28",
+   "penalty": true
+  },
+  {
+   "date": "2016-11-13",
+   "home": "Portugal",
+   "away": "Latvia",
+   "minute": "85",
+   "penalty": false
+  },
+  {
+   "date": "2017-03-25",
+   "home": "Portugal",
+   "away": "Hungary",
+   "minute": "36",
+   "penalty": false
+  },
+  {
+   "date": "2017-03-25",
+   "home": "Portugal",
+   "away": "Hungary",
+   "minute": "65",
+   "penalty": false
+  },
+  {
+   "date": "2017-06-09",
+   "home": "Latvia",
+   "away": "Portugal",
+   "minute": "41",
+   "penalty": false
+  },
+  {
+   "date": "2017-06-09",
+   "home": "Latvia",
+   "away": "Portugal",
+   "minute": "63",
+   "penalty": false
+  },
+  {
+   "date": "2017-06-21",
+   "home": "Russia",
+   "away": "Portugal",
+   "minute": "8",
+   "penalty": false
+  },
+  {
+   "date": "2017-06-24",
+   "home": "New Zealand",
+   "away": "Portugal",
+   "minute": "33",
+   "penalty": true
+  },
+  {
+   "date": "2017-08-31",
+   "home": "Portugal",
+   "away": "Faroe Islands",
+   "minute": "3",
+   "penalty": false
+  },
+  {
+   "date": "2017-08-31",
+   "home": "Portugal",
+   "away": "Faroe Islands",
+   "minute": "28",
+   "penalty": true
+  },
+  {
+   "date": "2017-08-31",
+   "home": "Portugal",
+   "away": "Faroe Islands",
+   "minute": "65",
+   "penalty": false
+  },
+  {
+   "date": "2017-10-07",
+   "home": "Andorra",
+   "away": "Portugal",
+   "minute": "63",
+   "penalty": false
+  },
+  {
+   "date": "2018-06-15",
+   "home": "Portugal",
+   "away": "Spain",
+   "minute": "4",
+   "penalty": true
+  },
+  {
+   "date": "2018-06-15",
+   "home": "Portugal",
+   "away": "Spain",
+   "minute": "44",
+   "penalty": false
+  },
+  {
+   "date": "2018-06-15",
+   "home": "Portugal",
+   "away": "Spain",
+   "minute": "88",
+   "penalty": false
+  },
+  {
+   "date": "2018-06-20",
+   "home": "Portugal",
+   "away": "Morocco",
+   "minute": "4",
+   "penalty": false
+  },
+  {
+   "date": "2019-06-05",
+   "home": "Portugal",
+   "away": "Switzerland",
+   "minute": "25",
+   "penalty": false
+  },
+  {
+   "date": "2019-06-05",
+   "home": "Portugal",
+   "away": "Switzerland",
+   "minute": "88",
+   "penalty": false
+  },
+  {
+   "date": "2019-06-05",
+   "home": "Portugal",
+   "away": "Switzerland",
+   "minute": "90",
+   "penalty": false
+  },
+  {
+   "date": "2019-09-07",
+   "home": "Serbia",
+   "away": "Portugal",
+   "minute": "80",
+   "penalty": false
+  },
+  {
+   "date": "2019-09-10",
+   "home": "Lithuania",
+   "away": "Portugal",
+   "minute": "7",
+   "penalty": true
+  },
+  {
+   "date": "2019-09-10",
+   "home": "Lithuania",
+   "away": "Portugal",
+   "minute": "62",
+   "penalty": false
+  },
+  {
+   "date": "2019-09-10",
+   "home": "Lithuania",
+   "away": "Portugal",
+   "minute": "65",
+   "penalty": false
+  },
+  {
+   "date": "2019-09-10",
+   "home": "Lithuania",
+   "away": "Portugal",
+   "minute": "76",
+   "penalty": false
+  },
+  {
+   "date": "2019-10-11",
+   "home": "Portugal",
+   "away": "Luxembourg",
+   "minute": "65",
+   "penalty": false
+  },
+  {
+   "date": "2019-10-14",
+   "home": "Ukraine",
+   "away": "Portugal",
+   "minute": "72",
+   "penalty": true
+  },
+  {
+   "date": "2019-11-14",
+   "home": "Portugal",
+   "away": "Lithuania",
+   "minute": "7",
+   "penalty": true
+  },
+  {
+   "date": "2019-11-14",
+   "home": "Portugal",
+   "away": "Lithuania",
+   "minute": "22",
+   "penalty": false
+  },
+  {
+   "date": "2019-11-14",
+   "home": "Portugal",
+   "away": "Lithuania",
+   "minute": "65",
+   "penalty": false
+  },
+  {
+   "date": "2019-11-17",
+   "home": "Luxembourg",
+   "away": "Portugal",
+   "minute": "86",
+   "penalty": false
+  },
+  {
+   "date": "2020-09-08",
+   "home": "Sweden",
+   "away": "Portugal",
+   "minute": "45",
+   "penalty": false
+  },
+  {
+   "date": "2020-09-08",
+   "home": "Sweden",
+   "away": "Portugal",
+   "minute": "72",
+   "penalty": false
+  },
+  {
+   "date": "2021-03-30",
+   "home": "Luxembourg",
+   "away": "Portugal",
+   "minute": "51",
+   "penalty": false
+  },
+  {
+   "date": "2021-06-15",
+   "home": "Hungary",
+   "away": "Portugal",
+   "minute": "87",
+   "penalty": true
+  },
+  {
+   "date": "2021-06-15",
+   "home": "Hungary",
+   "away": "Portugal",
+   "minute": "90",
+   "penalty": false
+  },
+  {
+   "date": "2021-06-19",
+   "home": "Germany",
+   "away": "Portugal",
+   "minute": "15",
+   "penalty": false
+  },
+  {
+   "date": "2021-06-23",
+   "home": "Portugal",
+   "away": "France",
+   "minute": "31",
+   "penalty": true
+  },
+  {
+   "date": "2021-06-23",
+   "home": "Portugal",
+   "away": "France",
+   "minute": "60",
+   "penalty": true
+  },
+  {
+   "date": "2021-09-01",
+   "home": "Portugal",
+   "away": "Republic of Ireland",
+   "minute": "89",
+   "penalty": false
+  },
+  {
+   "date": "2021-09-01",
+   "home": "Portugal",
+   "away": "Republic of Ireland",
+   "minute": "90",
+   "penalty": false
+  },
+  {
+   "date": "2021-10-12",
+   "home": "Portugal",
+   "away": "Luxembourg",
+   "minute": "8",
+   "penalty": true
+  },
+  {
+   "date": "2021-10-12",
+   "home": "Portugal",
+   "away": "Luxembourg",
+   "minute": "13",
+   "penalty": true
+  },
+  {
+   "date": "2021-10-12",
+   "home": "Portugal",
+   "away": "Luxembourg",
+   "minute": "87",
+   "penalty": false
+  },
+  {
+   "date": "2022-06-05",
+   "home": "Portugal",
+   "away": "Switzerland",
+   "minute": "35",
+   "penalty": false
+  },
+  {
+   "date": "2022-06-05",
+   "home": "Portugal",
+   "away": "Switzerland",
+   "minute": "39",
+   "penalty": false
+  },
+  {
+   "date": "2022-11-24",
+   "home": "Portugal",
+   "away": "Ghana",
+   "minute": "65",
+   "penalty": true
+  },
+  {
+   "date": "2023-03-23",
+   "home": "Portugal",
+   "away": "Liechtenstein",
+   "minute": "51",
+   "penalty": true
+  },
+  {
+   "date": "2023-03-23",
+   "home": "Portugal",
+   "away": "Liechtenstein",
+   "minute": "63",
+   "penalty": false
+  },
+  {
+   "date": "2023-03-26",
+   "home": "Luxembourg",
+   "away": "Portugal",
+   "minute": "9",
+   "penalty": false
+  },
+  {
+   "date": "2023-03-26",
+   "home": "Luxembourg",
+   "away": "Portugal",
+   "minute": "31",
+   "penalty": false
+  },
+  {
+   "date": "2023-06-20",
+   "home": "Iceland",
+   "away": "Portugal",
+   "minute": "89",
+   "penalty": false
+  },
+  {
+   "date": "2023-10-13",
+   "home": "Portugal",
+   "away": "Slovakia",
+   "minute": "29",
+   "penalty": true
+  },
+  {
+   "date": "2023-10-13",
+   "home": "Portugal",
+   "away": "Slovakia",
+   "minute": "72",
+   "penalty": false
+  },
+  {
+   "date": "2023-10-16",
+   "home": "Bosnia and Herzegovina",
+   "away": "Portugal",
+   "minute": "5",
+   "penalty": true
+  },
+  {
+   "date": "2023-10-16",
+   "home": "Bosnia and Herzegovina",
+   "away": "Portugal",
+   "minute": "20",
+   "penalty": false
+  },
+  {
+   "date": "2023-11-16",
+   "home": "Liechtenstein",
+   "away": "Portugal",
+   "minute": "46",
+   "penalty": false
+  },
+  {
+   "date": "2024-09-05",
+   "home": "Portugal",
+   "away": "Croatia",
+   "minute": "34",
+   "penalty": false
+  },
+  {
+   "date": "2024-09-08",
+   "home": "Portugal",
+   "away": "Scotland",
+   "minute": "88",
+   "penalty": false
+  },
+  {
+   "date": "2024-10-12",
+   "home": "Poland",
+   "away": "Portugal",
+   "minute": "37",
+   "penalty": false
+  },
+  {
+   "date": "2024-11-15",
+   "home": "Portugal",
+   "away": "Poland",
+   "minute": "72",
+   "penalty": true
+  },
+  {
+   "date": "2024-11-15",
+   "home": "Portugal",
+   "away": "Poland",
+   "minute": "87",
+   "penalty": false
+  },
+  {
+   "date": "2025-03-23",
+   "home": "Portugal",
+   "away": "Denmark",
+   "minute": "72",
+   "penalty": false
+  },
+  {
+   "date": "2025-06-04",
+   "home": "Germany",
+   "away": "Portugal",
+   "minute": "68",
+   "penalty": false
+  },
+  {
+   "date": "2025-06-08",
+   "home": "Portugal",
+   "away": "Spain",
+   "minute": "61",
+   "penalty": false
+  },
+  {
+   "date": "2025-09-06",
+   "home": "Armenia",
+   "away": "Portugal",
+   "minute": "21",
+   "penalty": false
+  },
+  {
+   "date": "2025-09-06",
+   "home": "Armenia",
+   "away": "Portugal",
+   "minute": "46",
+   "penalty": false
+  },
+  {
+   "date": "2025-09-09",
+   "home": "Hungary",
+   "away": "Portugal",
+   "minute": "58",
+   "penalty": true
+  },
+  {
+   "date": "2025-10-14",
+   "home": "Portugal",
+   "away": "Hungary",
+   "minute": "22",
+   "penalty": false
+  },
+  {
+   "date": "2025-10-14",
+   "home": "Portugal",
+   "away": "Hungary",
+   "minute": "45",
+   "penalty": false
+  },
+  {
+   "date": "2026-06-23",
+   "home": "Portugal",
+   "away": "Uzbekistan",
+   "minute": "6",
+   "penalty": false
+  },
+  {
+   "date": "2026-06-23",
+   "home": "Portugal",
+   "away": "Uzbekistan",
+   "minute": "39",
+   "penalty": false
+  },
+  {
+   "date": "2026-07-02",
+   "home": "Portugal",
+   "away": "Croatia",
+   "minute": "68",
+   "penalty": true
+  }
+ ]
+}
