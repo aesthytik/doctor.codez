@@ -17,9 +17,25 @@ pnpm validate   # check the dataset
 
 Node 22 or newer. The scripts are TypeScript run directly by Node; they need no build step.
 
+Useful addresses while developing:
+
+| Address | What it shows |
+|---|---|
+| `/?preview=1000` | The goal-1,000 celebration, rehearsed with simulated goals (clearly labelled) |
+| `/?intro=0` | Skip the opening |
+| `/?venue=santiago-bernabeu` | Open straight onto one stadium |
+| `/?goal=700` | Open straight onto one goal |
+| `/?t=2012-06-01` | The career as it stood on a date |
+
+## How it works
+
+- `components/globe/` draws the Earth with MapLibre GL (globe projection) from a world outline shipped with the site, and the lights with deck.gl. Street-level tiles are requested from OpenFreeMap only after someone zooms in, so the opening view and the celebration depend on no outside service.
+- `components/Experience.tsx` holds the interface state: the timeline, the stadium and goal on show, and the celebration.
+- `lib/data/` turns the dataset into what is drawn: per-stadium totals, each goal's place in its stadium's spiral, and the clock behind the timeline.
+
 ## The dataset
 
-`data/goals.json` holds one record per goal and `data/venues.json` one per stadium. Both are built and checked by scripts, never edited as output.
+`data/goals.json` holds one record per goal and is always built by script, never edited by hand. `data/venues.json` holds one record per stadium and is curated by hand; the validator checks it.
 
 | File | What it is |
 |---|---|

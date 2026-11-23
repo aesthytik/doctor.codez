@@ -16,6 +16,13 @@ export const ADDITIVE = {
   depthWriteEnabled: false,
 } as const;
 
+/**
+ * The same, but drawn over everything. Used for glows, which face the camera and
+ * would otherwise fight with the ground they sit on. Lights on the far side of
+ * the Earth are hidden by the controller instead of by the depth buffer.
+ */
+export const ADDITIVE_ON_TOP = { ...ADDITIVE, depthCompare: "always" } as const;
+
 /** A disc whose brightness falls away smoothly from the centre. */
 export class GlowLayer<DataT = unknown> extends ScatterplotLayer<DataT> {
   static layerName = "GlowLayer";
@@ -28,7 +35,7 @@ export class GlowLayer<DataT = unknown> extends ScatterplotLayer<DataT> {
         "fs:DECKGL_FILTER_COLOR": `
           float glowDist = clamp(length(geometry.uv), 0.0, 1.0);
           float glow = 1.0 - glowDist;
-          color.a *= glow * glow * (3.0 - 2.0 * glow) * glow;
+          color.a *= glow * glow;
         `,
       },
     };

@@ -5,7 +5,7 @@ import type { MapLibreOverlay } from "@deck.gl/maplibre";
 import { MAPLIBRE_WORKER_URL } from "@/lib/vendor.generated";
 import { TEAMS, type TeamKey } from "@/lib/data/types";
 import { countAt, type GoalPoint, type VenueAgg, type World } from "@/lib/data/derive";
-import { mapStyle } from "./mapStyle";
+import { DETAIL_SOURCE, DETAIL_ZOOM, detailLayers, mapStyle } from "./mapStyle";
 
 export type Hit =
   | { kind: "venue"; venue: VenueAgg; x: number; y: number }
@@ -43,7 +43,7 @@ const TEAM_TINT = Object.fromEntries(
 
 /** Beam height in metres for a ground with `c` goals: 1 goal ≈ 95 km, 260 ≈ 1,500 km. */
 const beamHeight = (c: number) => 95_000 * Math.sqrt(c);
-const haloRadius = (c: number) => (c > 0 ? 6 + 4.4 * Math.sqrt(c) : 0);
+const haloRadius = (c: number) => (c > 0 ? 7 + 5.6 * Math.sqrt(c) : 0);
 const coreRadius = (c: number) => (c > 0 ? 2.1 + 0.62 * Math.sqrt(c) : 0);
 
 export class GlobeController {
@@ -53,6 +53,7 @@ export class GlobeController {
     GlowLayer: typeof import("./lightLayers").GlowLayer;
     BeamLayer: typeof import("./lightLayers").BeamLayer;
     ADDITIVE: typeof import("./lightLayers").ADDITIVE;
+    ON_TOP: typeof import("./lightLayers").ADDITIVE_ON_TOP;
     ScatterplotLayer: typeof import("@deck.gl/layers").ScatterplotLayer;
   };
   private world: World;
@@ -74,7 +75,10 @@ export class GlobeController {
   private disposed = false;
   private lastTouch = 0;
   private spinning: boolean;
-  private positionsKey = -1;
+  private detailAdded = false;
+  private hitOrder: VenueAgg[];
+  private majorVenues: VenueAgg[];
+  private giantVenues: VenueAgg[];
 
   private constructor(world: World, events: GlobeEvents, opts: GlobeOptions) {
     this.world = world;
@@ -82,6 +86,9 @@ export class GlobeController {
     this.opts = opts;
     this.cursor = world.total;
     this.spinning = Boolean(opts.spin);
+    this.hitOrder = [...world.venues].reverse();
+    this.majorVenues = world.venues.filter((v) => v.count >= 20);
+    this.giantVenues = world.venues.filter((v) => v.count >= 80);
     this.rebuildVisible();
   }
 
@@ -93,16 +100,22 @@ export class GlobeController {
       import("@deck.gl/layers"),
       import("./lightLayers"),
     ]);
-    self.lib = { GlowLayer: light.GlowLayer, BeamLayer: light.BeamLayer, ADDITIVE: light.ADDITIVE, ScatterplotLayer: layers.ScatterplotLayer };
+    self.lib = {
+      GlowLayer: light.GlowLayer,
+      BeamLayer: light.BeamLayer,
+      ADDITIVE: light.ADDITIVE,
+      ON_TOP: light.ADDITIVE_ON_TOP,
+      ScatterplotLayer: layers.ScatterplotLayer,
+    };
     ml.setWorkerUrl(MAPLIBRE_WORKER_URL);
 
     const home = self.homeView(container);
     self.map = new ml.Map({
       container,
-      style: mapStyle({ detail: opts.detail !== false }),
+      style: mapStyle(),
       center: home.center,
       zoom: home.zoom,
-      pitch: 0,
+      pitch: home.pitch,
       minZoom: 0.6,
       maxZoom: 17.2,
       maxPitch: 72,
@@ -110,7 +123,9 @@ export class GlobeController {
       renderWorldCopies: false,
       fadeDuration: 250,
     });
-    self.map.on("error", (e) => events.onError?.(e.error?.message ?? "map error"));
+    self.map.setPadding(home.padding);
+    // A failed tile is not worth alarming anyone over: the lights do not depend on it.
+    self.map.on("error", (e) => console.warn("map:", e.error?.message ?? e));
 
     self.overlay = new deckMl.MapLibreOverlay({
       interleaved: true,
@@ -128,6 +143,11 @@ export class GlobeController {
     for (const ev of ["mousedown", "wheel", "touchstart", "dragstart", "zoomstart"] as const) self.map.on(ev, touch);
     self.map.on("move", () => {
       self.dirty = true;
+      const zoom = self.map.getZoom();
+      if (zoom > DETAIL_ZOOM) self.ensureDetail();
+      events.onView?.({ zoom, bloom: self.bloomAt(zoom) });
+    });
+    self.map.on("moveend", () => {
       const zoom = self.map.getZoom();
       events.onView?.({ zoom, bloom: self.bloomAt(zoom) });
     });
@@ -176,7 +196,7 @@ export class GlobeController {
 
   flyHome(duration = 2600) {
     const home = this.homeView(this.map.getContainer());
-    this.map.flyTo({ center: home.center, zoom: home.zoom, pitch: 0, bearing: 0, duration, essential: true });
+    this.map.flyTo({ center: home.center, zoom: home.zoom, pitch: home.pitch, bearing: 0, padding: home.padding, duration, essential: true });
   }
 
   flyToVenue(venueId: string, duration = 4200) {
@@ -187,7 +207,7 @@ export class GlobeController {
     const metresPerPixel = (2 * spiral) / (0.62 * Math.min(box.width, box.height));
     const zoom = Math.min(16.4, Math.max(12.8, Math.log2((78271.5 * Math.cos((v.lat * Math.PI) / 180)) / metresPerPixel)));
     this.lastTouch = performance.now();
-    this.map.flyTo({ center: [v.lng, v.lat], zoom, pitch: 46, bearing: -18, duration, essential: true, curve: 1.5 });
+    this.map.flyTo({ center: [v.lng, v.lat], zoom, pitch: 46, bearing: -18, padding: { top: 0, bottom: 0, left: 0, right: 0 }, duration, essential: true, curve: 1.5 });
   }
 
   /** Where a point on the Earth currently sits on screen. */
@@ -209,11 +229,65 @@ export class GlobeController {
 
   // ---------- internals ----------
 
-  private homeView(container: HTMLElement): { center: [number, number]; zoom: number } {
+  /**
+   * The opening view: tilted, so the horizon crosses the screen and the beams rise into
+   * space. The globe is sized to span the width on wide screens and to fill the lower
+   * part of tall ones.
+   */
+  private homeView(container: HTMLElement): { center: [number, number]; zoom: number; pitch: number; padding: { top: number; bottom: number; left: number; right: number } } {
     const box = container.getBoundingClientRect();
-    const narrow = box.width < 720;
-    const diameter = (narrow ? 1.18 : 0.94) * Math.min(box.width, box.height);
-    return { center: narrow ? [6, 34] : [14, 30], zoom: Math.log2((diameter * Math.PI) / 512) };
+    if (box.width < 720) {
+      // Tall screens: a smaller Earth, lifted clear of the timeline, so Madrid and Riyadh both stay in frame.
+      return { center: [19, 33], zoom: Math.log2((1.75 * box.width * Math.PI) / 512), pitch: 32, padding: { top: 0, bottom: 0.2 * box.height, left: 0, right: 0 } };
+    }
+    const diameter = Math.max(0.97 * box.width, 1.12 * box.height);
+    return { center: [15, 39], zoom: Math.log2((diameter * Math.PI) / 512), pitch: 45, padding: { top: 0, bottom: 0, left: 0, right: 0 } };
+  }
+
+  /**
+   * How visible a point on the Earth is from the camera: 1 on the near side, falling to
+   * 0 at the horizon and beyond. Close in, the map is flat and everything is visible.
+   */
+  private visibility(): (lng: number, lat: number) => number {
+    const zoom = this.map.getZoom();
+    if (zoom > 6.2) return () => 1;
+    const rad = Math.PI / 180;
+    const c = this.map.getCenter();
+    const phi = c.lat * rad;
+    const lam = c.lng * rad;
+    const pitch = this.map.getPitch() * rad;
+    const bearing = this.map.getBearing() * rad;
+    const h = this.map.getContainer().clientHeight || 800;
+    // Globe radius in pixels (MapLibre matches Mercator's scale at the centre latitude),
+    // and the camera's distance from the centre point in globe radii.
+    const radiusPx = (512 * Math.pow(2, zoom)) / (2 * Math.PI * Math.cos(phi));
+    const dist = (1.5 * h) / radiusPx;
+    const s = [Math.cos(phi) * Math.cos(lam), Math.cos(phi) * Math.sin(lam), Math.sin(phi)];
+    const north = [-Math.sin(phi) * Math.cos(lam), -Math.sin(phi) * Math.sin(lam), Math.cos(phi)];
+    const east = [-Math.sin(lam), Math.cos(lam), 0];
+    const cam = [0, 1, 2].map((i) => {
+      const forward = Math.cos(bearing) * north[i] + Math.sin(bearing) * east[i];
+      return s[i] + dist * (Math.cos(pitch) * s[i] - Math.sin(pitch) * forward);
+    });
+    return (lng, lat) => {
+      const a = lat * rad;
+      const b = lng * rad;
+      const dot = cam[0] * Math.cos(a) * Math.cos(b) + cam[1] * Math.cos(a) * Math.sin(b) + cam[2] * Math.sin(a);
+      return Math.min(1, Math.max(0, (dot - 1) / 0.035));
+    };
+  }
+
+  /**
+   * Street-level tiles come from a third party, so they are only asked for once someone
+   * zooms in. The opening view and the celebration never touch them.
+   */
+  private ensureDetail() {
+    if (this.detailAdded || this.opts.detail === false || !this.map.isStyleLoaded()) return;
+    this.detailAdded = true;
+    this.map.addSource("streets", DETAIL_SOURCE);
+    // The lights are custom layers on the same map; streets must go underneath them.
+    const firstLight = this.map.getLayersOrder().find((id) => this.map.getLayer(id)?.type === "custom");
+    for (const layer of detailLayers()) this.map.addLayer(layer, firstLight);
   }
 
   private bloomAt(zoom: number) {
@@ -275,19 +349,39 @@ export class GlobeController {
   }
 
   private buildLayers() {
-    const { GlowLayer, BeamLayer, ADDITIVE, ScatterplotLayer } = this.lib;
+    const { GlowLayer, BeamLayer, ADDITIVE, ON_TOP, ScatterplotLayer } = this.lib;
     const { venues, points } = this.world;
     const zoom = this.map.getZoom();
     const bloom = this.bloomAt(zoom);
     const far = 1 - smooth(5.2, 9.2, zoom); // venue-level marks fade out as the goals take over
     const k = this.intensity;
     const cursor = this.cursor;
+    const seen = this.visibility();
+    const c = this.map.getCenter();
     const stamp = `${cursor.toFixed(2)}|${this.flash}|${this.teams ? [...this.teams].join(",") : "all"}`;
     const hoverStamp = `${this.hoverVenue}|${this.focusVenue}`;
-    const zoomScale = Math.min(1.5, Math.max(0.5, 0.5 + 0.2 * (zoom - 1)));
+    // Which lights are over the horizon changes as the Earth turns.
+    const viewStamp = zoom > 6.2 ? "flat" : `${c.lng.toFixed(1)}|${c.lat.toFixed(1)}|${zoom.toFixed(1)}|${this.map.getPitch().toFixed(0)}|${this.map.getBearing().toFixed(0)}`;
+    const zoomScale = Math.min(1.5, Math.max(0.55, 0.42 + 0.18 * zoom));
     const layers: unknown[] = [];
 
     if (far > 0.01) {
+      const beam = (id: string, data: VenueAgg[], radius: number, alpha: number) =>
+        new BeamLayer<VenueAgg>({
+          id,
+          data,
+          getPosition: (v) => [v.lng, v.lat],
+          getElevation: (v) => beamHeight(this.litCount(v)),
+          radius,
+          radiusUnits: "pixels",
+          diskResolution: 8,
+          extruded: true,
+          material: false,
+          getFillColor: (v) => [...GOLD, this.litCount(v) > 0 ? alpha : 0] as [number, number, number, number],
+          opacity: Math.min(1, far * far * k),
+          parameters: ADDITIVE,
+          updateTriggers: { getElevation: stamp, getFillColor: stamp },
+        });
       layers.push(
         new GlowLayer<VenueAgg>({
           id: "venue-halo",
@@ -295,60 +389,49 @@ export class GlobeController {
           getPosition: (v) => [v.lng, v.lat],
           getRadius: (v) => {
             const lit = this.litCount(v);
-            const boost = v.id === this.hoverVenue || v.id === this.focusVenue ? 1.35 : 1;
-            return haloRadius(lit) * (1 + 0.9 * this.flashOf(v, lit)) * boost;
+            const boost = v.id === this.hoverVenue || v.id === this.focusVenue ? 1.4 : 1;
+            return haloRadius(lit) * (1 + 0.9 * this.flashOf(v, lit)) * boost * seen(v.lng, v.lat);
           },
           radiusUnits: "pixels",
           radiusScale: zoomScale,
-          getFillColor: [255, 150, 44, 105],
+          billboard: true,
+          getFillColor: [255, 146, 40, 88],
           stroked: false,
           opacity: Math.min(1, far * k),
-          parameters: ADDITIVE,
-          updateTriggers: { getRadius: [stamp, hoverStamp] },
+          parameters: ON_TOP,
+          updateTriggers: { getRadius: [stamp, hoverStamp, viewStamp] },
         }),
-        new BeamLayer<VenueAgg>({
-          id: "venue-beam",
-          data: venues,
-          getPosition: (v) => [v.lng, v.lat],
-          getElevation: (v) => beamHeight(this.litCount(v)),
-          radius: 1.5,
-          radiusUnits: "pixels",
-          diskResolution: 6,
-          extruded: true,
-          material: false,
-          getFillColor: (v) => {
-            const lit = this.litCount(v);
-            return [...GOLD, lit > 0 ? Math.min(255, 150 + 9 * Math.sqrt(lit)) : 0] as [number, number, number, number];
-          },
-          opacity: Math.min(1, far * far * k),
-          parameters: ADDITIVE,
-          updateTriggers: { getElevation: stamp, getFillColor: stamp },
-        }),
+        // Thin beams everywhere; thicker ones mark the grounds where he scored most.
+        beam("venue-beam", venues, 1.3, 215),
+        beam("venue-beam-major", this.majorVenues, 2.5, 190),
+        beam("venue-beam-giant", this.giantVenues, 4.2, 170),
         new GlowLayer<VenueAgg>({
           id: "venue-core",
           data: venues,
           getPosition: (v) => [v.lng, v.lat],
           getRadius: (v) => {
             const lit = this.litCount(v);
-            return coreRadius(lit) * (1 + 1.4 * this.flashOf(v, lit));
+            return coreRadius(lit) * (1 + 1.4 * this.flashOf(v, lit)) * seen(v.lng, v.lat);
           },
           radiusUnits: "pixels",
           radiusScale: zoomScale * 1.9,
+          billboard: true,
           getFillColor: [255, 243, 214, 255],
           stroked: false,
           opacity: Math.min(1, far * k),
-          parameters: ADDITIVE,
-          updateTriggers: { getRadius: stamp },
+          parameters: ON_TOP,
+          updateTriggers: { getRadius: [stamp, viewStamp] },
         }),
       );
     }
 
+    const ease = bloom * bloom * (3 - 2 * bloom);
+    const posKey = Math.round(ease * 400);
+    const pos = (p: GoalPoint): [number, number] => [p.home[0] + (p.slot[0] - p.home[0]) * ease, p.home[1] + (p.slot[1] - p.home[1]) * ease];
+    const shown = (p: GoalPoint) => p.goal.n <= cursor && (!this.teams || this.teams.has(p.goal.team));
+    const hotGoal = (p: GoalPoint) => p.goal.n === this.hoverGoal || p.goal.n === this.focusGoal;
+
     if (bloom > 0.01) {
-      const ease = bloom * bloom * (3 - 2 * bloom);
-      const posKey = Math.round(ease * 400);
-      this.positionsKey = posKey;
-      const pos = (p: GoalPoint): [number, number] => [p.home[0] + (p.slot[0] - p.home[0]) * ease, p.home[1] + (p.slot[1] - p.home[1]) * ease];
-      const shown = (p: GoalPoint) => p.goal.n <= cursor && (!this.teams || this.teams.has(p.goal.team));
       const dotScale = Math.min(1.25, Math.max(0.42, 0.42 + 0.19 * (zoom - 10.5)));
       const hot = `${this.hoverGoal}|${this.focusGoal}`;
       layers.push(
@@ -356,29 +439,31 @@ export class GlobeController {
           id: "goal-glow",
           data: points,
           getPosition: pos,
-          getRadius: (p) => (shown(p) ? (p.goal.n === this.hoverGoal || p.goal.n === this.focusGoal ? 30 : 15) : 0),
+          getRadius: (p) => (shown(p) ? (hotGoal(p) ? 34 : 16) : 0),
           radiusUnits: "pixels",
           radiusScale: dotScale,
-          getFillColor: (p) => [...TEAM_TINT[p.goal.team], 150] as [number, number, number, number],
+          billboard: true,
+          getFillColor: (p) => [...TEAM_TINT[p.goal.team], hotGoal(p) ? 220 : 150] as [number, number, number, number],
           stroked: false,
           opacity: bloom * Math.min(1, k),
-          parameters: ADDITIVE,
-          updateTriggers: { getPosition: posKey, getRadius: [stamp, hot] },
+          parameters: ON_TOP,
+          updateTriggers: { getPosition: posKey, getRadius: [stamp, hot], getFillColor: hot },
         }),
         new ScatterplotLayer<GoalPoint>({
           id: "goal-core",
           data: points,
           getPosition: pos,
-          getRadius: (p) => (shown(p) ? (p.goal.n === this.hoverGoal || p.goal.n === this.focusGoal ? 6.2 : 4.1) : 0),
+          getRadius: (p) => (shown(p) ? (hotGoal(p) ? 6.4 : 4.1) : 0),
           radiusUnits: "pixels",
           radiusScale: dotScale,
-          getFillColor: (p) =>
-            (p.goal.n === this.hoverGoal || p.goal.n === this.focusGoal ? [255, 255, 255, 255] : [...mix(TEAM_TINT[p.goal.team], [255, 250, 235], 0.35), 245]) as [number, number, number, number],
+          billboard: true,
+          getFillColor: (p) => (hotGoal(p) ? [255, 255, 255, 255] : [...mix(TEAM_TINT[p.goal.team], [255, 250, 235], 0.35), 245]) as [number, number, number, number],
           stroked: true,
           getLineColor: (p) => [...TEAM_TINT[p.goal.team], 255] as [number, number, number, number],
-          getLineWidth: (p) => (p.goal.penalty ? 0 : 1.1),
+          getLineWidth: 1.1,
           lineWidthUnits: "pixels",
           opacity: bloom,
+          parameters: { depthCompare: "always", depthWriteEnabled: false },
           updateTriggers: { getPosition: posKey, getRadius: [stamp, hot], getFillColor: hot },
         }),
       );
@@ -389,27 +474,31 @@ export class GlobeController {
       layers.push(
         new ScatterplotLayer<VenueAgg>({
           id: "venue-hit",
-          data: venues,
+          // Smallest first, so where lights overlap from far away the biggest ground wins the pointer.
+          data: this.hitOrder,
           getPosition: (v) => [v.lng, v.lat],
-          getRadius: (v) => (this.litCount(v) > 0 ? Math.max(11, coreRadius(v.count) * 2.6 * zoomScale) : 0),
+          getRadius: (v) => (this.litCount(v) > 0 && seen(v.lng, v.lat) > 0.2 ? Math.max(11, coreRadius(v.count) * 2.6 * zoomScale) : 0),
           radiusUnits: "pixels",
+          billboard: true,
           getFillColor: [0, 0, 0, 0],
           pickable: true,
-          updateTriggers: { getRadius: [stamp, Math.round(zoomScale * 20)] },
+          parameters: { depthCompare: "always", depthWriteEnabled: false },
+          updateTriggers: { getRadius: [stamp, viewStamp] },
         }),
       );
     } else {
-      const ease = bloom * bloom * (3 - 2 * bloom);
       layers.push(
         new ScatterplotLayer<GoalPoint>({
           id: "goal-hit",
           data: points,
-          getPosition: (p) => [p.home[0] + (p.slot[0] - p.home[0]) * ease, p.home[1] + (p.slot[1] - p.home[1]) * ease],
-          getRadius: (p) => (p.goal.n <= cursor && (!this.teams || this.teams.has(p.goal.team)) ? 11 : 0),
+          getPosition: pos,
+          getRadius: (p) => (shown(p) ? 11 : 0),
           radiusUnits: "pixels",
+          billboard: true,
           getFillColor: [0, 0, 0, 0],
           pickable: true,
-          updateTriggers: { getPosition: this.positionsKey, getRadius: stamp },
+          parameters: { depthCompare: "always", depthWriteEnabled: false },
+          updateTriggers: { getPosition: posKey, getRadius: stamp },
         }),
       );
     }

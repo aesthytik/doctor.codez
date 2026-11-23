@@ -1,7 +1,7 @@
 // The look of the Earth itself.
 // Far out it is drawn only from the outline shipped with the site. Street-level
 // detail from OpenFreeMap fades in when someone zooms in close to a stadium.
-import type { StyleSpecification } from "maplibre-gl";
+import type { LayerSpecification, StyleSpecification } from "maplibre-gl";
 
 const C = {
   space: "#04060b",
@@ -37,16 +37,8 @@ function graticule(): GeoJSON.FeatureCollection {
   return { type: "FeatureCollection", features };
 }
 
-export function mapStyle(opts: { detail: boolean }): StyleSpecification {
-  const fadeIn = (from: number, to: number, max = 1): ["interpolate", ["linear"], ["zoom"], number, number, number, number] => [
-    "interpolate",
-    ["linear"],
-    ["zoom"],
-    from,
-    0,
-    to,
-    max,
-  ];
+/** The Earth as drawn from the bundled outline. Makes no requests to anyone else. */
+export function mapStyle(): StyleSpecification {
   const style: StyleSpecification = {
     version: 8,
     projection: { type: "globe" },
@@ -96,10 +88,26 @@ export function mapStyle(opts: { detail: boolean }): StyleSpecification {
       },
     ],
   };
+  return style;
+}
 
-  if (opts.detail) {
-    style.sources.streets = { type: "vector", url: "https://tiles.openfreemap.org/planet", minzoom: 0, maxzoom: 14 };
-    style.layers.push(
+const fadeIn = (from: number, to: number, max = 1): ["interpolate", ["linear"], ["zoom"], number, number, number, number] => [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  from,
+  0,
+  to,
+  max,
+];
+
+/** Zoom at which street-level detail starts to matter; the source is only added once the view gets here. */
+export const DETAIL_ZOOM = 4.8;
+export const DETAIL_SOURCE = { type: "vector", url: "https://tiles.openfreemap.org/planet", minzoom: 0, maxzoom: 14 } as const;
+
+/** Streets, buildings, pitches and place names for close-up views (OpenFreeMap, © OpenStreetMap contributors). */
+export function detailLayers(): LayerSpecification[] {
+  return [
       { id: "d-water", type: "fill", source: "streets", "source-layer": "water", minzoom: DETAIL_FROM, paint: { "fill-color": C.water, "fill-opacity": fadeIn(6, 8) } },
       {
         id: "d-park",
@@ -171,7 +179,5 @@ export function mapStyle(opts: { detail: boolean }): StyleSpecification {
         },
         paint: { "text-color": C.label, "text-halo-color": C.space, "text-halo-width": 1.4, "text-opacity": fadeIn(5.5, 7, 0.75) },
       },
-    );
-  }
-  return style;
+  ];
 }

@@ -1301,6 +1301,12 @@
    "reviewed": true,
    "feedIds": [
     "4277"
+   ],
+   "periodNames": [
+    {
+     "name": "Swedbank Stadion",
+     "to": "2017-12-31"
+    }
    ]
   },
   {
