@@ -21,10 +21,13 @@ type Pose = {
 };
 
 // Right-hand side of the body, in body heights (the left side mirrors it). x across, y up.
-const STAND: Pose = { head: [0, 0.93], neck: [0, 0.85], shoulder: [0.17, 0.81], elbow: [0.2, 0.63], hand: [0.19, 0.46], hip: [0.075, 0.51], knee: [0.085, 0.27], foot: [0.09, 0.02], lift: 0 };
-const CROUCH: Pose = { head: [0, 0.8], neck: [0, 0.72], shoulder: [0.16, 0.7], elbow: [0.25, 0.56], hand: [0.3, 0.42], hip: [0.09, 0.4], knee: [0.15, 0.23], foot: [0.1, 0], lift: 0 };
-const AIR: Pose = { head: [0, 0.94], neck: [0, 0.86], shoulder: [0.16, 0.83], elbow: [0.23, 0.98], hand: [0.11, 1.13], hip: [0.085, 0.52], knee: [0.13, 0.33], foot: [0.1, 0.12], lift: 0.34 };
-const LAND: Pose = { head: [0, 0.935], neck: [0, 0.85], shoulder: [0.18, 0.81], elbow: [0.33, 0.63], hand: [0.47, 0.45], hip: [0.08, 0.5], knee: [0.19, 0.265], foot: [0.27, 0.02], lift: 0 };
+// Proportions are those of a tall, long-legged athlete: shoulders a quarter of the
+// height across, hips narrow, legs a little over half the height.
+const STAND: Pose = { head: [0, 0.935], neck: [0, 0.86], shoulder: [0.135, 0.815], elbow: [0.165, 0.63], hand: [0.16, 0.46], hip: [0.06, 0.53], knee: [0.07, 0.285], foot: [0.08, 0.035], lift: 0 };
+const CROUCH: Pose = { head: [0, 0.81], neck: [0, 0.735], shoulder: [0.135, 0.69], elbow: [0.21, 0.56], hand: [0.27, 0.44], hip: [0.065, 0.42], knee: [0.13, 0.25], foot: [0.085, 0.035], lift: 0 };
+const AIR: Pose = { head: [0, 0.94], neck: [0, 0.865], shoulder: [0.135, 0.82], elbow: [0.2, 0.97], hand: [0.1, 1.11], hip: [0.06, 0.53], knee: [0.11, 0.34], foot: [0.09, 0.14], lift: 0.18 };
+// The landing: feet planted wide, legs straight, chest out, both arms thrown straight down and back, fingers spread.
+const LAND: Pose = { head: [0, 0.935], neck: [0, 0.86], shoulder: [0.135, 0.815], elbow: [0.265, 0.655], hand: [0.395, 0.5], hip: [0.065, 0.52], knee: [0.165, 0.285], foot: [0.255, 0.035], lift: 0 };
 
 const PERIOD = 12; // seconds for one loop
 const ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
@@ -59,85 +62,206 @@ function at(t: number): { pose: Pose; turn: number; alpha: number; landed: numbe
   return { pose, turn: -1, alpha, landed: since };
 }
 
+// How thick each part of a limb is along its length (fraction along, width in body heights).
+const UPPER_ARM: Pt[] = [[0, 0.086], [0.28, 0.08], [0.7, 0.062], [1, 0.054]];
+const FOREARM: Pt[] = [[0, 0.054], [0.25, 0.06], [0.75, 0.042], [1, 0.035]];
+const THIGH: Pt[] = [[0, 0.118], [0.3, 0.126], [0.75, 0.09], [1, 0.074]];
+const SHORTS: Pt[] = [[0, 0.136], [1, 0.142]];
+const SHIN: Pt[] = [[0, 0.072], [0.28, 0.088], [0.7, 0.054], [1, 0.044]];
+
 function drawBody(g: CanvasRenderingContext2D, pose: Pose, turn: number, H: number, cx: number, ground: number, numberFont: string) {
   // Seen side-on in mid-turn the body is narrow; it never quite vanishes.
   const squash = Math.sign(turn || 1) * Math.max(0.34, Math.abs(turn));
-  const wide = Math.max(0.45, Math.abs(squash));
+  const wide = Math.max(0.5, Math.abs(squash));
   const P = (p: Pt, side: 1 | -1): Pt => [cx + side * p[0] * squash * H, ground - (p[1] + pose.lift) * H];
-  /** A limb that tapers from one joint to the next, rounded at both ends. */
-  const limb = (a: Pt, b: Pt, wa: number, wb: number) => {
-    const ra = (wa * H * wide) / 2;
-    const rb = (wb * H * wide) / 2;
+  const along = (a: Pt, b: Pt, t: number): Pt => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+  const widthAt = (profile: Pt[], t: number) => {
+    for (let i = 1; i < profile.length; i++) {
+      if (t <= profile[i][0]) {
+        const [t0, w0] = profile[i - 1];
+        const [t1, w1] = profile[i];
+        const k = (t - t0) / (t1 - t0);
+        return w0 + (w1 - w0) * (k * k * (3 - 2 * k));
+      }
+    }
+    return profile[profile.length - 1][1];
+  };
+  /** A limb with muscle on it: its width follows a profile from one joint to the next. */
+  const limb = (a: Pt, b: Pt, profile: Pt[], from = 0, to = 1) => {
     const ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
     const nx = Math.sin(ang);
     const ny = -Math.cos(ang);
+    const steps = 14;
+    const left: Pt[] = [];
+    const right: Pt[] = [];
+    for (let i = 0; i <= steps; i++) {
+      const t = from + ((to - from) * i) / steps;
+      const c = along(a, b, t);
+      const r = (widthAt(profile, t) * H * wide) / 2;
+      left.push([c[0] + nx * r, c[1] + ny * r]);
+      right.push([c[0] - nx * r, c[1] - ny * r]);
+    }
+    const start = along(a, b, from);
+    const end = along(a, b, to);
     g.beginPath();
-    g.moveTo(a[0] + nx * ra, a[1] + ny * ra);
-    g.lineTo(b[0] + nx * rb, b[1] + ny * rb);
-    g.arc(b[0], b[1], rb, ang - Math.PI / 2, ang + Math.PI / 2);
-    g.lineTo(a[0] - nx * ra, a[1] - ny * ra);
-    g.arc(a[0], a[1], ra, ang + Math.PI / 2, ang - Math.PI / 2);
+    g.moveTo(left[0][0], left[0][1]);
+    for (const p of left) g.lineTo(p[0], p[1]);
+    g.arc(end[0], end[1], (widthAt(profile, to) * H * wide) / 2, ang - Math.PI / 2, ang + Math.PI / 2);
+    for (const p of right.reverse()) g.lineTo(p[0], p[1]);
+    g.arc(start[0], start[1], (widthAt(profile, from) * H * wide) / 2, ang + Math.PI / 2, ang - Math.PI / 2);
     g.closePath();
     g.fill();
   };
+  /** A dark seam across a limb: a sleeve, the hem of the shorts, the top of a sock. */
+  const seams: { at: Pt; ang: number; half: number }[] = [];
+  const seam = (a: Pt, b: Pt, profile: Pt[], t: number) => seams.push({ at: along(a, b, t), ang: Math.atan2(b[1] - a[1], b[0] - a[0]), half: (widthAt(profile, t) * H * wide) / 2 + 2 });
+
   g.fillStyle = "#fff";
+  g.strokeStyle = "#fff";
+  g.lineCap = "round";
   for (const side of [1, -1] as const) {
     const shoulder = P(pose.shoulder, side);
     const elbow = P(pose.elbow, side);
     const hand = P(pose.hand, side);
     const hip = P(pose.hip, side);
     const knee = P(pose.knee, side);
-    const foot = P(pose.foot, side);
-    limb(shoulder, elbow, 0.078, 0.056);
-    limb(elbow, hand, 0.054, 0.04);
+    const ankle = P(pose.foot, side);
+    limb(shoulder, elbow, UPPER_ARM);
+    limb(elbow, hand, FOREARM);
+    seam(shoulder, elbow, UPPER_ARM, 0.5);
+    // An open hand, fingers spread.
+    const reach = Math.atan2(hand[1] - elbow[1], hand[0] - elbow[0]);
     g.beginPath();
-    g.arc(hand[0], hand[1], 0.026 * H, 0, Math.PI * 2);
+    g.arc(hand[0] + Math.cos(reach) * 0.012 * H, hand[1] + Math.sin(reach) * 0.012 * H, 0.021 * H, 0, Math.PI * 2);
     g.fill();
-    // Shorts over the top of the thigh, then the leg, sock and boot.
-    const hem: Pt = [hip[0] + (knee[0] - hip[0]) * 0.55, hip[1] + (knee[1] - hip[1]) * 0.55];
-    limb(hip, hem, 0.135, 0.125);
-    limb(hip, knee, 0.105, 0.072);
-    limb(knee, foot, 0.078, 0.05);
-    limb(foot, [foot[0] + side * wide * 0.075 * H, foot[1] + 0.004 * H], 0.05, 0.036);
+    g.lineWidth = 0.0105 * H;
+    for (let f = -2; f <= 2; f++) {
+      const dir = reach + f * 0.26;
+      const len = (f === -2 || f === 2 ? 0.045 : 0.058) * H;
+      g.beginPath();
+      g.moveTo(hand[0] + Math.cos(reach) * 0.014 * H, hand[1] + Math.sin(reach) * 0.014 * H);
+      g.lineTo(hand[0] + Math.cos(dir) * len, hand[1] + Math.sin(dir) * len);
+      g.stroke();
+    }
+    // Leg, with the shorts over the top of the thigh, a sock to the knee and a boot.
+    limb(hip, knee, THIGH);
+    limb(hip, knee, SHORTS, 0, 0.5);
+    limb(knee, ankle, SHIN);
+    seam(knee, ankle, SHIN, 0.12);
+    const out = side * Math.sign(squash) * wide;
+    g.beginPath();
+    g.ellipse(ankle[0] + out * 0.034 * H, ankle[1] + 0.022 * H, 0.06 * H * wide, 0.026 * H, out * 0.12, 0, Math.PI * 2);
+    g.fill();
   }
-  // Torso: broad at the shoulders, narrow at the waist.
+
+  // Torso: sloping shoulders, a deep chest, a narrow waist.
   const sr = P(pose.shoulder, 1);
-  const sl = P(pose.shoulder, -1);
   const hr = P(pose.hip, 1);
-  const hl = P(pose.hip, -1);
-  const waistY = sr[1] + (hr[1] - sr[1]) * 0.72;
-  const waist = Math.abs(hr[0] - cx) * 1.12;
-  const top = 0.035 * H;
+  const neck = P(pose.neck, 1);
+  const dir = Math.sign(sr[0] - cx || 1);
+  const span = Math.abs(sr[0] - cx);
+  const torsoH = hr[1] - sr[1];
+  const X = (k: number, sideSign: number) => cx + sideSign * dir * k * span;
+  const Y = (k: number) => sr[1] + k * torsoH;
   g.beginPath();
-  g.moveTo(sl[0], sl[1] - top);
-  g.quadraticCurveTo(cx, sl[1] - top * 1.9, sr[0], sr[1] - top);
-  g.quadraticCurveTo(sr[0] + Math.sign(squash) * 0.03 * H * wide, sr[1], sr[0], sr[1] + top);
-  g.quadraticCurveTo(cx + (sr[0] - cx) * 0.78, waistY - 0.05 * H, cx + Math.sign(sr[0] - cx || 1) * waist, waistY);
-  g.lineTo(hr[0] + Math.sign(hr[0] - cx || 1) * 0.062 * H * wide, hr[1] + 0.02 * H);
-  g.lineTo(hl[0] + Math.sign(hl[0] - cx || -1) * 0.062 * H * wide, hl[1] + 0.02 * H);
-  g.lineTo(cx + Math.sign(sl[0] - cx || -1) * waist, waistY);
-  g.quadraticCurveTo(cx + (sl[0] - cx) * 0.78, waistY - 0.05 * H, sl[0], sl[1] + top);
-  g.quadraticCurveTo(sl[0] - Math.sign(squash) * 0.03 * H * wide, sl[1], sl[0], sl[1] - top);
+  g.moveTo(X(0.32, -1), neck[1] + 0.012 * H);
+  g.lineTo(X(0.32, 1), neck[1] + 0.012 * H);
+  g.quadraticCurveTo(X(0.5, 1), Y(-0.17), X(0.98, 1), Y(-0.1)); // trapezius to the point of the shoulder
+  g.quadraticCurveTo(X(1.1, 1), Y(0.04), X(0.98, 1), Y(0.24)); // round the shoulder to the armpit
+  g.quadraticCurveTo(X(0.96, 1), Y(0.5), X(0.7, 1), Y(0.72)); // down the ribs to the waist
+  g.quadraticCurveTo(X(0.68, 1), Y(0.9), X(0.86, 1), Y(1.06)); // out again over the hip
+  g.lineTo(X(0.86, -1), Y(1.06));
+  g.quadraticCurveTo(X(0.7, -1), Y(0.9), X(0.7, -1), Y(0.72));
+  g.quadraticCurveTo(X(0.96, -1), Y(0.5), X(0.98, -1), Y(0.24));
+  g.quadraticCurveTo(X(1.1, -1), Y(0.04), X(0.98, -1), Y(-0.1));
+  g.quadraticCurveTo(X(0.5, -1), Y(-0.17), X(0.32, -1), neck[1] + 0.012 * H);
   g.closePath();
   g.fill();
-  // Neck and head.
-  const neck = P(pose.neck, 1);
-  const head = P(pose.head, 1);
-  limb([neck[0], neck[1] + 0.02 * H], head, 0.062, 0.058);
+  // The seat of the shorts, between the legs.
   g.beginPath();
-  g.ellipse(head[0], head[1], 0.054 * H * Math.max(0.8, wide), 0.068 * H, 0, 0, Math.PI * 2);
+  g.moveTo(X(0.86, 1), Y(1.0));
+  g.lineTo(X(0.86, -1), Y(1.0));
+  g.lineTo(X(0.5, -1), Y(1.26));
+  g.lineTo(cx, Y(1.2));
+  g.lineTo(X(0.5, 1), Y(1.26));
+  g.closePath();
   g.fill();
-  // His back is to us once he has turned: the number shows.
+
+  // Neck and head: a strong neck, ears, short hair standing up a little on top.
+  const head = P(pose.head, 1);
+  const hw = 0.05 * H * Math.max(0.85, wide);
+  const hh = 0.067 * H;
+  g.beginPath();
+  g.moveTo(neck[0] - 0.034 * H * wide, neck[1] + 0.02 * H);
+  g.lineTo(neck[0] - 0.03 * H * wide, head[1] + hh * 0.55);
+  g.lineTo(neck[0] + 0.03 * H * wide, head[1] + hh * 0.55);
+  g.lineTo(neck[0] + 0.034 * H * wide, neck[1] + 0.02 * H);
+  g.closePath();
+  g.fill();
+  g.beginPath();
+  g.moveTo(head[0] - hw * 0.62, head[1] + hh * 0.98); // jaw
+  g.quadraticCurveTo(head[0] - hw * 1.02, head[1] + hh * 0.55, head[0] - hw, head[1] - hh * 0.05);
+  g.quadraticCurveTo(head[0] - hw * 1.04, head[1] - hh * 0.95, head[0] - hw * 0.45, head[1] - hh * 1.08); // hair, squared off
+  g.quadraticCurveTo(head[0], head[1] - hh * 1.2, head[0] + hw * 0.45, head[1] - hh * 1.08);
+  g.quadraticCurveTo(head[0] + hw * 1.04, head[1] - hh * 0.95, head[0] + hw, head[1] - hh * 0.05);
+  g.quadraticCurveTo(head[0] + hw * 1.02, head[1] + hh * 0.55, head[0] + hw * 0.62, head[1] + hh * 0.98);
+  g.quadraticCurveTo(head[0], head[1] + hh * 1.16, head[0] - hw * 0.62, head[1] + hh * 0.98);
+  g.closePath();
+  g.fill();
+  for (const e of [-1, 1]) {
+    g.beginPath();
+    g.ellipse(head[0] + e * hw * 1.03, head[1] + hh * 0.12, hw * 0.16, hh * 0.24, 0, 0, Math.PI * 2);
+    g.fill();
+  }
+
+  // The kit, cut into the light as dark seams.
+  g.save();
+  g.globalCompositeOperation = "destination-out";
+  g.strokeStyle = "rgba(0,0,0,0.85)";
+  g.lineWidth = Math.max(1, 0.0075 * H);
+  g.lineCap = "butt";
+  for (const s of seams) {
+    const nx = Math.sin(s.ang) * s.half;
+    const ny = -Math.cos(s.ang) * s.half;
+    g.beginPath();
+    g.moveTo(s.at[0] + nx, s.at[1] + ny);
+    g.lineTo(s.at[0] - nx, s.at[1] - ny);
+    g.stroke();
+  }
+  // Hem of the shorts on each leg, the waistband, and the collar.
+  for (const side of [1, -1] as const) {
+    const hip = P(pose.hip, side);
+    const knee = P(pose.knee, side);
+    const at = along(hip, knee, 0.52);
+    const ang = Math.atan2(knee[1] - hip[1], knee[0] - hip[0]);
+    const half = (0.145 * H * wide) / 2 + 2;
+    g.beginPath();
+    g.moveTo(at[0] + Math.sin(ang) * half, at[1] - Math.cos(ang) * half);
+    g.lineTo(at[0] - Math.sin(ang) * half, at[1] + Math.cos(ang) * half);
+    g.stroke();
+  }
+  g.beginPath();
+  g.moveTo(X(0.8, -1), Y(0.97));
+  g.quadraticCurveTo(cx, Y(1.01), X(0.8, 1), Y(0.97));
+  g.stroke();
+  g.beginPath();
+  g.moveTo(X(0.34, -1), neck[1] + 0.016 * H);
+  g.quadraticCurveTo(cx, neck[1] + 0.04 * H, X(0.34, 1), neck[1] + 0.016 * H);
+  g.stroke();
+  // His back is to us once he has turned: the name and number show.
   if (turn < -0.55) {
-    g.save();
-    g.globalCompositeOperation = "destination-out";
-    g.globalAlpha = Math.min(1, (-turn - 0.55) / 0.3) * 0.8;
-    g.font = `900 ${Math.round(0.17 * H)}px ${numberFont}`;
+    g.globalAlpha = Math.min(1, (-turn - 0.55) / 0.3);
+    g.fillStyle = "rgba(0,0,0,0.85)";
     g.textAlign = "center";
     g.textBaseline = "middle";
-    g.fillText("7", cx, sr[1] + (hr[1] - sr[1]) * 0.42);
-    g.restore();
+    g.font = `900 ${Math.round(0.165 * H)}px ${numberFont}`;
+    g.fillText("7", cx, Y(0.5));
+    g.font = `800 ${Math.max(6, Math.round(0.04 * H))}px ${numberFont}`;
+    const name = "RONALDO";
+    const gap = 0.031 * H;
+    [...name].forEach((ch, i) => g.fillText(ch, cx + (i - (name.length - 1) / 2) * gap, Y(0.13) - Math.cos(((i - 3) / 3) * 1.1) * 0.012 * H));
   }
+  g.restore();
 }
 
 type Props = {

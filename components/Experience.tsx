@@ -355,8 +355,9 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
     const h = view.horizon;
     // The celebration has the sky to itself.
     if (!h || !controller || query?.get("holo") === "0" || phase === "loading" || phase === "celebrate") return null;
-    const height = Math.min(box.h * 0.4, h.y - (narrow ? 6 : 14));
-    if (height < 110) return null;
+    // Shorter than the sky above the horizon, so the jump stays on the page.
+    const height = Math.min(box.h * 0.4, (h.y - (narrow ? 6 : 14)) * 0.8);
+    if (height < 90) return null;
     const far = 1 - Math.min(1, Math.max(0, (view.zoom - 3.3) / 1.1));
     const strength = far * (phase === "intro" ? 0.5 : narrow ? 0.5 : 0.78);
     return { x: h.x, y: h.y + height * 0.02, height, strength };
