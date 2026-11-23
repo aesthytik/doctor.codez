@@ -1,0 +1,118 @@
+name: Add a goal by hand
+
+# For a competition the match feed does not carry (the Saudi Super Cup), or a night
+# when the feed is slow. Fill in the form; the goal is added only if the whole
+# dataset still passes its checks, and the site then rebuilds itself.
+#
+# A goal entered for a match the feed does cover steps aside by itself once the feed
+# reports that match, so nothing is counted twice.
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: Match date (YYYY-MM-DD)
+        required: true
+      opponent:
+        description: Opponent
+        required: true
+      competition:
+        description: Competition
+        type: choice
+        required: true
+        options:
+          - Saudi Pro League
+          - King's Cup
+          - Saudi Super Cup
+          - AFC Champions League
+          - AFC Champions League Two
+      ground:
+        description: Where Al-Nassr played
+        type: choice
+        required: true
+        options:
+          - home
+          - away
+          - neutral
+      stadium:
+        description: "Stadium, City, Country (add @ latitude, longitude for a ground that is new to the site)"
+        required: true
+      minute:
+        description: "Minute: 67, or 90+3 for stoppage time"
+        required: true
+      penalty:
+        description: It was a penalty
+        type: boolean
+        default: false
+      score:
+        description: "Score straight after the goal, Al-Nassr first (2-1)"
+        required: true
+      final:
+        description: "Final score, Al-Nassr first (3-1)"
+        required: true
+      source:
+        description: Link to a match report
+        required: true
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: goal-data
+  cancel-in-progress: false
+
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Add the goal
+        id: add
+        env:
+          GOAL_DATE: ${{ inputs.date }}
+          GOAL_OPPONENT: ${{ inputs.opponent }}
+          GOAL_COMPETITION: ${{ inputs.competition }}
+          GOAL_GROUND: ${{ inputs.ground }}
+          GOAL_STADIUM: ${{ inputs.stadium }}
+          GOAL_MINUTE: ${{ inputs.minute }}
+          GOAL_PENALTY: ${{ inputs.penalty }}
+          GOAL_SCORE: ${{ inputs.score }}
+          GOAL_FINAL: ${{ inputs.final }}
+          GOAL_SOURCE: ${{ inputs.source }}
+        run: node scripts/add-manual-goal.ts
+
+      - name: Publish the change
+        if: steps.add.outputs.changed == 'true'
+        env:
+          TITLE: ${{ steps.add.outputs.title }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then echo "Nothing to publish."; exit 0; fi
+          git commit -m "$TITLE" -m "Entered by hand by ${GITHUB_ACTOR}: $RUN_URL"
+          for attempt in 1 2 3 4; do
+            if git push; then exit 0; fi
+            sleep $((attempt * 3))
+            git pull --rebase
+          done
+          exit 1
+
+      - name: Ask for a new stadium to be checked
+        if: steps.add.outputs.alert != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ALERT: ${{ steps.add.outputs.alert }}
+        run: |
+          gh label create goal-updater --color FBCA04 --description "Raised by the automatic goal updater" 2>/dev/null || true
+          gh issue create --title "A stadium was added by hand entry: please check its position" --label goal-updater --body "$ALERT" \
+            || gh issue create --title "A stadium was added by hand entry: please check its position" --body "$ALERT"

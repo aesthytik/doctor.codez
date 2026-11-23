@@ -158,12 +158,12 @@ if (plan.blocked.length) {
   console.error("\nNothing was written.");
   process.exit(1);
 }
-if (flag("dry-run")) {
-  console.log(`\nDry run: nothing written. Would be recorded as: ${plan.title}`);
-  process.exit(0);
-}
 if (!anyChange) {
   console.log("\nNothing to change.");
+  process.exit(0);
+}
+if (flag("dry-run")) {
+  console.log(`\nDry run: nothing written. Would be recorded as: ${plan.title}`);
   process.exit(0);
 }
 

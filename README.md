@@ -13,29 +13,35 @@ pnpm install
 pnpm dev        # http://localhost:3000
 pnpm build      # static site in out/
 pnpm validate   # check the dataset
+pnpm test       # check the counting and update rules
 ```
 
-Node 22 or newer. The scripts are TypeScript run directly by Node; they need no build step.
+Node 22.18 or newer (Vercel and the GitHub workflows use Node 26). The scripts are TypeScript run directly by Node; they need no build step.
 
 Useful addresses while developing:
 
 | Address | What it shows |
 |---|---|
 | `/?preview=1000` | The goal-1,000 celebration, rehearsed with simulated goals (clearly labelled) |
-| `/?intro=0` | Skip the opening |
+| `/?intro=0` | Skip the opening (`/?intro=1` plays it again; by itself it plays on a first visit only) |
 | `/?venue=santiago-bernabeu` | Open straight onto one stadium |
 | `/?goal=700` | Open straight onto one goal |
 | `/?t=2012-06-01` | The career as it stood on a date |
+
+## Where it lives
+
+<https://a-thousand-lights.vercel.app/>, hosted on Vercel. Every push to `main` is built and published automatically. A push to any other branch gets its own preview address, visible when signed in to Vercel. The site is plain files: nothing runs on a server.
 
 ## How it works
 
 - `components/globe/` draws the Earth with MapLibre GL (globe projection) from a world outline shipped with the site, and the lights with deck.gl. Street-level tiles are requested from OpenFreeMap only after someone zooms in, so the opening view and the celebration depend on no outside service.
 - `components/Experience.tsx` holds the interface state: the timeline, the stadium and goal on show, and the celebration.
 - `lib/data/` turns the dataset into what is drawn: per-stadium totals, each goal's place in its stadium's spiral, and the clock behind the timeline.
+- `lib/live.ts` keeps an open page current. The build publishes a tiny status file (`/live/status.json`); a page asks for it every minute around a match and every ten minutes otherwise, and fetches the new dataset when the version stamp has moved on. That is how a new goal, and the goal-1,000 celebration, reach a page that was left open.
 
 ## The dataset
 
-`data/goals.json` holds one record per goal and is always built by script, never edited by hand. `data/venues.json` holds one record per stadium and is curated by hand; the validator checks it.
+`data/goals.json` holds one record per goal and is always built by script, never edited by hand. `data/venues.json` holds one record per stadium and is curated by hand; the validator checks it. The rules are in `scripts/lib/`, and `tests/` checks them against saved match records.
 
 | File | What it is |
 |---|---|
@@ -44,6 +50,7 @@ Useful addresses while developing:
 | `data/overrides.json` | The counting rule, neutral-ground rulings and other hand corrections, each with its reason |
 | `data/venues.json` | Curated stadiums with coordinates |
 | `data/reference/` | Published totals and lists used only to cross-check |
+| `data/source/season.json` | The current season's matches as read by the updater, and the next fixtures |
 
 ```bash
 pnpm sweep                      # re-read the feed (cached; slow the first time)
@@ -52,17 +59,34 @@ pnpm validate                   # numbering, running scores, totals and stadium 
 node scripts/geocode-venues.ts  # propose coordinates for new stadiums
 ```
 
-### Adding a new goal by hand
+### Staying up to date
 
-Until the automatic updater is in place, three commands bring the dataset up to date after a match:
+**Automatically.** The `Update goals` workflow runs every half hour through the hours Al-Nassr's matches finish (14:00 to 22:00 UTC) and once a night. Most runs make one request to the feed, find nothing new and stop. After a match it runs `scripts/update-latest.ts`, which re-reads the season's recent results, rebuilds the dataset and commits the change to `main`; Vercel then rebuilds the site. A goal normally appears within the hour after the final whistle.
+
+The updater is cautious on purpose:
+
+- It reads finished matches only, so a goal ruled out during play is never counted.
+- A new goal is accepted only when the feed's two accounts of the match (the match record and the summary) agree. Otherwise the match is held and retried.
+- The result must pass every check in `scripts/lib/checks.ts`.
+- A count that would fall is never published by itself, and more than six new goals in one run is refused.
+- It compares its count with the feed's own season totals for him and says so when they differ.
+- A goal at a ground he has not scored at before is placed by matching the stadium's name, then by Wikidata, then at its city (marked approximate), and flagged for a person to check.
+
+When something needs a person, the workflow opens one issue labelled `goal-updater` and, if it had to stop, fails the run. Nothing is published in that case.
 
 ```bash
-node scripts/build-history.ts --only=alnassr   # re-read this season from the feed
-pnpm data                                      # rebuild data/goals.json
-pnpm validate                                  # confirm it is sound
+node scripts/update-latest.ts --check     # is there anything new? (one request)
+node scripts/update-latest.ts --dry-run   # work it out, write nothing
+node scripts/update-latest.ts             # update the data files
 ```
 
-The feed does not carry the Saudi Super Cup. A goal there goes into `data/manual-goals.json` with its source.
+**By hand.** The feed does not carry the Saudi Super Cup, and on a big night it may be slow. The `Add a goal by hand` workflow is a form (it works from the GitHub phone app); `scripts/add-manual-goal.ts` is the same thing on the command line. A goal entered for a match the feed does cover is marked provisional: it steps aside as soon as the feed reports that match, so nothing is counted twice.
+
+**Switches.** The `Match-night controls` workflow (`scripts/control.ts`) can hold or release the goal-1,000 celebration, remove or restore a goal, and count or leave out the disputed goal. Each is a small edit to `data/overrides.json`, checked like any other change.
+
+**Not automatic yet.** Goals are picked up after the match, not during it. Watching a match live, so that goal 1,000 lands within minutes, is the next piece.
+
+`data/source/season.json` is the updater's own record of the season's matches and the next fixtures.
 
 ### What counts
 
@@ -76,7 +100,7 @@ A goal counts when the organiser of the competition credits it to him in an offi
 
 ### The one disputed goal
 
-On 23 October 2026 (Al-Faisaly 1–3 Al-Nassr) a goal went in off a defender after Ronaldo challenged for a free kick. The referee's report and the Saudi Pro League credit Ronaldo; Opta and other data providers record an own goal. This dataset follows the competition organiser, as it does everywhere else, so its total is one higher than counts that follow those providers. The goal carries a note saying so, and `countDisputed` in `data/overrides.json` switches it off.
+On 23 October 2026 (Al-Faisaly 1–3 Al-Nassr) a goal went in off a defender after Ronaldo challenged for a free kick. The referee's report and the Saudi Pro League credit Ronaldo; Opta and other data providers record an own goal. This dataset follows the competition organiser, as it does everywhere else, so its total is one higher than counts that follow those providers. The goal carries a note saying so, and `countDisputed` in `data/overrides.json` (or the `Match-night controls` workflow) switches it off.
 
 ## Sources and credits
 

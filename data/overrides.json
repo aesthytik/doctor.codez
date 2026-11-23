@@ -3,6 +3,8 @@
   "countingRule": "A goal counts when the organiser of the competition credits it to him in an official senior match: league, cup and continental games for his clubs, and full internationals for Portugal, friendlies included. Club friendlies, exhibition trophies, youth and B-team games and penalty shoot-out kicks do not count.",
   "countDisputed": true,
   "countDisputedNote": "One goal is credited differently by different bodies (23 October 2026, Al-Faisaly v Al-Nassr). With this switch on the total follows the Saudi Pro League and the headline count used by ESPN's tracker and most outlets; with it off the total follows Opta and the other data providers and is one lower.",
+  "celebration": "auto",
+  "celebrationNote": "'auto' lets the goal-1,000 celebration play once the count reaches 1,000. 'hold' keeps it from playing whatever the count says, for the moments when the count needs a human look first. Set it with the Match-night controls workflow.",
   "exclude": [],
   "neutral": {
     "_note": "true = played on neutral ground although the fixture lists a home side; false = not neutral although the general rule says so.",

@@ -1,0 +1,75 @@
+name: Match-night controls
+
+# The switches a person may need around goal 1,000. Each is a small, checked edit;
+# nothing is changed unless the whole dataset still passes its checks.
+#
+#   hold-celebration     keep the goal-1,000 celebration from playing, whatever the count says
+#   release-celebration  let it play again
+#   remove-goal          take a goal out of the count (give its number and the reason)
+#   restore-goal         undo the most recent removal
+#   count-disputed       count the goal that the league and the data providers credit differently
+#   leave-out-disputed   leave it out (the count is then one lower)
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: What to do
+        type: choice
+        required: true
+        options:
+          - hold-celebration
+          - release-celebration
+          - remove-goal
+          - restore-goal
+          - count-disputed
+          - leave-out-disputed
+      goal:
+        description: Goal number (only for remove-goal)
+      reason:
+        description: Reason (only for remove-goal)
+
+permissions:
+  contents: write
+
+concurrency:
+  group: goal-data
+  cancel-in-progress: false
+
+jobs:
+  control:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Apply
+        id: control
+        env:
+          CONTROL_ACTION: ${{ inputs.action }}
+          CONTROL_GOAL: ${{ inputs.goal }}
+          CONTROL_REASON: ${{ inputs.reason }}
+        run: node scripts/control.ts
+
+      - name: Publish the change
+        if: steps.control.outputs.changed == 'true'
+        env:
+          TITLE: ${{ steps.control.outputs.title }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then echo "Already set: nothing to publish."; exit 0; fi
+          git commit -m "$TITLE" -m "Set by hand by ${GITHUB_ACTOR}: $RUN_URL"
+          for attempt in 1 2 3 4; do
+            if git push; then exit 0; fi
+            sleep $((attempt * 3))
+            git pull --rebase
+          done
+          exit 1

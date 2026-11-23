@@ -8,6 +8,8 @@ type Props = {
   controller: GlobeController | null;
   /** The count to climb to (1,000). */
   target: number;
+  /** The count to leave the globe showing afterwards: the real total, which may by then be higher. */
+  settleAt: number;
   place: string;
   dateLabel: string;
   simulated: boolean;
@@ -27,7 +29,7 @@ export default function Celebration(props: Props) {
   return <Sequence key={run} {...props} onReplay={() => setRun((r) => r + 1)} />;
 }
 
-function Sequence({ controller, target, place, dateLabel, simulated, onClose, onReplay }: Props & { onReplay: () => void }) {
+function Sequence({ controller, target, settleAt, place, dateLabel, simulated, onClose, onReplay }: Props & { onReplay: () => void }) {
   const calm = useMediaQuery("(prefers-reduced-motion: reduce)");
   // With motion turned off, the finished state is shown straight away.
   const [count, setCount] = useState(calm ? target : 0);
@@ -41,7 +43,7 @@ function Sequence({ controller, target, place, dateLabel, simulated, onClose, on
     const timers: number[] = [];
 
     if (calm) {
-      controller.setCursor(target);
+      controller.setCursor(settleAt);
       return;
     }
 
@@ -85,10 +87,10 @@ function Sequence({ controller, target, place, dateLabel, simulated, onClose, on
       cancelAnimationFrame(raf);
       timers.forEach(clearTimeout);
       controller.setIntensity(1);
-      controller.setCursor(target);
+      controller.setCursor(settleAt);
       controller.setSpin(true);
     };
-  }, [controller, target, calm]);
+  }, [controller, target, settleAt, calm]);
 
   // Gold sparks drifting down behind the number.
   useEffect(() => {

@@ -8,6 +8,7 @@ import path from "node:path";
 import { describe, it } from "node:test";
 import { buildDataset, type ManualGoal } from "../scripts/lib/dataset.ts";
 import type { FeedDetail, FeedEvent, FeedSummary } from "../scripts/lib/espn.ts";
+import { pollDelay } from "../lib/data/publish.ts";
 import { loadCountries, loadSources } from "../scripts/lib/files.ts";
 import type { Located } from "../scripts/lib/geocode.ts";
 import { manualGoalFromForm, parseMinute, parseScore, parseStadium } from "../scripts/lib/manual.ts";
@@ -440,6 +441,23 @@ describe("the hand-entry form", () => {
     assert.throws(() => manualGoalFromForm({ ...form, stadium: "Kingdom Arena" }), /Name, City, Country/);
     assert.throws(() => manualGoalFromForm({ ...form, competition: "Friendly" }), /is not one of/);
     assert.throws(() => manualGoalFromForm({ ...form, source: " " }), /A source is needed/);
+  });
+});
+
+describe("how often an open page looks for news", () => {
+  const kickoff = "2026-11-24T18:15Z";
+  const at = (iso: string) => pollDelay([kickoff, "2026-11-28T12:15Z"], Date.parse(iso));
+  it("is every minute from shortly before kick-off until well after full time", () => {
+    assert.equal(at("2026-11-24T18:00Z"), 60_000);
+    assert.equal(at("2026-11-24T19:30Z"), 60_000);
+    assert.equal(at("2026-11-24T22:15Z"), 60_000);
+  });
+  it("is every ten minutes the rest of the time", () => {
+    assert.equal(at("2026-11-24T17:59Z"), 600_000);
+    assert.equal(at("2026-11-24T22:16Z"), 600_000);
+    assert.equal(at("2026-11-26T12:00Z"), 600_000);
+    assert.equal(pollDelay(undefined, Date.now()), 600_000);
+    assert.equal(pollDelay(["not a date"], Date.now()), 600_000);
   });
 });
 

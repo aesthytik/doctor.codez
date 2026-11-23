@@ -76,9 +76,14 @@ export class GlobeController {
   private lastTouch = 0;
   private spinning: boolean;
   private detailAdded = false;
-  private hitOrder: VenueAgg[];
-  private majorVenues: VenueAgg[];
-  private giantVenues: VenueAgg[];
+  private hitOrder: VenueAgg[] = [];
+  private majorVenues: VenueAgg[] = [];
+  private giantVenues: VenueAgg[] = [];
+  /** Goals that have just arrived, and the stadiums they were scored at: these throb for a while. */
+  private pulseGoals = new Set<number>();
+  private pulseVenues = new Set<string>();
+  private pulseFrom = 0;
+  private pulseUntil = 0;
 
   private constructor(world: World, events: GlobeEvents, opts: GlobeOptions) {
     this.world = world;
@@ -86,9 +91,14 @@ export class GlobeController {
     this.opts = opts;
     this.cursor = world.total;
     this.spinning = Boolean(opts.spin);
-    this.hitOrder = [...world.venues].reverse();
-    this.majorVenues = world.venues.filter((v) => v.count >= 20);
-    this.giantVenues = world.venues.filter((v) => v.count >= 80);
+    this.indexWorld();
+  }
+
+  private indexWorld() {
+    const { venues } = this.world;
+    this.hitOrder = [...venues].reverse();
+    this.majorVenues = venues.filter((v) => v.count >= 20);
+    this.giantVenues = venues.filter((v) => v.count >= 80);
     this.rebuildVisible();
   }
 
@@ -163,6 +173,25 @@ export class GlobeController {
   }
 
   // ---------- what the interface can ask for ----------
+
+  /** Swap in a newer dataset (a goal has been added) without rebuilding the map. */
+  setWorld(world: World) {
+    if (world === this.world) return;
+    this.world = world;
+    this.hoverVenue = null;
+    this.hoverGoal = null;
+    this.indexWorld();
+    this.dirty = true;
+  }
+
+  /** Make these goals, and the stadiums they were scored at, throb for a while. */
+  pulse(goalNumbers: number[], ms = 9000) {
+    this.pulseGoals = new Set(goalNumbers);
+    this.pulseVenues = new Set(goalNumbers.map((n) => this.world.pointByN.get(n)?.venue.id).filter((id): id is string => Boolean(id)));
+    this.pulseFrom = performance.now();
+    this.pulseUntil = this.pulseFrom + ms;
+    this.dirty = true;
+  }
 
   /** Show the career as it stood after `n` goals (fractions allowed while animating). */
   setCursor(n: number, opts: { flash?: boolean } = {}) {
@@ -316,6 +345,14 @@ export class GlobeController {
     return Math.max(0, 1 - (this.cursor - a[lit - 1]) / 5);
   }
 
+  /** 0 at rest; while a pulse runs, a slow throb that dies away. */
+  private pulseNow(): number {
+    const now = performance.now();
+    if (now >= this.pulseUntil) return 0;
+    const left = 1 - (now - this.pulseFrom) / (this.pulseUntil - this.pulseFrom);
+    return left * (0.55 + 0.45 * Math.sin((now - this.pulseFrom) / 190));
+  }
+
   private handlePick(info: { object?: unknown; layer?: { id: string } | null; x: number; y: number }, click: boolean) {
     let hit: Hit | null = null;
     const id = info.layer?.id;
@@ -343,6 +380,15 @@ export class GlobeController {
       this.map.jumpTo({ center: [c.lng - 0.035, c.lat] });
       this.dirty = true;
     }
+    if (this.pulseUntil) {
+      // Redraw every frame while something throbs, then once more to settle.
+      this.dirty = true;
+      if (performance.now() >= this.pulseUntil) {
+        this.pulseUntil = 0;
+        this.pulseGoals.clear();
+        this.pulseVenues.clear();
+      }
+    }
     if (!this.dirty) return;
     this.dirty = false;
     this.overlay.setProps({ layers: this.buildLayers() });
@@ -360,6 +406,9 @@ export class GlobeController {
     const c = this.map.getCenter();
     const stamp = `${cursor.toFixed(2)}|${this.flash}|${this.teams ? [...this.teams].join(",") : "all"}`;
     const hoverStamp = `${this.hoverVenue}|${this.focusVenue}`;
+    const throb = this.pulseNow();
+    const throbStamp = this.pulseUntil ? Math.round(throb * 200) : 0;
+    const throbbing = (v: VenueAgg) => (this.pulseVenues.has(v.id) ? throb : 0);
     // Which lights are over the horizon changes as the Earth turns.
     const viewStamp = zoom > 6.2 ? "flat" : `${c.lng.toFixed(1)}|${c.lat.toFixed(1)}|${zoom.toFixed(1)}|${this.map.getPitch().toFixed(0)}|${this.map.getBearing().toFixed(0)}`;
     const zoomScale = Math.min(1.5, Math.max(0.55, 0.42 + 0.18 * zoom));
@@ -390,7 +439,7 @@ export class GlobeController {
           getRadius: (v) => {
             const lit = this.litCount(v);
             const boost = v.id === this.hoverVenue || v.id === this.focusVenue ? 1.4 : 1;
-            return haloRadius(lit) * (1 + 0.9 * this.flashOf(v, lit)) * boost * seen(v.lng, v.lat);
+            return haloRadius(lit) * (1 + 0.9 * this.flashOf(v, lit) + 2.4 * throbbing(v)) * boost * seen(v.lng, v.lat);
           },
           radiusUnits: "pixels",
           radiusScale: zoomScale,
@@ -399,7 +448,7 @@ export class GlobeController {
           stroked: false,
           opacity: Math.min(1, far * k),
           parameters: ON_TOP,
-          updateTriggers: { getRadius: [stamp, hoverStamp, viewStamp] },
+          updateTriggers: { getRadius: [stamp, hoverStamp, viewStamp, throbStamp] },
         }),
         // Thin beams everywhere; thicker ones mark the grounds where he scored most.
         beam("venue-beam", venues, 1.3, 215),
@@ -411,7 +460,7 @@ export class GlobeController {
           getPosition: (v) => [v.lng, v.lat],
           getRadius: (v) => {
             const lit = this.litCount(v);
-            return coreRadius(lit) * (1 + 1.4 * this.flashOf(v, lit)) * seen(v.lng, v.lat);
+            return coreRadius(lit) * (1 + 1.4 * this.flashOf(v, lit) + 1.5 * throbbing(v)) * seen(v.lng, v.lat);
           },
           radiusUnits: "pixels",
           radiusScale: zoomScale * 1.9,
@@ -420,7 +469,7 @@ export class GlobeController {
           stroked: false,
           opacity: Math.min(1, far * k),
           parameters: ON_TOP,
-          updateTriggers: { getRadius: [stamp, viewStamp] },
+          updateTriggers: { getRadius: [stamp, viewStamp, throbStamp] },
         }),
       );
     }
@@ -429,17 +478,18 @@ export class GlobeController {
     const posKey = Math.round(ease * 400);
     const pos = (p: GoalPoint): [number, number] => [p.home[0] + (p.slot[0] - p.home[0]) * ease, p.home[1] + (p.slot[1] - p.home[1]) * ease];
     const shown = (p: GoalPoint) => p.goal.n <= cursor && (!this.teams || this.teams.has(p.goal.team));
-    const hotGoal = (p: GoalPoint) => p.goal.n === this.hoverGoal || p.goal.n === this.focusGoal;
+    const arriving = (p: GoalPoint) => (this.pulseGoals.has(p.goal.n) ? throb : 0);
+    const hotGoal = (p: GoalPoint) => p.goal.n === this.hoverGoal || p.goal.n === this.focusGoal || this.pulseGoals.has(p.goal.n);
 
     if (bloom > 0.01) {
       const dotScale = Math.min(1.25, Math.max(0.42, 0.42 + 0.19 * (zoom - 10.5)));
-      const hot = `${this.hoverGoal}|${this.focusGoal}`;
+      const hot = `${this.hoverGoal}|${this.focusGoal}|${throbStamp}|${this.pulseGoals.size}`;
       layers.push(
         new GlowLayer<GoalPoint>({
           id: "goal-glow",
           data: points,
           getPosition: pos,
-          getRadius: (p) => (shown(p) ? (hotGoal(p) ? 34 : 16) : 0),
+          getRadius: (p) => (shown(p) ? (hotGoal(p) ? 34 + 46 * arriving(p) : 16) : 0),
           radiusUnits: "pixels",
           radiusScale: dotScale,
           billboard: true,
