@@ -27,7 +27,7 @@ Useful addresses while developing:
 | `/?venue=santiago-bernabeu` | Open straight onto one stadium |
 | `/?goal=700` | Open straight onto one goal |
 | `/?t=2012-06-01` | The career as it stood on a date |
-| `/?holo=0` | Without the hologram on the horizon |
+| `/?holo=0` | Without the hologram on the horizon (`/?holo=drawn` shows the stand-in figure instead of the clip) |
 
 ## Where it lives
 
@@ -36,7 +36,7 @@ Useful addresses while developing:
 ## How it works
 
 - `components/globe/` draws the Earth with MapLibre GL (globe projection) from a world outline shipped with the site, and the lights with deck.gl. Street-level tiles are requested from OpenFreeMap only after someone zooms in, so the opening view and the celebration depend on no outside service.
-- `components/Hologram.tsx` draws the figure on the horizon doing the celebration. It is drawn in code from a small skeleton; there is no photograph or traced image in it.
+- `components/HologramClip.tsx` is the hologram on the horizon: Panini America's animation of the celebration, played straight from GIPHY (never copied into this site) and shown as a blue negative with scan lines. Only the celebration part of the clip is played. `components/Hologram.tsx` is a figure drawn in code that stands in when GIPHY cannot be reached or the visitor has asked for reduced motion.
 - `components/Experience.tsx` holds the interface state: the timeline, the stadium and goal on show, and the celebration.
 - `lib/data/` turns the dataset into what is drawn: per-stadium totals, each goal's place in its stadium's spiral, and the clock behind the timeline.
 - `lib/live.ts` keeps an open page current. The build publishes a tiny status file (`/live/status.json`); a page asks for it every minute around a match and every ten minutes otherwise, and fetches the new dataset when the version stamp has moved on. That is how a new goal, and the goal-1,000 celebration, reach a page that was left open.
@@ -110,4 +110,5 @@ On 23 October 2026 (Al-Faisaly 1–3 Al-Nassr) a goal went in off a defender aft
 - Cross-checks: Wikipedia (CC BY-SA 4.0) and [martj42/international_results](https://github.com/martj42/international_results) (CC0).
 - Stadium coordinates: Wikidata (CC0) and Wikipedia.
 - World outline: Natural Earth (public domain), via `world-atlas`.
+- Hologram animation: [Panini America, via GIPHY](https://giphy.com/gifs/SportsManias-world-cup-sportsmanias-panini-muwgatuQcLStmvNZII), played from GIPHY and credited on the page.
 - Street-level map tiles: OpenFreeMap, data © OpenStreetMap contributors.

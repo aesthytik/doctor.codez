@@ -5,6 +5,7 @@ import GlobeCanvas from "@/components/globe/GlobeCanvas";
 import type { GlobeController, Hit } from "@/components/globe/GlobeController";
 import Celebration from "@/components/celebration/Celebration";
 import Hologram from "@/components/Hologram";
+import HologramClip, { CLIP_PAGE } from "@/components/HologramClip";
 import Counter from "@/components/ui/Counter";
 import Timeline from "@/components/ui/Timeline";
 import VenuePanel from "@/components/ui/VenuePanel";
@@ -350,7 +351,11 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
   }, [world]);
   // The hologram stands where the Earth meets the sky, as tall as the sky above it
   // allows, and fades as the view closes in. (?holo=0 switches it off.)
+  // It is Panini's animation, played from GIPHY. If that cannot be reached, or the
+  // visitor has asked for less motion, a figure drawn by the page stands in.
   const calm = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const [clipFailed, setClipFailed] = useState(false);
+  const useClip = !calm && !clipFailed && query?.get("holo") !== "drawn";
   const holo = useMemo(() => {
     const h = view.horizon;
     // The celebration has the sky to itself.
@@ -383,9 +388,12 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
       )}
 
       {/* the hologram: standing on the horizon while there is sky to stand in */}
-      {holo && (
+      {holo && (useClip ? (
+        // A little larger than the drawn figure, standing just this side of the horizon.
+        <HologramClip x={holo.x} y={holo.y + holo.height * 0.12} height={holo.height * 1.07} strength={holo.strength} onFail={() => setClipFailed(true)} />
+      ) : (
         <Hologram x={holo.x} y={holo.y} height={holo.height} strength={holo.strength} calm={calm} />
-      )}
+      ))}
 
       {/* depth: darker corners and a little film grain */}
       <div className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 75% 70% at 50% 46%, rgba(4,6,11,0) 55%, rgba(4,6,11,0.72) 100%)" }} />
@@ -492,6 +500,11 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
           <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[10px] tracking-wide text-faint">
             <span>
               Unofficial fan tribute. Not affiliated with Cristiano Ronaldo or any club.{" "}
+              {holo && useClip && (
+                <a href={CLIP_PAGE} target="_blank" rel="noreferrer" className="pointer-events-auto underline-offset-2 hover:underline">
+                  Hologram animation: Panini America, via GIPHY.
+                </a>
+              )}{" "}
               {atPresent && (
                 <span className="text-dim">
                   Latest: No. {world.total}, {longDate(world.goals[world.goals.length - 1].date)}.
