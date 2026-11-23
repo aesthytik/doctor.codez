@@ -15,6 +15,12 @@ export const SITE_URL = (process.env.SITE_URL ?? (vercelDomain ? `https://${verc
 
 export const MAKER = { name: "aesthytik", url: "https://github.com/aesthytik" };
 
+/**
+ * The code that proves to Google Search Console who runs the site. It is public (it is
+ * printed in the page's head) and has to stay there for the site to remain verified.
+ */
+export const GOOGLE_VERIFICATION = process.env.GOOGLE_SITE_VERIFICATION ?? "Qb6ipxGWrDkvZg3bsTSOO_I3FIxXbSwyizqm5dqQyd8";
+
 /** The picture for link previews, drawn by app/og.png/route.tsx. */
 export const OG_IMAGE = { width: 1200, height: 630 };
 export const OG_ALT = `${SITE_NAME}: every Cristiano Ronaldo goal as a point of light on the globe`;

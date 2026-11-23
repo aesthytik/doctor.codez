@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { facts } from "@/lib/data/career";
-import { MAKER, OG_ALT, OG_IMAGE, SITE_NAME, SITE_URL, headline, summary } from "@/lib/site";
+import { GOOGLE_VERIFICATION, MAKER, OG_ALT, OG_IMAGE, SITE_NAME, SITE_URL, headline, summary } from "@/lib/site";
 import "./globals.css";
 
 const sans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     apple: { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
-  // Set these to prove ownership to Google Search Console and Bing Webmaster Tools.
-  verification: { google: process.env.GOOGLE_SITE_VERIFICATION, other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined },
+  // Proof of ownership for Google Search Console and, when set, Bing Webmaster Tools.
+  verification: { google: GOOGLE_VERIFICATION, other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined },
 };
 
 export const viewport: Viewport = {

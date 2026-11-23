@@ -33,7 +33,7 @@ Useful addresses while developing:
 
 <https://a-thousand-lights.aesthytik.dev/>, hosted on Vercel. Every push to `main` is built and published automatically. A push to any other branch gets its own preview address, visible when signed in to Vercel. The site is plain files: nothing runs on a server.
 
-The site's own address is written into its canonical link, sitemap and link previews. On Vercel it is the project's production domain; set `SITE_URL` (for example `https://example.com`) to use another. To prove ownership to Google Search Console or Bing Webmaster Tools, set `GOOGLE_SITE_VERIFICATION` or `BING_SITE_VERIFICATION` to the code they give you and redeploy.
+The site's own address is written into its canonical link, sitemap and link previews. On Vercel it is the project's production domain; set `SITE_URL` (for example `https://example.com`) to use another. The site is verified in Google Search Console by the code in `lib/site.ts`, which must stay (`GOOGLE_SITE_VERIFICATION` overrides it). For Bing Webmaster Tools, set `BING_SITE_VERIFICATION` to the code it gives you and redeploy.
 
 ## How it works
 
