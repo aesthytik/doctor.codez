@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import GlobeCanvas from "@/components/globe/GlobeCanvas";
 import type { GlobeController, Hit } from "@/components/globe/GlobeController";
 import Celebration from "@/components/celebration/Celebration";
@@ -24,6 +24,8 @@ type Props = {
   version: string;
   /** "hold" keeps the goal-1,000 celebration from playing. */
   celebration: "auto" | "hold";
+  /** The career in words (components/About.tsx), opened from the footer. */
+  children?: ReactNode;
 };
 type Phase = "loading" | "intro" | "explore" | "celebrate";
 type Anim = { kind: "intro" | "play" | "arrive"; from: number; to: number; t0: number; dur: number; pulse?: number[] };
@@ -49,7 +51,7 @@ const once = (key: string): boolean => {
 const TEAM_ORDER: TeamKey[] = ["sporting", "manutd", "realmadrid", "juventus", "alnassr", "portugal"];
 const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
-export default function Experience({ goals: builtGoals, venues: builtVenues, version, celebration }: Props) {
+export default function Experience({ goals: builtGoals, venues: builtVenues, version, celebration, children }: Props) {
   // The address bar can ask for a rehearsal (?preview=1000) or a fixed view for screenshots.
   const search = useLocationSearch();
   const query = useMemo(() => (search === null ? null : new URLSearchParams(search)), [search]);
@@ -76,6 +78,7 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
   const [view, setView] = useState<{ zoom: number; bloom: number; horizon: { x: number; y: number } | null }>({ zoom: 1.5, bloom: 0, horizon: null });
   const [team, setTeam] = useState<TeamKey | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [about, setAbout] = useState(false);
   const box = useViewport();
   const touch = useMediaQuery("(hover: none)");
 
@@ -283,6 +286,41 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
     ctrl.current?.flyHome();
   }, []);
 
+  // ---------- the career in words ----------
+  const aboutOpen = about && phase === "explore";
+  const aboutButton = useRef<HTMLButtonElement>(null);
+  const aboutClose = useRef<HTMLButtonElement>(null);
+  const closeAbout = useCallback(() => setAbout(false), []);
+  // Focus goes into the text when it opens and back to its button when it closes.
+  const aboutWasOpen = useRef(false);
+  useEffect(() => {
+    if (aboutOpen) aboutClose.current?.focus();
+    else if (aboutWasOpen.current) aboutButton.current?.focus();
+    aboutWasOpen.current = aboutOpen;
+  }, [aboutOpen]);
+
+  // A stadium or a goal named in the text opens on the globe behind it. (The links are
+  // real addresses, ?venue= and ?goal=, so they also work in a new tab.)
+  const onAboutClick = useCallback(
+    (e: MouseEvent<HTMLElement>) => {
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>("a[data-venue], a[data-goal]");
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const n = Number(a.dataset.goal ?? 0);
+      const point = n ? world.pointByN.get(n) : undefined;
+      const id = point?.venue.id ?? a.dataset.venue;
+      if (!id || !world.venueById.has(id)) return;
+      e.preventDefault();
+      setAbout(false);
+      stopAnim();
+      setTime(lastTime);
+      ctrl.current?.setCursor(world.total);
+      setFocusVenue(id);
+      setPinned(point ? n : null);
+      ctrl.current?.flyToVenue(id);
+    },
+    [world, lastTime, stopAnim],
+  );
+
   useEffect(() => {
     ctrl.current?.setFocus({ venue: focusVenue, goal: pinned ?? listHover });
   }, [focusVenue, pinned, listHover, controller]);
@@ -319,6 +357,8 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
 
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
+      // While the text is open the keys belong to it.
+      if (aboutOpen) return e.key === "Escape" ? closeAbout() : undefined;
       if (e.key === "Escape") return pinned ? setPinned(null) : backToGlobe();
       if (e.key === "ArrowLeft" && pinned) stepGoal(-1);
       if (e.key === "ArrowRight" && pinned) stepGoal(1);
@@ -330,7 +370,7 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
-  }, [pinned, phase, stepGoal, backToGlobe, togglePlay, skipIntro]);
+  }, [pinned, phase, stepGoal, backToGlobe, togglePlay, skipIntro, aboutOpen, closeAbout]);
 
   // ---------- where the floating card goes ----------
   const floating = (hit: Hit, w: number, h: number) => {
@@ -424,14 +464,16 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
       )}
 
       {/* ---------- the interface ---------- */}
-      <div className={`pointer-events-none absolute inset-0 transition-opacity duration-1000 ${hud ? "opacity-100" : "opacity-0"}`} aria-hidden={!hud}>
+      <div className={`pointer-events-none absolute inset-0 transition-opacity duration-1000 ${hud ? "opacity-100" : "opacity-0"}`} aria-hidden={!hud} inert={aboutOpen}>
         <header className="absolute left-4 top-4 max-w-[60vw] sm:left-8 sm:top-7">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.42em] text-gold sm:text-[13px]">A Thousand Lights</div>
-          <p className="mt-1.5 hidden font-serif text-xl italic leading-snug text-dim sm:block">
-            Every Cristiano Ronaldo goal,
-            <br />
-            where it happened.
-          </p>
+          <h1>
+            <span className="block text-[11px] font-semibold uppercase tracking-[0.42em] text-gold sm:text-[13px]">A Thousand Lights</span>{" "}
+            <span className="mt-1.5 hidden font-serif text-xl font-normal italic leading-snug text-dim sm:block">
+              Every Cristiano Ronaldo goal,
+              <br />
+              where it happened.
+            </span>
+          </h1>
           <nav className={`pointer-events-auto mt-4 flex max-w-[420px] flex-wrap gap-1.5 ${hud ? "" : "invisible"}`} aria-label="Show one team">
             <button type="button" onClick={() => setTeam(null)} className={`chip ${team === null ? "chip-on" : ""}`}>
               All
@@ -500,6 +542,11 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
           <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[10px] tracking-wide text-faint">
             <span>
               Unofficial fan tribute. Not affiliated with Cristiano Ronaldo or any club.{" "}
+              {children && (
+                <button ref={aboutButton} type="button" onClick={() => setAbout(true)} aria-haspopup="dialog" className="pointer-events-auto mr-1 text-dim underline underline-offset-2 hover:text-gold">
+                  About the count
+                </button>
+              )}{" "}
               {holo && useClip && (
                 <a href={CLIP_PAGE} target="_blank" rel="noreferrer" className="pointer-events-auto underline-offset-2 hover:underline">
                   Hologram animation: Panini America, via GIPHY.
@@ -526,6 +573,33 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
           </div>
         </footer>
       </div>
+
+      {/* ---------- the career in words: in the page from the start, shown on request ---------- */}
+      {children && (
+        <div hidden={!aboutOpen} className="absolute inset-0 grid place-items-center bg-[rgba(4,6,11,0.74)] p-3 backdrop-blur-sm sm:p-8" onClick={closeAbout}>
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="about-title"
+            className="relative max-h-full w-full max-w-[760px] overflow-y-auto overscroll-contain rounded-2xl border border-line bg-[rgba(8,12,21,0.92)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,241,194,0.06)] sm:p-10"
+            onClick={(e) => {
+              e.stopPropagation();
+              onAboutClick(e);
+            }}
+          >
+            <button
+              ref={aboutClose}
+              type="button"
+              onClick={closeAbout}
+              aria-label="Back to the globe"
+              className="float-right -mr-1 -mt-1 ml-4 grid h-9 w-9 place-items-center rounded-full border border-line text-dim transition hover:border-gold/60 hover:text-gold sm:-mr-3 sm:-mt-3"
+            >
+              ×
+            </button>
+            {children}
+          </section>
+        </div>
+      )}
 
       {phase === "celebrate" && (
         <Celebration

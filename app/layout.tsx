@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { facts } from "@/lib/data/career";
+import { MAKER, OG_ALT, OG_IMAGE, SITE_NAME, SITE_URL, headline, summary } from "@/lib/site";
 import "./globals.css";
 
 const sans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -7,10 +9,31 @@ const mono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 const display = Big_Shoulders({ variable: "--font-display", subsets: ["latin"], axes: ["opsz"] });
 const serif = Instrument_Serif({ variable: "--font-serif", subsets: ["latin"], weight: "400", style: ["normal", "italic"] });
 
+const title = headline(facts);
+const description = summary(facts);
+// The count is part of the picture, so its address changes with the count and link
+// previews cached by other sites pick up the new one.
+const image = { url: `/og.png?n=${facts.total}`, ...OG_IMAGE, alt: OG_ALT, type: "image/png" };
+
 export const metadata: Metadata = {
-  title: "A Thousand Lights — every Cristiano Ronaldo goal, on the map",
-  description:
-    "An unofficial fan tribute: every goal of Cristiano Ronaldo's career as a point of light at the stadium where it was scored, on the road to 1,000.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: `${title} | ${SITE_NAME}`, template: `%s | ${SITE_NAME}` },
+  description,
+  applicationName: SITE_NAME,
+  authors: [{ name: MAKER.name, url: MAKER.url }],
+  creator: MAKER.name,
+  category: "sports",
+  // Every address of the page (?venue=, ?goal=, ?t= and the rest) is the same page.
+  alternates: { canonical: "/" },
+  openGraph: { type: "website", url: "/", siteName: SITE_NAME, title, description, locale: "en_GB", images: [image] },
+  twitter: { card: "summary_large_image", title, description, images: [image] },
+  icons: {
+    icon: { url: "/icon.svg", type: "image/svg+xml", sizes: "any" },
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+  },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
+  // Set these to prove ownership to Google Search Console and Bing Webmaster Tools.
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION, other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined },
 };
 
 export const viewport: Viewport = {

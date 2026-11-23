@@ -33,12 +33,15 @@ Useful addresses while developing:
 
 <https://a-thousand-lights.vercel.app/>, hosted on Vercel. Every push to `main` is built and published automatically. A push to any other branch gets its own preview address, visible when signed in to Vercel. The site is plain files: nothing runs on a server.
 
+The site's own address is written into its canonical link, sitemap and link previews. On Vercel it is the project's production domain; set `SITE_URL` (for example `https://example.com`) to use another. To prove ownership to Google Search Console or Bing Webmaster Tools, set `GOOGLE_SITE_VERIFICATION` or `BING_SITE_VERIFICATION` to the code they give you and redeploy.
+
 ## How it works
 
 - `components/globe/` draws the Earth with MapLibre GL (globe projection) from a world outline shipped with the site, and the lights with deck.gl. Street-level tiles are requested from OpenFreeMap only after someone zooms in, so the opening view and the celebration depend on no outside service.
 - `components/HologramClip.tsx` is the hologram on the horizon: Panini America's animation of the celebration, played straight from GIPHY (never copied into this site) and shown as a blue negative with scan lines. Only the celebration part of the clip is played. `components/Hologram.tsx` is a figure drawn in code that stands in when GIPHY cannot be reached or the visitor has asked for reduced motion.
 - `components/Experience.tsx` holds the interface state: the timeline, the stadium and goal on show, and the celebration.
 - `lib/data/` turns the dataset into what is drawn: per-stadium totals, each goal's place in its stadium's spiral, and the clock behind the timeline.
+- `lib/site.ts`, `lib/data/facts.ts` and `lib/structured-data.ts` are what search engines and link previews read: the title and description (which carry the current count), the schema.org description of the page, and the career in numbers. `components/About.tsx` shows the same numbers to a reader ("About the count" in the footer), so the page says in words what the globe shows in lights. `app/og.png/` draws the link-preview picture at build time; `app/sitemap.ts` and `app/robots.ts` write `sitemap.xml` and `robots.txt`.
 - `lib/live.ts` keeps an open page current. The build publishes a tiny status file (`/live/status.json`); a page asks for it every minute around a match and every ten minutes otherwise, and fetches the new dataset when the version stamp has moved on. That is how a new goal, and the goal-1,000 celebration, reach a page that was left open.
 
 ## The dataset

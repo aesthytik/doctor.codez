@@ -1,11 +1,20 @@
+import About from "@/components/About";
 import Experience from "@/components/Experience";
-import goalsFile from "@/data/goals.json";
 import overrides from "@/data/overrides.json";
-import venuesFile from "@/data/venues.json";
-import { celebrationSetting, forBrowser, versionOf } from "@/lib/data/publish";
+import { facts, published } from "@/lib/data/career";
+import { celebrationSetting, versionOf } from "@/lib/data/publish";
+import { answers, structuredData } from "@/lib/structured-data";
 
 export default function Home() {
-  // Only what the page draws is sent to the browser.
-  const data = forBrowser(goalsFile.goals, venuesFile.venues);
-  return <Experience goals={data.goals} venues={data.venues} version={versionOf(data)} celebration={celebrationSetting(overrides)} />;
+  const faq = answers(facts, overrides.countingRule);
+  return (
+    <>
+      {/* What the page is, for search engines. "<" is escaped so no text can close the tag. */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData(facts, faq)).replace(/</g, "\\u003c") }} />
+      {/* Only what the page draws is sent to the browser. */}
+      <Experience goals={published.goals} venues={published.venues} version={versionOf(published)} celebration={celebrationSetting(overrides)}>
+        <About facts={facts} faq={faq} />
+      </Experience>
+    </>
+  );
 }
