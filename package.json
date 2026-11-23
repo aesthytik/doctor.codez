@@ -1,0 +1,46 @@
+{
+  "name": "a-thousand-lights",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/prepare-assets.ts && next dev",
+    "build": "node scripts/prepare-assets.ts && next build",
+    "start": "npx serve out",
+    "lint": "eslint",
+    "typecheck": "node scripts/prepare-assets.ts && next typegen && tsc --noEmit",
+    "sweep": "node scripts/build-history.ts",
+    "data": "node scripts/build-dataset.ts",
+    "validate": "node scripts/validate.ts",
+    "assets": "node scripts/prepare-assets.ts"
+  },
+  "dependencies": {
+    "@deck.gl/core": "^9.4.1",
+    "@deck.gl/layers": "^9.4.1",
+    "@deck.gl/maplibre": "^9.4.1",
+    "@luma.gl/core": "^9.4.2",
+    "maplibre-gl": "^6.19.0",
+    "motion": "^14.14.0",
+    "next": "16.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/topojson-client": "^3.1.5",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "tailwindcss": "4.3.3",
+    "topojson-client": "^3.1.0",
+    "typescript": "^5",
+    "world-atlas": "^2.0.2"
+  },
+  "packageManager": "pnpm@10.28.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  }
+}

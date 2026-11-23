@@ -1,0 +1,2181 @@
+{
+ "about": "Every stadium he has scored in. Coordinates come from the Wikidata item named in each record or from the matching Wikipedia article. Each position was checked by hand against the stadium's city, and 145 of the 159 were also compared with their Wikipedia article and agree within 300 metres. 'approx' marks a ground whose published position is only precise to the town.",
+ "venues": [
+  {
+   "id": "santiago-bernabeu",
+   "name": "Santiago Bernabéu",
+   "city": "Madrid",
+   "country": "Spain",
+   "lat": 40.45306,
+   "lng": -3.68835,
+   "wikidata": "Q164027",
+   "reviewed": true,
+   "feedIds": [
+    "10630",
+    "1568",
+    "2224",
+    "347",
+    "4326"
+   ],
+   "manualNames": [
+    "Santiago Bernabéu"
+   ]
+  },
+  {
+   "id": "old-trafford",
+   "name": "Old Trafford",
+   "city": "Manchester",
+   "country": "England",
+   "lat": 53.4631,
+   "lng": -2.2914,
+   "wikidata": "Q83457",
+   "reviewed": true,
+   "feedIds": [
+    "250"
+   ]
+  },
+  {
+   "id": "al-awwal-park",
+   "name": "Al-Awwal Park",
+   "city": "Riyadh",
+   "country": "Saudi Arabia",
+   "lat": 24.7292,
+   "lng": 46.6239,
+   "wikidata": "Q20421103",
+   "periodNames": [
+    {
+     "name": "Mrsool Park",
+     "to": "2023-08-31"
+    }
+   ],
+   "reviewed": true,
+   "feedIds": [
+    "10675",
+    "7607"
+   ]
+  },
+  {
+   "id": "juventus-stadium",
+   "name": "Juventus Stadium",
+   "city": "Turin",
+   "country": "Italy",
+   "lat": 45.10959,
+   "lng": 7.64125,
+   "wikidata": "Q62149",
+   "periodNames": [
+    {
+     "name": "Allianz Stadium",
+     "from": "2017-07-01"
+    },
+    {
+     "name": "Juventus Stadium",
+     "to": "2017-06-30"
+    }
+   ],
+   "reviewed": true,
+   "feedIds": [
+    "4600"
+   ]
+  },
+  {
+   "id": "camp-nou",
+   "name": "Camp Nou",
+   "city": "Barcelona",
+   "country": "Spain",
+   "lat": 41.38083,
+   "lng": 2.12278,
+   "wikidata": "Q159848",
+   "reviewed": true,
+   "feedIds": [
+    "1625",
+    "293"
+   ],
+   "manualNames": [
+    "Camp Nou"
+   ]
+  },
+  {
+   "id": "estadio-algarve",
+   "name": "Estádio Algarve",
+   "city": "Faro",
+   "country": "Portugal",
+   "lat": 37.08833,
+   "lng": -7.97472,
+   "wikidata": "Q646151",
+   "reviewed": true,
+   "feedIds": [
+    "1468",
+    "6604"
+   ],
+   "manualNames": [
+    "Estádio Algarve"
+   ]
+  },
+  {
+   "id": "ramon-sanchez-pizjuan",
+   "name": "Ramón Sánchez-Pizjuán",
+   "city": "Seville",
+   "country": "Spain",
+   "lat": 37.38388,
+   "lng": -5.97047,
+   "wikidata": "Q275429",
+   "reviewed": true,
+   "feedIds": [
+    "2222",
+    "812"
+   ]
+  },
+  {
+   "id": "estadio-jose-alvalade",
+   "name": "Estádio José Alvalade",
+   "city": "Lisbon",
+   "country": "Portugal",
+   "lat": 38.76119,
+   "lng": -9.16078,
+   "wikidata": "Q287359",
+   "reviewed": true,
+   "feedIds": [
+    "1472",
+    "2352"
+   ]
+  },
+  {
+   "id": "prince-sultan-bin-abdul-aziz-stadium",
+   "name": "Prince Sultan bin Abdul Aziz Stadium",
+   "city": "Abha",
+   "country": "Saudi Arabia",
+   "lat": 18.3106,
+   "lng": 42.5983,
+   "wikidata": "Q4116876",
+   "reviewed": true,
+   "feedIds": [
+    "9478"
+   ],
+   "manualNames": [
+    "Prince Sultan bin Abdul Aziz Stadium"
+   ]
+  },
+  {
+   "id": "estadio-da-luz",
+   "name": "Estádio da Luz",
+   "city": "Lisbon",
+   "country": "Portugal",
+   "lat": 38.7527,
+   "lng": -9.1847,
+   "wikidata": "Q7875112",
+   "reviewed": true,
+   "feedIds": [
+    "1470"
+   ]
+  },
+  {
+   "id": "vicente-calderon",
+   "name": "Vicente Calderón",
+   "city": "Madrid",
+   "country": "Spain",
+   "lat": 40.4017,
+   "lng": -3.7206,
+   "wikidata": "Q207626",
+   "demolished": true,
+   "reviewed": true,
+   "feedIds": [
+    "1326"
+   ]
+  },
+  {
+   "id": "estadio-do-dragao",
+   "name": "Estádio do Dragão",
+   "city": "Porto",
+   "country": "Portugal",
+   "lat": 41.16176,
+   "lng": -8.58393,
+   "wikidata": "Q271454",
+   "reviewed": true,
+   "feedIds": [
+    "1467"
+   ]
+  },
+  {
+   "id": "rcde-stadium",
+   "name": "RCDE Stadium",
+   "city": "Cornellà de Llobregat",
+   "country": "Spain",
+   "lat": 41.34786,
+   "lng": 2.07567,
+   "wikidata": "Q473223",
+   "reviewed": true,
+   "feedIds": [
+    "4159"
+   ]
+  },
+  {
+   "id": "king-abdullah-sport-city-stadium",
+   "name": "King Abdullah Sport City Stadium",
+   "city": "Buraidah",
+   "country": "Saudi Arabia",
+   "lat": 26.3789,
+   "lng": 43.9478,
+   "wikidata": "Q4119060",
+   "reviewed": true,
+   "feedIds": [
+    "7031"
+   ]
+  },
+  {
+   "id": "mestalla",
+   "name": "Mestalla",
+   "city": "Valencia",
+   "country": "Spain",
+   "lat": 39.47472,
+   "lng": -0.35833,
+   "wikidata": "Q202762",
+   "reviewed": true,
+   "feedIds": [
+    "1635",
+    "2296",
+    "9659"
+   ]
+  },
+  {
+   "id": "estadio-de-la-ceramica",
+   "name": "Estadio de la Cerámica",
+   "city": "Villarreal",
+   "country": "Spain",
+   "lat": 39.9442,
+   "lng": -0.1036,
+   "wikidata": "Q741157",
+   "reviewed": true,
+   "feedIds": [
+    "1630",
+    "55"
+   ]
+  },
+  {
+   "id": "coliseum-alfonso-perez",
+   "name": "Coliseum Alfonso Pérez",
+   "city": "Getafe",
+   "country": "Spain",
+   "lat": 40.32556,
+   "lng": -3.71472,
+   "wikidata": "Q929109",
+   "reviewed": true,
+   "feedIds": [
+    "4154"
+   ]
+  },
+  {
+   "id": "stadio-olimpico",
+   "name": "Stadio Olimpico",
+   "city": "Rome",
+   "country": "Italy",
+   "lat": 41.93389,
+   "lng": 12.45472,
+   "wikidata": "Q159884",
+   "reviewed": true,
+   "feedIds": [
+    "3573",
+    "8"
+   ]
+  },
+  {
+   "id": "la-rosaleda",
+   "name": "La Rosaleda",
+   "city": "Málaga",
+   "country": "Spain",
+   "lat": 36.73409,
+   "lng": -4.42642,
+   "wikidata": "Q695879",
+   "reviewed": true,
+   "feedIds": [
+    "10638",
+    "1627",
+    "33"
+   ]
+  },
+  {
+   "id": "allianz-arena",
+   "name": "Allianz Arena",
+   "city": "Munich",
+   "country": "Germany",
+   "lat": 48.21878,
+   "lng": 11.62475,
+   "wikidata": "Q127429",
+   "reviewed": true,
+   "feedIds": [
+    "1935"
+   ]
+  },
+  {
+   "id": "prince-abdullah-bin-jalawi-stadium",
+   "name": "Prince Abdullah bin Jalawi Stadium",
+   "city": "Al-Hofuf",
+   "country": "Saudi Arabia",
+   "lat": 25.3058,
+   "lng": 49.6128,
+   "wikidata": "Q4116944",
+   "reviewed": true,
+   "feedIds": [
+    "7054"
+   ]
+  },
+  {
+   "id": "balaidos",
+   "name": "Balaídos",
+   "city": "Vigo",
+   "country": "Spain",
+   "lat": 42.21186,
+   "lng": -8.74033,
+   "wikidata": "Q1326578",
+   "reviewed": true,
+   "feedIds": [
+    "10627",
+    "1771",
+    "2297"
+   ]
+  },
+  {
+   "id": "johan-cruyff-arena",
+   "name": "Johan Cruyff Arena",
+   "city": "Amsterdam",
+   "country": "Netherlands",
+   "lat": 52.31417,
+   "lng": 4.94194,
+   "wikidata": "Q207109",
+   "periodNames": [
+    {
+     "name": "Amsterdam Arena",
+     "to": "2018-04-24"
+    }
+   ],
+   "reviewed": true,
+   "feedIds": [
+    "50"
+   ]
+  },
+  {
+   "id": "estadio-municipal-de-aveiro",
+   "name": "Estádio Municipal de Aveiro",
+   "city": "Aveiro",
+   "country": "Portugal",
+   "lat": 40.6475,
+   "lng": -8.59361,
+   "wikidata": "Q1032105",
+   "reviewed": true,
+   "feedIds": [
+    "4211"
+   ]
+  },
+  {
+   "id": "san-siro",
+   "name": "San Siro",
+   "city": "Milan",
+   "country": "Italy",
+   "lat": 45.47806,
+   "lng": 9.12389,
+   "wikidata": "Q133566",
+   "reviewed": true,
+   "feedIds": [
+    "1642"
+   ]
+  },
+  {
+   "id": "king-abdul-aziz-stadium",
+   "name": "King Abdul Aziz Stadium",
+   "city": "Mecca",
+   "country": "Saudi Arabia",
+   "lat": 21.4855,
+   "lng": 39.9737,
+   "wikidata": "Q1129161",
+   "reviewed": true,
+   "feedIds": [
+    "9481"
+   ]
+  },
+  {
+   "id": "vazgen-sargsyan-republican-stadium",
+   "name": "Vazgen Sargsyan Republican Stadium",
+   "city": "Yerevan",
+   "country": "Armenia",
+   "lat": 40.1719,
+   "lng": 44.5258,
+   "wikidata": "Q1459459",
+   "reviewed": true,
+   "feedIds": [
+    "1646",
+    "4471"
+   ]
+  },
+  {
+   "id": "villa-park",
+   "name": "Villa Park",
+   "city": "Birmingham",
+   "country": "England",
+   "lat": 52.50917,
+   "lng": -1.88472,
+   "wikidata": "Q175339",
+   "reviewed": true,
+   "feedIds": [
+    "307"
+   ]
+  },
+  {
+   "id": "millennium-stadium",
+   "name": "Millennium Stadium",
+   "city": "Cardiff",
+   "country": "Wales",
+   "lat": 51.47806,
+   "lng": -3.1825,
+   "wikidata": "Q204496",
+   "periodNames": [],
+   "reviewed": true,
+   "feedIds": [
+    "181"
+   ]
+  },
+  {
+   "id": "estadio-de-vallecas",
+   "name": "Estadio de Vallecas",
+   "city": "Madrid",
+   "country": "Spain",
+   "lat": 40.39194,
+   "lng": -3.65896,
+   "wikidata": "Q983806",
+   "reviewed": true,
+   "feedIds": [
+    "4645"
+   ]
+  },
+  {
+   "id": "westfalenstadion",
+   "name": "Westfalenstadion",
+   "city": "Dortmund",
+   "country": "Germany",
+   "lat": 51.4925,
+   "lng": 7.4517,
+   "wikidata": "Q150928",
+   "reviewed": true,
+   "feedIds": [
+    "2315"
+   ]
+  },
+  {
+   "id": "rams-park",
+   "name": "Rams Park",
+   "city": "Istanbul",
+   "country": "Turkey",
+   "lat": 41.10339,
+   "lng": 28.991,
+   "wikidata": "Q81492",
+   "periodNames": [
+    {
+     "name": "Türk Telekom Arena",
+     "to": "2021-12-31"
+    }
+   ],
+   "reviewed": true,
+   "feedIds": [
+    "4987"
+   ]
+  },
+  {
+   "id": "strawberry-arena",
+   "name": "Strawberry Arena",
+   "city": "Solna",
+   "country": "Sweden",
+   "lat": 59.3725,
+   "lng": 18,
+   "wikidata": "Q1138684",
+   "periodNames": [
+    {
+     "name": "Friends Arena",
+     "to": "2024-07-11"
+    }
+   ],
+   "reviewed": true,
+   "feedIds": [
+    "4982"
+   ]
+  },
+  {
+   "id": "puskas-arena",
+   "name": "Puskás Aréna",
+   "city": "Budapest",
+   "country": "Hungary",
+   "lat": 47.50304,
+   "lng": 19.09793,
+   "wikidata": "Q39069592",
+   "reviewed": true,
+   "feedIds": [
+    "8121"
+   ]
+  },
+  {
+   "id": "la-romareda",
+   "name": "La Romareda",
+   "city": "Zaragoza",
+   "country": "Spain",
+   "lat": 41.63659,
+   "lng": -0.90182,
+   "wikidata": "Q17484",
+   "reviewed": true,
+   "feedIds": [
+    "1634",
+    "4158"
+   ]
+  },
+  {
+   "id": "benito-villamarin",
+   "name": "Benito Villamarín",
+   "city": "Seville",
+   "country": "Spain",
+   "lat": 37.3564,
+   "lng": -5.98161,
+   "wikidata": "Q126844",
+   "reviewed": true,
+   "feedIds": [
+    "346",
+    "4408"
+   ]
+  },
+  {
+   "id": "ciutat-de-valencia",
+   "name": "Ciutat de València",
+   "city": "Valencia",
+   "country": "Spain",
+   "lat": 39.49472,
+   "lng": -0.36417,
+   "wikidata": "Q1122715",
+   "reviewed": true,
+   "feedIds": [
+    "10018",
+    "1628"
+   ]
+  },
+  {
+   "id": "international-stadium-yokohama",
+   "name": "International Stadium Yokohama",
+   "city": "Yokohama",
+   "country": "Japan",
+   "lat": 35.51004,
+   "lng": 139.60625,
+   "wikidata": "Q116601",
+   "reviewed": true,
+   "feedIds": [
+    "1941",
+    "3957"
+   ]
+  },
+  {
+   "id": "son-moix",
+   "name": "Son Moix",
+   "city": "Palma",
+   "country": "Spain",
+   "lat": 39.59,
+   "lng": 2.63,
+   "wikidata": "Q276163",
+   "reviewed": true,
+   "feedIds": [
+    "1631",
+    "4264"
+   ]
+  },
+  {
+   "id": "riazor",
+   "name": "Riazor",
+   "city": "A Coruña",
+   "country": "Spain",
+   "lat": 43.36867,
+   "lng": -8.41737,
+   "wikidata": "Q22130",
+   "reviewed": true,
+   "feedIds": [
+    "10626",
+    "1633"
+   ]
+  },
+  {
+   "id": "ipurua",
+   "name": "Ipurua",
+   "city": "Eibar",
+   "country": "Spain",
+   "lat": 43.1817,
+   "lng": -2.4758,
+   "wikidata": "Q3320428",
+   "reviewed": true,
+   "feedIds": [
+    "10637",
+    "5111"
+   ]
+  },
+  {
+   "id": "king-abdullah-sports-city",
+   "name": "King Abdullah Sports City",
+   "city": "Jeddah",
+   "country": "Saudi Arabia",
+   "lat": 21.7626,
+   "lng": 39.1651,
+   "wikidata": "Q6411211",
+   "reviewed": true,
+   "feedIds": [
+    "10659",
+    "6755"
+   ]
+  },
+  {
+   "id": "estadio-dr-magalhaes-pessoa",
+   "name": "Estádio Dr. Magalhães Pessoa",
+   "city": "Leiria",
+   "country": "Portugal",
+   "lat": 39.74861,
+   "lng": -8.81306,
+   "wikidata": "Q1056864",
+   "reviewed": true,
+   "feedIds": [
+    "1406",
+    "4812",
+    "5592"
+   ]
+  },
+  {
+   "id": "emirates-stadium",
+   "name": "Emirates Stadium",
+   "city": "London",
+   "country": "England",
+   "lat": 51.555,
+   "lng": -0.10833,
+   "wikidata": "Q163995",
+   "reviewed": true,
+   "feedIds": [
+    "2267"
+   ]
+  },
+  {
+   "id": "gsp-stadium",
+   "name": "GSP Stadium",
+   "city": "Nicosia",
+   "country": "Cyprus",
+   "lat": 35.1144,
+   "lng": 33.3628,
+   "wikidata": "Q592491",
+   "reviewed": true,
+   "feedIds": [
+    "1606"
+   ]
+  },
+  {
+   "id": "lff-stadium",
+   "name": "LFF Stadium",
+   "city": "Vilnius",
+   "country": "Lithuania",
+   "lat": 54.6685,
+   "lng": 25.2947,
+   "wikidata": "Q965566",
+   "reviewed": true,
+   "feedIds": [
+    "5131"
+   ]
+  },
+  {
+   "id": "stadio-luigi-ferraris",
+   "name": "Stadio Luigi Ferraris",
+   "city": "Genoa",
+   "country": "Italy",
+   "lat": 44.41643,
+   "lng": 8.95243,
+   "wikidata": "Q271568",
+   "reviewed": true,
+   "feedIds": [
+    "2590"
+   ]
+  },
+  {
+   "id": "al-shabab-club-stadium",
+   "name": "Al-Shabab Club Stadium",
+   "city": "Riyadh",
+   "country": "Saudi Arabia",
+   "lat": 24.80311,
+   "lng": 46.62879,
+   "wikidata": "Q80168938",
+   "reviewed": true,
+   "feedIds": [
+    "9628"
+   ]
+  },
+  {
+   "id": "estadio-jose-alvalade-1956-2003",
+   "name": "Estádio José Alvalade (1956–2003)",
+   "city": "Lisbon",
+   "country": "Portugal",
+   "lat": 38.76282,
+   "lng": -9.15862,
+   "wikidata": "Q3059094",
+   "demolished": true,
+   "reviewed": true,
+   "manualNames": [
+    "Estádio José Alvalade (1956)"
+   ]
+  },
+  {
+   "id": "king-fahd-sports-city-stadium",
+   "name": "King Fahd Sports City Stadium",
+   "city": "Taif",
+   "country": "Saudi Arabia",
+   "lat": 21.436,
+   "lng": 40.4804,
+   "wikidata": "Q6411564",
+   "reviewed": true,
+   "manualNames": [
+    "King Fahd Stadium"
+   ]
+  },
+  {
+   "id": "el-sadar",
+   "name": "El Sadar",
+   "city": "Pamplona",
+   "country": "Spain",
+   "lat": 42.79667,
+   "lng": -1.63694,
+   "wikidata": "Q735783",
+   "reviewed": true,
+   "feedIds": [
+    "1565",
+    "327"
+   ]
+  },
+  {
+   "id": "san-mames-1913-2013",
+   "name": "San Mamés (1913–2013)",
+   "city": "Bilbao",
+   "country": "Spain",
+   "lat": 43.2635,
+   "lng": -2.9484,
+   "wikidata": "Q244592",
+   "demolished": true,
+   "reviewed": true,
+   "feedIds": [
+    "1636",
+    "2218"
+   ]
+  },
+  {
+   "id": "stade-josy-barthel",
+   "name": "Stade Josy Barthel",
+   "city": "Luxembourg City",
+   "country": "Luxembourg",
+   "lat": 49.61563,
+   "lng": 6.10966,
+   "wikidata": "Q945298",
+   "reviewed": true,
+   "feedIds": [
+    "1239",
+    "4798"
+   ]
+  },
+  {
+   "id": "estadio-de-los-juegos-mediterraneos",
+   "name": "Estadio de los Juegos Mediterráneos",
+   "city": "Almería",
+   "country": "Spain",
+   "lat": 36.84,
+   "lng": -2.43528,
+   "wikidata": "Q1130617",
+   "reviewed": true,
+   "feedIds": [
+    "3024",
+    "4152"
+   ]
+  },
+  {
+   "id": "estadio-do-bessa",
+   "name": "Estádio do Bessa",
+   "city": "Porto",
+   "country": "Portugal",
+   "lat": 41.16222,
+   "lng": -8.64278,
+   "wikidata": "Q1058494",
+   "reviewed": true,
+   "feedIds": [
+    "5915"
+   ],
+   "manualNames": [
+    "Estádio do Bessa"
+   ]
+  },
+  {
+   "id": "riverside-stadium",
+   "name": "Riverside Stadium",
+   "city": "Middlesbrough",
+   "country": "England",
+   "lat": 54.5783,
+   "lng": -1.2169,
+   "wikidata": "Q822886",
+   "reviewed": true,
+   "feedIds": [
+    "193"
+   ]
+  },
+  {
+   "id": "olimpiyskiy",
+   "name": "Olimpiyskiy",
+   "city": "Kyiv",
+   "country": "Ukraine",
+   "lat": 50.4333,
+   "lng": 30.5219,
+   "wikidata": "Q183529",
+   "reviewed": true,
+   "feedIds": [
+    "2356"
+   ]
+  },
+  {
+   "id": "luzhniki-stadium",
+   "name": "Luzhniki Stadium",
+   "city": "Moscow",
+   "country": "Russia",
+   "lat": 55.71583,
+   "lng": 37.55361,
+   "wikidata": "Q202163",
+   "reviewed": true,
+   "feedIds": [
+    "1224"
+   ]
+  },
+  {
+   "id": "windsor-park",
+   "name": "Windsor Park",
+   "city": "Belfast",
+   "country": "Northern Ireland",
+   "lat": 54.5825,
+   "lng": -5.955,
+   "wikidata": "Q1049601",
+   "reviewed": true,
+   "feedIds": [
+    "1277"
+   ]
+  },
+  {
+   "id": "martinez-valero",
+   "name": "Martínez Valero",
+   "city": "Elche",
+   "country": "Spain",
+   "lat": 38.26694,
+   "lng": -0.66333,
+   "wikidata": "Q953600",
+   "reviewed": true,
+   "feedIds": [
+    "4016"
+   ]
+  },
+  {
+   "id": "veltins-arena",
+   "name": "Veltins-Arena",
+   "city": "Gelsenkirchen",
+   "country": "Germany",
+   "lat": 51.5545,
+   "lng": 7.06759,
+   "wikidata": "Q150961",
+   "reviewed": true,
+   "feedIds": [
+    "1791"
+   ]
+  },
+  {
+   "id": "parc-olympique-lyonnais",
+   "name": "Parc Olympique Lyonnais",
+   "city": "Décines-Charpieu",
+   "country": "France",
+   "lat": 45.76522,
+   "lng": 4.98213,
+   "wikidata": "Q8507",
+   "reviewed": true,
+   "feedIds": [
+    "6499"
+   ]
+  },
+  {
+   "id": "mendizorrotza",
+   "name": "Mendizorrotza",
+   "city": "Vitoria-Gasteiz",
+   "country": "Spain",
+   "lat": 42.83711,
+   "lng": -2.68804,
+   "wikidata": "Q1369390",
+   "reviewed": true,
+   "feedIds": [
+    "1772"
+   ]
+  },
+  {
+   "id": "fisht-olympic-stadium",
+   "name": "Fisht Olympic Stadium",
+   "city": "Sochi",
+   "country": "Russia",
+   "lat": 43.40177,
+   "lng": 39.95586,
+   "wikidata": "Q1149601",
+   "reviewed": true,
+   "feedIds": [
+    "6930"
+   ]
+  },
+  {
+   "id": "stadio-friuli",
+   "name": "Stadio Friuli",
+   "city": "Udine",
+   "country": "Italy",
+   "lat": 46.0816,
+   "lng": 13.2001,
+   "wikidata": "Q640031",
+   "reviewed": true,
+   "feedIds": [
+    "1790"
+   ]
+  },
+  {
+   "id": "stadio-atleti-azzurri-ditalia",
+   "name": "Stadio Atleti Azzurri d'Italia",
+   "city": "Bergamo",
+   "country": "Italy",
+   "lat": 45.70889,
+   "lng": 9.68083,
+   "wikidata": "Q780526",
+   "reviewed": true,
+   "feedIds": [
+    "4253"
+   ]
+  },
+  {
+   "id": "mapei-stadium",
+   "name": "Mapei Stadium",
+   "city": "Reggio Emilia",
+   "country": "Italy",
+   "lat": 44.71472,
+   "lng": 10.64972,
+   "wikidata": "Q1887221",
+   "reviewed": true,
+   "feedIds": [
+    "5275"
+   ]
+  },
+  {
+   "id": "unipol-domus",
+   "name": "Unipol Domus",
+   "city": "Cagliari",
+   "country": "Italy",
+   "lat": 39.19969,
+   "lng": 9.13742,
+   "wikidata": "Q30880646",
+   "reviewed": true,
+   "feedIds": [
+    "7400"
+   ]
+  },
+  {
+   "id": "prince-abdullah-al-faisal-stadium",
+   "name": "Prince Abdullah Al-Faisal Stadium",
+   "city": "Jeddah",
+   "country": "Saudi Arabia",
+   "lat": 21.4466,
+   "lng": 39.2517,
+   "wikidata": "Q3245092",
+   "reviewed": true,
+   "feedIds": [
+    "9097"
+   ]
+  },
+  {
+   "id": "kingdom-arena",
+   "name": "Kingdom Arena",
+   "city": "Riyadh",
+   "country": "Saudi Arabia",
+   "lat": 24.77817,
+   "lng": 46.60531,
+   "wikidata": "Q123412407",
+   "reviewed": true,
+   "feedIds": [
+    "9864"
+   ]
+  },
+  {
+   "id": "st-james-park",
+   "name": "St James' Park",
+   "city": "Newcastle upon Tyne",
+   "country": "England",
+   "lat": 54.97556,
+   "lng": -1.62167,
+   "wikidata": "Q191774",
+   "reviewed": true,
+   "feedIds": [
+    "152",
+    "308"
+   ]
+  },
+  {
+   "id": "parken",
+   "name": "Parken",
+   "city": "Copenhagen",
+   "country": "Denmark",
+   "lat": 55.70247,
+   "lng": 12.5722,
+   "wikidata": "Q33003",
+   "reviewed": true,
+   "feedIds": [
+    "1663",
+    "2209"
+   ]
+  },
+  {
+   "id": "stade-de-geneve",
+   "name": "Stade de Genève",
+   "city": "Geneva",
+   "country": "Switzerland",
+   "lat": 46.17778,
+   "lng": 6.1275,
+   "wikidata": "Q215295",
+   "reviewed": true,
+   "feedIds": [
+    "1883",
+    "4086"
+   ],
+   "manualNames": [
+    "Stade de Genève"
+   ]
+  },
+  {
+   "id": "st-andrews",
+   "name": "St Andrew's",
+   "city": "Birmingham",
+   "country": "England",
+   "lat": 52.4757,
+   "lng": -1.86819,
+   "wikidata": "Q819179",
+   "reviewed": true,
+   "feedIds": [
+    "248"
+   ]
+  },
+  {
+   "id": "highbury",
+   "name": "Highbury",
+   "city": "London",
+   "country": "England",
+   "lat": 51.5577,
+   "lng": -0.10297,
+   "wikidata": "Q205309",
+   "demolished": true,
+   "reviewed": true,
+   "feedIds": [
+    "267"
+   ]
+  },
+  {
+   "id": "goodison-park",
+   "name": "Goodison Park",
+   "city": "Liverpool",
+   "country": "England",
+   "lat": 53.43889,
+   "lng": -2.96639,
+   "wikidata": "Q968420",
+   "reviewed": true,
+   "feedIds": [
+    "253"
+   ]
+  },
+  {
+   "id": "fratton-park",
+   "name": "Fratton Park",
+   "city": "Portsmouth",
+   "country": "England",
+   "lat": 50.79639,
+   "lng": -1.06389,
+   "wikidata": "Q619531",
+   "reviewed": true,
+   "feedIds": [
+    "200"
+   ]
+  },
+  {
+   "id": "merkur-spiel-arena",
+   "name": "Merkur Spiel-Arena",
+   "city": "Düsseldorf",
+   "country": "Germany",
+   "lat": 51.26154,
+   "lng": 6.73308,
+   "wikidata": "Q155351",
+   "reviewed": true,
+   "feedIds": [
+    "1615"
+   ]
+  },
+  {
+   "id": "dw-stadium",
+   "name": "DW Stadium",
+   "city": "Wigan",
+   "country": "England",
+   "lat": 53.5478,
+   "lng": -2.6539,
+   "wikidata": "Q494388",
+   "reviewed": true,
+   "feedIds": [
+    "147"
+   ]
+  },
+  {
+   "id": "madejski-stadium",
+   "name": "Madejski Stadium",
+   "city": "Reading",
+   "country": "England",
+   "lat": 51.42222,
+   "lng": -0.98278,
+   "wikidata": "Q31656",
+   "reviewed": true,
+   "feedIds": [
+    "213"
+   ]
+  },
+  {
+   "id": "white-hart-lane",
+   "name": "White Hart Lane",
+   "city": "London",
+   "country": "England",
+   "lat": 51.60333,
+   "lng": -0.06583,
+   "wikidata": "Q186425",
+   "demolished": true,
+   "reviewed": true,
+   "feedIds": [
+    "195"
+   ]
+  },
+  {
+   "id": "pride-park",
+   "name": "Pride Park",
+   "city": "Derby",
+   "country": "England",
+   "lat": 52.915,
+   "lng": -1.44722,
+   "wikidata": "Q201612",
+   "reviewed": true,
+   "feedIds": [
+    "189"
+   ]
+  },
+  {
+   "id": "the-hawthorns",
+   "name": "The Hawthorns",
+   "city": "West Bromwich",
+   "country": "England",
+   "lat": 52.50917,
+   "lng": -1.96389,
+   "wikidata": "Q31678",
+   "reviewed": true,
+   "feedIds": [
+    "204"
+   ]
+  },
+  {
+   "id": "letzigrund",
+   "name": "Letzigrund",
+   "city": "Zürich",
+   "country": "Switzerland",
+   "lat": 47.38279,
+   "lng": 8.5038,
+   "wikidata": "Q207623",
+   "reviewed": true,
+   "feedIds": [
+    "3939"
+   ]
+  },
+  {
+   "id": "stade-velodrome",
+   "name": "Stade Vélodrome",
+   "city": "Marseille",
+   "country": "France",
+   "lat": 43.26924,
+   "lng": 5.39491,
+   "wikidata": "Q202150",
+   "reviewed": true,
+   "feedIds": [
+    "2333"
+   ]
+  },
+  {
+   "id": "estadio-municipal-de-chapin",
+   "name": "Estadio Municipal de Chapín",
+   "city": "Jerez de la Frontera",
+   "country": "Spain",
+   "lat": 36.68917,
+   "lng": -6.12028,
+   "wikidata": "Q1369475",
+   "reviewed": true,
+   "feedIds": [
+    "4150"
+   ]
+  },
+  {
+   "id": "jose-rico-perez",
+   "name": "José Rico Pérez",
+   "city": "Alicante",
+   "country": "Spain",
+   "lat": 38.35722,
+   "lng": -0.4925,
+   "wikidata": "Q945070",
+   "reviewed": true,
+   "feedIds": [
+    "4028"
+   ]
+  },
+  {
+   "id": "stade-de-gerland",
+   "name": "Stade de Gerland",
+   "city": "Lyon",
+   "country": "France",
+   "lat": 45.72377,
+   "lng": 4.83225,
+   "wikidata": "Q1980",
+   "reviewed": true,
+   "feedIds": [
+    "1643"
+   ]
+  },
+  {
+   "id": "nuevo-los-carmenes",
+   "name": "Nuevo Los Cármenes",
+   "city": "Granada",
+   "country": "Spain",
+   "lat": 37.15297,
+   "lng": -3.59574,
+   "wikidata": "Q574565",
+   "reviewed": true,
+   "feedIds": [
+    "4207"
+   ]
+  },
+  {
+   "id": "metalist-stadium",
+   "name": "Metalist Stadium",
+   "city": "Kharkiv",
+   "country": "Ukraine",
+   "lat": 49.98086,
+   "lng": 36.2617,
+   "wikidata": "Q3585",
+   "reviewed": true,
+   "feedIds": [
+    "4827"
+   ]
+  },
+  {
+   "id": "national-stadium",
+   "name": "National Stadium",
+   "city": "Warsaw",
+   "country": "Poland",
+   "lat": 52.23944,
+   "lng": 21.04556,
+   "wikidata": "Q179693",
+   "reviewed": true,
+   "feedIds": [
+    "4785"
+   ]
+  },
+  {
+   "id": "cardiff-city-stadium",
+   "name": "Cardiff City Stadium",
+   "city": "Cardiff",
+   "country": "Wales",
+   "lat": 51.47278,
+   "lng": -3.20306,
+   "wikidata": "Q867902",
+   "reviewed": true,
+   "feedIds": [
+    "3893"
+   ]
+  },
+  {
+   "id": "eleda-stadion",
+   "name": "Eleda Stadion",
+   "city": "Malmö",
+   "country": "Sweden",
+   "lat": 55.58361,
+   "lng": 12.98778,
+   "wikidata": "Q867234",
+   "reviewed": true,
+   "feedIds": [
+    "4277"
+   ],
+   "periodNames": [
+    {
+     "name": "Swedbank Stadion",
+     "to": "2017-12-31"
+    }
+   ]
+  },
+  {
+   "id": "arena-lviv",
+   "name": "Arena Lviv",
+   "city": "Lviv",
+   "country": "Ukraine",
+   "lat": 49.77528,
+   "lng": 24.02778,
+   "wikidata": "Q215399",
+   "reviewed": true,
+   "feedIds": [
+    "4703"
+   ]
+  },
+  {
+   "id": "skonto-stadium",
+   "name": "Skonto Stadium",
+   "city": "Riga",
+   "country": "Latvia",
+   "lat": 56.96137,
+   "lng": 24.11641,
+   "wikidata": "Q1474452",
+   "reviewed": true,
+   "feedIds": [
+    "5088"
+   ]
+  },
+  {
+   "id": "zayed-sports-city-stadium",
+   "name": "Zayed Sports City Stadium",
+   "city": "Abu Dhabi",
+   "country": "United Arab Emirates",
+   "lat": 24.41609,
+   "lng": 54.45359,
+   "wikidata": "Q167831",
+   "reviewed": true,
+   "feedIds": [
+    "3988"
+   ]
+  },
+  {
+   "id": "stadio-carlo-castellani",
+   "name": "Stadio Carlo Castellani",
+   "city": "Empoli",
+   "country": "Italy",
+   "lat": 43.72639,
+   "lng": 10.955,
+   "wikidata": "Q94633",
+   "reviewed": true,
+   "feedIds": [
+    "2591"
+   ]
+  },
+  {
+   "id": "stadio-olimpico-grande-torino",
+   "name": "Stadio Olimpico Grande Torino",
+   "city": "Turin",
+   "country": "Italy",
+   "lat": 45.04167,
+   "lng": 7.65,
+   "wikidata": "Q214629",
+   "reviewed": true,
+   "feedIds": [
+    "2599"
+   ]
+  },
+  {
+   "id": "stadio-marcantonio-bentegodi",
+   "name": "Stadio Marcantonio Bentegodi",
+   "city": "Verona",
+   "country": "Italy",
+   "lat": 45.43536,
+   "lng": 10.96865,
+   "wikidata": "Q737093",
+   "reviewed": true,
+   "feedIds": [
+    "2592"
+   ]
+  },
+  {
+   "id": "stadio-dino-manuzzi",
+   "name": "Stadio Dino Manuzzi",
+   "city": "Cesena",
+   "country": "Italy",
+   "lat": 44.14056,
+   "lng": 12.26194,
+   "wikidata": "Q94625",
+   "reviewed": true,
+   "feedIds": [
+    "2747"
+   ]
+  },
+  {
+   "id": "stadio-ennio-tardini",
+   "name": "Stadio Ennio Tardini",
+   "city": "Parma",
+   "country": "Italy",
+   "lat": 44.79492,
+   "lng": 10.33844,
+   "wikidata": "Q610546",
+   "reviewed": true,
+   "feedIds": [
+    "2594"
+   ]
+  },
+  {
+   "id": "stade-de-luxembourg",
+   "name": "Stade de Luxembourg",
+   "city": "Luxembourg City",
+   "country": "Luxembourg",
+   "lat": 49.57714,
+   "lng": 6.11573,
+   "wikidata": "Q25384178",
+   "reviewed": true,
+   "feedIds": [
+    "8813"
+   ]
+  },
+  {
+   "id": "prince-abdul-aziz-bin-musaed-stadium",
+   "name": "Prince Abdul Aziz bin Musa'ed Stadium",
+   "city": "Ha'il",
+   "country": "Saudi Arabia",
+   "lat": 27.504,
+   "lng": 41.6976,
+   "wikidata": "Q4120100",
+   "reviewed": true,
+   "feedIds": [
+    "9480"
+   ]
+  },
+  {
+   "id": "bilino-polje",
+   "name": "Bilino Polje",
+   "city": "Zenica",
+   "country": "Bosnia and Herzegovina",
+   "lat": 44.20575,
+   "lng": 17.90708,
+   "wikidata": "Q861838",
+   "reviewed": true,
+   "feedIds": [
+    "4432"
+   ]
+  },
+  {
+   "id": "prince-faisal-bin-fahd-stadium",
+   "name": "Prince Faisal bin Fahd Stadium",
+   "city": "Riyadh",
+   "country": "Saudi Arabia",
+   "lat": 24.6626,
+   "lng": 46.73975,
+   "wikidata": "Q3273652",
+   "reviewed": true,
+   "feedIds": [
+    "6756"
+   ]
+  },
+  {
+   "id": "prince-hathloul-bin-abdul-aziz-sport-city-stadium",
+   "name": "Prince Hathloul bin Abdul Aziz Sport City Stadium",
+   "city": "Najran",
+   "country": "Saudi Arabia",
+   "lat": 17.65744,
+   "lng": 44.47661,
+   "wikidata": "Q122226943",
+   "reviewed": true,
+   "feedIds": [
+    "9631"
+   ]
+  },
+  {
+   "id": "al-bayt-stadium",
+   "name": "Al Bayt Stadium",
+   "city": "Al Khor",
+   "country": "Qatar",
+   "lat": 25.65222,
+   "lng": 51.48778,
+   "wikidata": "Q1050220",
+   "reviewed": true,
+   "feedIds": [
+    "9091"
+   ]
+  },
+  {
+   "id": "prince-mohamed-bin-fahd-stadium",
+   "name": "Prince Mohamed bin Fahd Stadium",
+   "city": "Dammam",
+   "country": "Saudi Arabia",
+   "lat": 26.4272,
+   "lng": 50.1141,
+   "wikidata": "Q2650633",
+   "reviewed": true,
+   "feedIds": [
+    "6849"
+   ]
+  },
+  {
+   "id": "nrg-stadium",
+   "name": "NRG Stadium",
+   "city": "Houston",
+   "country": "United States",
+   "lat": 29.68472,
+   "lng": -95.41083,
+   "wikidata": "Q1058864",
+   "reviewed": true,
+   "feedIds": [
+    "6262"
+   ]
+  },
+  {
+   "id": "laugardalsvollur",
+   "name": "Laugardalsvöllur",
+   "city": "Reykjavík",
+   "country": "Iceland",
+   "lat": 64.14356,
+   "lng": -21.87897,
+   "wikidata": "Q151212",
+   "reviewed": true,
+   "feedIds": [
+    "1668",
+    "5091"
+   ]
+  },
+  {
+   "id": "al-ettifaq-club-stadium",
+   "name": "Al-Ettifaq Club Stadium",
+   "city": "Dammam",
+   "country": "Saudi Arabia",
+   "lat": 26.35057,
+   "lng": 50.18114,
+   "wikidata": "Q126391645",
+   "reviewed": true,
+   "feedIds": [
+    "10361",
+    "9766"
+   ]
+  },
+  {
+   "id": "st-marys-stadium",
+   "name": "St Mary's Stadium",
+   "city": "Southampton",
+   "country": "England",
+   "lat": 50.90583,
+   "lng": -1.39111,
+   "wikidata": "Q567339",
+   "reviewed": true,
+   "feedIds": [
+    "303"
+   ]
+  },
+  {
+   "id": "a-le-coq-arena",
+   "name": "A. Le Coq Arena",
+   "city": "Tallinn",
+   "country": "Estonia",
+   "lat": 59.42129,
+   "lng": 24.73205,
+   "wikidata": "Q278923",
+   "reviewed": true,
+   "feedIds": [
+    "1647"
+   ]
+  },
+  {
+   "id": "waldstadion",
+   "name": "Waldstadion",
+   "city": "Frankfurt",
+   "country": "Germany",
+   "lat": 50.06861,
+   "lng": 8.64528,
+   "wikidata": "Q157273",
+   "reviewed": true,
+   "feedIds": [
+    "20"
+   ]
+  },
+  {
+   "id": "reebok-stadium",
+   "name": "Reebok Stadium",
+   "city": "Bolton",
+   "country": "England",
+   "lat": 53.58056,
+   "lng": -2.53556,
+   "wikidata": "Q242772",
+   "reviewed": true,
+   "feedIds": [
+    "256"
+   ]
+  },
+  {
+   "id": "craven-cottage",
+   "name": "Craven Cottage",
+   "city": "London",
+   "country": "England",
+   "lat": 51.475,
+   "lng": -0.22167,
+   "wikidata": "Q318043",
+   "reviewed": true,
+   "feedIds": [
+    "279"
+   ]
+  },
+  {
+   "id": "city-of-manchester-stadium",
+   "name": "City of Manchester Stadium",
+   "city": "Manchester",
+   "country": "England",
+   "lat": 53.48306,
+   "lng": -2.20028,
+   "wikidata": "Q48159",
+   "periodNames": [
+    {
+     "name": "City of Manchester Stadium",
+     "to": "2011-07-07"
+    }
+   ],
+   "reviewed": true,
+   "feedIds": [
+    "1379"
+   ]
+  },
+  {
+   "id": "almaty-central-stadium",
+   "name": "Almaty Central Stadium",
+   "city": "Almaty",
+   "country": "Kazakhstan",
+   "lat": 43.2383,
+   "lng": 76.9244,
+   "wikidata": "Q190788",
+   "reviewed": true,
+   "feedIds": [
+    "1741"
+   ]
+  },
+  {
+   "id": "stadium-of-light",
+   "name": "Stadium of Light",
+   "city": "Sunderland",
+   "country": "England",
+   "lat": 54.91443,
+   "lng": -1.38817,
+   "wikidata": "Q31969",
+   "reviewed": true,
+   "feedIds": [
+    "194"
+   ]
+  },
+  {
+   "id": "boleyn-ground",
+   "name": "Boleyn Ground",
+   "city": "London",
+   "country": "England",
+   "lat": 51.53194,
+   "lng": 0.03944,
+   "wikidata": "Q330731",
+   "demolished": true,
+   "reviewed": true,
+   "feedIds": [
+    "304"
+   ]
+  },
+  {
+   "id": "heliodoro-rodriguez-lopez",
+   "name": "Heliodoro Rodríguez López",
+   "city": "Santa Cruz de Tenerife",
+   "country": "Spain",
+   "lat": 28.46306,
+   "lng": -16.26056,
+   "wikidata": "Q255447",
+   "reviewed": true,
+   "feedIds": [
+    "4151"
+   ]
+  },
+  {
+   "id": "jose-zorrilla",
+   "name": "José Zorrilla",
+   "city": "Valladolid",
+   "country": "Spain",
+   "lat": 41.64444,
+   "lng": -4.76111,
+   "wikidata": "Q151816",
+   "reviewed": true,
+   "feedIds": [
+    "4156"
+   ]
+  },
+  {
+   "id": "el-sardinero",
+   "name": "El Sardinero",
+   "city": "Santander",
+   "country": "Spain",
+   "lat": 43.47639,
+   "lng": -3.79333,
+   "wikidata": "Q195391",
+   "reviewed": true,
+   "feedIds": [
+    "1323"
+   ]
+  },
+  {
+   "id": "cape-town-stadium",
+   "name": "Cape Town Stadium",
+   "city": "Cape Town",
+   "country": "South Africa",
+   "lat": -33.90346,
+   "lng": 18.41115,
+   "wikidata": "Q173559",
+   "reviewed": true,
+   "feedIds": [
+    "4166"
+   ]
+  },
+  {
+   "id": "el-molinon",
+   "name": "El Molinón",
+   "city": "Gijón",
+   "country": "Spain",
+   "lat": 43.53611,
+   "lng": -5.63722,
+   "wikidata": "Q929315",
+   "reviewed": true,
+   "feedIds": [
+    "4155"
+   ]
+  },
+  {
+   "id": "el-toralin",
+   "name": "El Toralín",
+   "city": "Ponferrada",
+   "country": "Spain",
+   "lat": 42.5574,
+   "lng": -6.59997,
+   "wikidata": "Q979112",
+   "reviewed": true,
+   "feedIds": [
+    "2414"
+   ]
+  },
+  {
+   "id": "estadio-d-afonso-henriques",
+   "name": "Estádio D. Afonso Henriques",
+   "city": "Guimarães",
+   "country": "Portugal",
+   "lat": 41.44583,
+   "lng": -8.30097,
+   "wikidata": "Q1057274",
+   "reviewed": true,
+   "feedIds": [
+    "4723"
+   ]
+  },
+  {
+   "id": "estadio-nacional-mane-garrincha",
+   "name": "Estádio Nacional Mané Garrincha",
+   "city": "Brasília",
+   "country": "Brazil",
+   "lat": -15.7836,
+   "lng": -47.8992,
+   "wikidata": "Q336088",
+   "reviewed": true,
+   "feedIds": [
+    "5189"
+   ]
+  },
+  {
+   "id": "vasil-levski-national-stadium",
+   "name": "Vasil Levski National Stadium",
+   "city": "Sofia",
+   "country": "Bulgaria",
+   "lat": 42.68758,
+   "lng": 23.33544,
+   "wikidata": "Q1327903",
+   "reviewed": true,
+   "feedIds": [
+    "2354"
+   ]
+  },
+  {
+   "id": "anfield",
+   "name": "Anfield",
+   "city": "Liverpool",
+   "country": "England",
+   "lat": 53.43083,
+   "lng": -2.96083,
+   "wikidata": "Q45671",
+   "reviewed": true,
+   "feedIds": [
+    "192"
+   ]
+  },
+  {
+   "id": "st-jakob-park",
+   "name": "St. Jakob-Park",
+   "city": "Basel",
+   "country": "Switzerland",
+   "lat": 47.54139,
+   "lng": 7.62,
+   "wikidata": "Q190010",
+   "reviewed": true,
+   "feedIds": [
+    "3492"
+   ]
+  },
+  {
+   "id": "torsv-llur",
+   "name": "Tórsvøllur",
+   "city": "Tórshavn",
+   "country": "Faroe Islands",
+   "lat": 62.01917,
+   "lng": -6.77806,
+   "wikidata": "Q845610",
+   "reviewed": true,
+   "feedIds": [
+    "5087"
+   ]
+  },
+  {
+   "id": "estadio-do-maritimo",
+   "name": "Estádio do Marítimo",
+   "city": "Funchal",
+   "country": "Portugal",
+   "lat": 32.64556,
+   "lng": -16.92833,
+   "wikidata": "Q1272724",
+   "reviewed": true,
+   "feedIds": [
+    "7759"
+   ]
+  },
+  {
+   "id": "otkritie-arena",
+   "name": "Otkritie Arena",
+   "city": "Moscow",
+   "country": "Russia",
+   "lat": 55.8178,
+   "lng": 37.4403,
+   "wikidata": "Q1190634",
+   "reviewed": true,
+   "feedIds": [
+    "6025"
+   ]
+  },
+  {
+   "id": "krestovsky-stadium",
+   "name": "Krestovsky Stadium",
+   "city": "Saint Petersburg",
+   "country": "Russia",
+   "lat": 59.97295,
+   "lng": 30.22053,
+   "wikidata": "Q722970",
+   "reviewed": true,
+   "feedIds": [
+    "6931"
+   ]
+  },
+  {
+   "id": "estadi-nacional",
+   "name": "Estadi Nacional",
+   "city": "Andorra la Vella",
+   "country": "Andorra",
+   "lat": 42.5046,
+   "lng": 1.5175,
+   "wikidata": "Q18125598",
+   "reviewed": true,
+   "feedIds": [
+    "6864"
+   ]
+  },
+  {
+   "id": "wembley-stadium",
+   "name": "Wembley Stadium",
+   "city": "London",
+   "country": "England",
+   "lat": 51.5556,
+   "lng": -0.2794,
+   "wikidata": "Q128468",
+   "reviewed": true,
+   "feedIds": [
+    "3703"
+   ]
+  },
+  {
+   "id": "parc-des-princes",
+   "name": "Parc des Princes",
+   "city": "Paris",
+   "country": "France",
+   "lat": 48.84145,
+   "lng": 2.25305,
+   "wikidata": "Q193431",
+   "reviewed": true,
+   "feedIds": [
+    "2271"
+   ]
+  },
+  {
+   "id": "benito-stirpe-stadium",
+   "name": "Benito Stirpe Stadium",
+   "city": "Frosinone",
+   "country": "Italy",
+   "lat": 41.63426,
+   "lng": 13.32187,
+   "wikidata": "Q29655396",
+   "reviewed": true,
+   "feedIds": [
+    "7494"
+   ]
+  },
+  {
+   "id": "stadio-artemio-franchi",
+   "name": "Stadio Artemio Franchi",
+   "city": "Florence",
+   "country": "Italy",
+   "lat": 43.78082,
+   "lng": 11.28226,
+   "wikidata": "Q270474",
+   "reviewed": true,
+   "feedIds": [
+    "2588"
+   ]
+  },
+  {
+   "id": "rajko-mitic-stadium",
+   "name": "Rajko Mitić Stadium",
+   "city": "Belgrade",
+   "country": "Serbia",
+   "lat": 44.78333,
+   "lng": 20.46472,
+   "wikidata": "Q478000",
+   "reviewed": true,
+   "feedIds": [
+    "1222"
+   ]
+  },
+  {
+   "id": "bayarena",
+   "name": "BayArena",
+   "city": "Leverkusen",
+   "country": "Germany",
+   "lat": 51.03826,
+   "lng": 7.00221,
+   "wikidata": "Q156630",
+   "reviewed": true,
+   "feedIds": [
+    "112"
+   ]
+  },
+  {
+   "id": "stadio-diego-armando-maradona",
+   "name": "Stadio Diego Armando Maradona",
+   "city": "Naples",
+   "country": "Italy",
+   "lat": 40.82797,
+   "lng": 14.19301,
+   "wikidata": "Q82709",
+   "reviewed": true,
+   "feedIds": [
+    "2991"
+   ]
+  },
+  {
+   "id": "stadio-paolo-mazza",
+   "name": "Stadio Paolo Mazza",
+   "city": "Ferrara",
+   "country": "Italy",
+   "lat": 44.83972,
+   "lng": 11.6075,
+   "wikidata": "Q1575161",
+   "reviewed": true,
+   "feedIds": [
+    "6403"
+   ]
+  },
+  {
+   "id": "stadio-renato-dallara",
+   "name": "Stadio Renato Dall'Ara",
+   "city": "Bologna",
+   "country": "Italy",
+   "lat": 44.4922,
+   "lng": 11.3098,
+   "wikidata": "Q757182",
+   "reviewed": true,
+   "feedIds": [
+    "2792"
+   ]
+  },
+  {
+   "id": "stadion-wankdorf",
+   "name": "Stadion Wankdorf",
+   "city": "Bern",
+   "country": "Switzerland",
+   "lat": 46.96278,
+   "lng": 7.465,
+   "wikidata": "Q194479",
+   "reviewed": true,
+   "feedIds": [
+    "1879"
+   ]
+  },
+  {
+   "id": "london-stadium",
+   "name": "London Stadium",
+   "city": "London",
+   "country": "England",
+   "lat": 51.53861,
+   "lng": -0.01639,
+   "wikidata": "Q172190",
+   "reviewed": true,
+   "feedIds": [
+    "6660"
+   ]
+  },
+  {
+   "id": "tottenham-hotspur-stadium",
+   "name": "Tottenham Hotspur Stadium",
+   "city": "London",
+   "country": "England",
+   "lat": 51.60444,
+   "lng": -0.06639,
+   "wikidata": "Q55074091",
+   "reviewed": true,
+   "feedIds": [
+    "7827"
+   ]
+  },
+  {
+   "id": "carrow-road",
+   "name": "Carrow Road",
+   "city": "Norwich",
+   "country": "England",
+   "lat": 52.62222,
+   "lng": 1.30917,
+   "wikidata": "Q123017",
+   "reviewed": true,
+   "feedIds": [
+    "199"
+   ]
+  },
+  {
+   "id": "zimbru-stadium",
+   "name": "Zimbru Stadium",
+   "city": "Chișinău",
+   "country": "Moldova",
+   "lat": 46.98028,
+   "lng": 28.86694,
+   "wikidata": "Q239295",
+   "reviewed": true,
+   "feedIds": [
+    "5090"
+   ]
+  },
+  {
+   "id": "stadium-974",
+   "name": "Stadium 974",
+   "city": "Doha",
+   "country": "Qatar",
+   "lat": 25.2887,
+   "lng": 51.56647,
+   "wikidata": "Q1134439",
+   "reviewed": true,
+   "feedIds": [
+    "9093"
+   ]
+  },
+  {
+   "id": "rheinpark-stadion",
+   "name": "Rheinpark Stadion",
+   "city": "Vaduz",
+   "country": "Liechtenstein",
+   "lat": 47.14028,
+   "lng": 9.51028,
+   "wikidata": "Q597004",
+   "reviewed": true,
+   "feedIds": [
+    "1648"
+   ]
+  },
+  {
+   "id": "king-khalid-sport-city-stadium",
+   "name": "King Khalid Sport City Stadium",
+   "city": "Tabuk",
+   "country": "Saudi Arabia",
+   "lat": 28.4796,
+   "lng": 36.48874,
+   "wikidata": "Q85683772",
+   "reviewed": true,
+   "feedIds": [
+    "10449"
+   ]
+  },
+  {
+   "id": "al-fateh-stadium",
+   "name": "Al-Fateh Stadium",
+   "city": "Al-Mubarraz",
+   "country": "Saudi Arabia",
+   "lat": 25.41667,
+   "lng": 49.58333,
+   "wikidata": "Q134514554",
+   "approx": true,
+   "reviewed": false,
+   "feedIds": [
+    "10673"
+   ]
+  },
+  {
+   "id": "zabeel-stadium",
+   "name": "Zabeel Stadium",
+   "city": "Dubai",
+   "country": "United Arab Emirates",
+   "lat": 25.2189,
+   "lng": 55.31715,
+   "wikidata": "Q2701976",
+   "reviewed": true,
+   "feedIds": [
+    "4781"
+   ]
+  },
+  {
+   "id": "bmo-field",
+   "name": "BMO Field",
+   "city": "Toronto",
+   "country": "Canada",
+   "lat": 43.63278,
+   "lng": -79.41861,
+   "wikidata": "Q796351",
+   "reviewed": true,
+   "feedIds": [
+    "10143"
+   ]
+  },
+  {
+   "id": "hong-kong-stadium",
+   "name": "Hong Kong Stadium",
+   "city": "Hong Kong",
+   "country": "Hong Kong",
+   "lat": 22.27286,
+   "lng": 114.18844,
+   "wikidata": "Q992697",
+   "reviewed": true,
+   "manualNames": [
+    "Hong Kong Stadium"
+   ]
+  },
+  {
+   "id": "al-majmaah-sports-city-stadium",
+   "name": "Al Majma'ah Sports City Stadium",
+   "city": "Al Majma'ah",
+   "country": "Saudi Arabia",
+   "lat": 25.8869,
+   "lng": 45.368,
+   "wikidata": "Q7244241",
+   "reviewed": true,
+   "manualNames": [
+    "Al Majma'ah Sports City Stadium"
+   ],
+   "feedIds": [
+    "10674"
+   ]
+  },
+  {
+   "id": "estadio-cidade-de-coimbra",
+   "name": "Estádio Cidade de Coimbra",
+   "city": "Coimbra",
+   "country": "Portugal",
+   "lat": 40.2033,
+   "lng": -8.4078,
+   "wikidata": "Q1067308",
+   "reviewed": true
+  }
+ ]
+}

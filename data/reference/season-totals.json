@@ -1,0 +1,42 @@
+{
+  "source": "Wikipedia, 'Cristiano Ronaldo', career statistics tables (CC BY-SA 4.0), as updated after the match played 20 November 2026",
+  "retrieved": "2026-11-23",
+  "note": "Goals per club season and competition group, and per calendar year for Portugal. Used only to check the dataset's totals. The 2010-11 league figure of 40 excludes the goal of 18 September 2010 v Real Sociedad, which Marca credits to Ronaldo and La Liga and UEFA credit to Pepe.",
+  "club": [
+    { "team": "sporting", "season": "2002–03", "league": 3, "cup": 2, "leagueCup": 0, "continental": 0, "other": 0, "total": 5 },
+    { "team": "manutd", "season": "2003–04", "league": 4, "cup": 2, "leagueCup": 0, "continental": 0, "other": 0, "total": 6 },
+    { "team": "manutd", "season": "2004–05", "league": 5, "cup": 4, "leagueCup": 0, "continental": 0, "other": 0, "total": 9 },
+    { "team": "manutd", "season": "2005–06", "league": 9, "cup": 0, "leagueCup": 2, "continental": 1, "other": 0, "total": 12 },
+    { "team": "manutd", "season": "2006–07", "league": 17, "cup": 3, "leagueCup": 0, "continental": 3, "other": 0, "total": 23 },
+    { "team": "manutd", "season": "2007–08", "league": 31, "cup": 3, "leagueCup": 0, "continental": 8, "other": 0, "total": 42 },
+    { "team": "manutd", "season": "2008–09", "league": 18, "cup": 1, "leagueCup": 2, "continental": 4, "other": 1, "total": 26 },
+    { "team": "realmadrid", "season": "2009–10", "league": 26, "cup": 0, "leagueCup": 0, "continental": 7, "other": 0, "total": 33 },
+    { "team": "realmadrid", "season": "2010–11", "league": 40, "cup": 7, "leagueCup": 0, "continental": 6, "other": 0, "total": 53 },
+    { "team": "realmadrid", "season": "2011–12", "league": 46, "cup": 3, "leagueCup": 0, "continental": 10, "other": 1, "total": 60 },
+    { "team": "realmadrid", "season": "2012–13", "league": 34, "cup": 7, "leagueCup": 0, "continental": 12, "other": 2, "total": 55 },
+    { "team": "realmadrid", "season": "2013–14", "league": 31, "cup": 3, "leagueCup": 0, "continental": 17, "other": 0, "total": 51 },
+    { "team": "realmadrid", "season": "2014–15", "league": 48, "cup": 1, "leagueCup": 0, "continental": 10, "other": 2, "total": 61 },
+    { "team": "realmadrid", "season": "2015–16", "league": 35, "cup": 0, "leagueCup": 0, "continental": 16, "other": 0, "total": 51 },
+    { "team": "realmadrid", "season": "2016–17", "league": 25, "cup": 1, "leagueCup": 0, "continental": 12, "other": 4, "total": 42 },
+    { "team": "realmadrid", "season": "2017–18", "league": 26, "cup": 0, "leagueCup": 0, "continental": 15, "other": 3, "total": 44 },
+    { "team": "juventus", "season": "2018–19", "league": 21, "cup": 0, "leagueCup": 0, "continental": 6, "other": 1, "total": 28 },
+    { "team": "juventus", "season": "2019–20", "league": 31, "cup": 2, "leagueCup": 0, "continental": 4, "other": 0, "total": 37 },
+    { "team": "juventus", "season": "2020–21", "league": 29, "cup": 2, "leagueCup": 0, "continental": 4, "other": 1, "total": 36 },
+    { "team": "juventus", "season": "2021–22", "league": 0, "cup": 0, "leagueCup": 0, "continental": 0, "other": 0, "total": 0 },
+    { "team": "manutd", "season": "2021–22", "league": 18, "cup": 0, "leagueCup": 0, "continental": 6, "other": 0, "total": 24 },
+    { "team": "manutd", "season": "2022–23", "league": 1, "cup": 0, "leagueCup": 0, "continental": 2, "other": 0, "total": 3 },
+    { "team": "alnassr", "season": "2022–23", "league": 14, "cup": 0, "leagueCup": 0, "continental": 0, "other": 0, "total": 14 },
+    { "team": "alnassr", "season": "2023–24", "league": 35, "cup": 3, "leagueCup": 0, "continental": 6, "other": 6, "total": 50 },
+    { "team": "alnassr", "season": "2024–25", "league": 25, "cup": 0, "leagueCup": 0, "continental": 8, "other": 2, "total": 35 },
+    { "team": "alnassr", "season": "2025–26", "league": 28, "cup": 0, "leagueCup": 0, "continental": 1, "other": 1, "total": 30 },
+    { "team": "alnassr", "season": "2026–27", "league": 8, "cup": 0, "leagueCup": 0, "continental": 1, "other": 0, "total": 9, "asOf": "2026-11-20" }
+  ],
+  "clubTotals": { "sporting": 5, "manutd": 145, "realmadrid": 450, "juventus": 101, "alnassr": 138, "all": 839 },
+  "portugalByYear": {
+    "2003": 0, "2004": 7, "2005": 2, "2006": 6, "2007": 5, "2008": 1, "2009": 1, "2010": 3, "2011": 7, "2012": 5,
+    "2013": 10, "2014": 5, "2015": 3, "2016": 13, "2017": 11, "2018": 6, "2019": 14, "2020": 3, "2021": 13, "2022": 3,
+    "2023": 10, "2024": 7, "2025": 8, "2026": 3
+  },
+  "portugalTotal": 146,
+  "careerTotal": 985
+}

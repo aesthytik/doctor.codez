@@ -1,0 +1,34 @@
+{
+  "about": "Hand corrections applied when the dataset is built. Every entry carries its reason.",
+  "countingRule": "A goal counts when the organiser of the competition credits it to him in an official senior match: league, cup and continental games for his clubs, and full internationals for Portugal, friendlies included. Club friendlies, exhibition trophies, youth and B-team games and penalty shoot-out kicks do not count.",
+  "countDisputed": true,
+  "countDisputedNote": "One goal is credited differently by different bodies (23 October 2026, Al-Faisaly v Al-Nassr). With this switch on the total follows the Saudi Pro League and the headline count used by ESPN's tracker and most outlets; with it off the total follows Opta and the other data providers and is one lower.",
+  "exclude": [],
+  "neutral": {
+    "_note": "true = played on neutral ground although the fixture lists a home side; false = not neutral although the general rule says so.",
+    "363330": false,
+    "734870": true
+  },
+  "patch": {},
+  "venueByEvent": {
+    "_note": "Matches for which the feed names no stadium. Internationals follow Wikipedia's list of his international goals; the three club games were ordinary home fixtures.",
+    "152284": "skonto-stadium",
+    "152440": "estadio-dr-magalhaes-pessoa",
+    "152876": "estadio-jose-alvalade",
+    "197260": "estadio-do-bessa",
+    "197290": "estadio-cidade-de-coimbra",
+    "197311": "estadio-jose-alvalade",
+    "197397": "estadio-da-luz",
+    "311145": "santiago-bernabeu",
+    "311951": "santiago-bernabeu",
+    "323925": "santiago-bernabeu",
+    "441673": "estadio-dr-magalhaes-pessoa",
+    "447143": "estadio-da-luz",
+    "500494": "letzigrund",
+    "591835": "estadio-algarve"
+  },
+  "neutralReasons": {
+    "363330": "2013 Copa del Rey final v Atlético Madrid was staged at the Santiago Bernabéu, his own home ground.",
+    "734870": "2025 AFC Champions League Elite quarter-final v Yokohama F. Marinos: the finals stage was held centrally in Jeddah."
+  }
+}
