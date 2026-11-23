@@ -14,7 +14,7 @@ export type Hit =
 export type GlobeEvents = {
   onHover?: (hit: Hit | null) => void;
   onSelect?: (hit: Hit | null) => void;
-  onView?: (view: { zoom: number; bloom: number }) => void;
+  onView?: (view: { zoom: number; bloom: number; horizon: { x: number; y: number } | null }) => void;
   onReady?: () => void;
   onError?: (message: string) => void;
 };
@@ -155,13 +155,17 @@ export class GlobeController {
       self.dirty = true;
       const zoom = self.map.getZoom();
       if (zoom > DETAIL_ZOOM) self.ensureDetail();
-      events.onView?.({ zoom, bloom: self.bloomAt(zoom) });
+      events.onView?.({ zoom, bloom: self.bloomAt(zoom), horizon: self.horizonTop() });
     });
     self.map.on("moveend", () => {
       const zoom = self.map.getZoom();
-      events.onView?.({ zoom, bloom: self.bloomAt(zoom) });
+      events.onView?.({ zoom, bloom: self.bloomAt(zoom), horizon: self.horizonTop() });
     });
-    self.map.once("idle", () => events.onReady?.());
+    self.map.once("idle", () => {
+      const zoom = self.map.getZoom();
+      events.onView?.({ zoom, bloom: self.bloomAt(zoom), horizon: self.horizonTop() });
+      events.onReady?.();
+    });
 
     const loop = () => {
       if (self.disposed) return;
@@ -237,6 +241,31 @@ export class GlobeController {
     const zoom = Math.min(16.4, Math.max(12.8, Math.log2((78271.5 * Math.cos((v.lat * Math.PI) / 180)) / metresPerPixel)));
     this.lastTouch = performance.now();
     this.map.flyTo({ center: [v.lng, v.lat], zoom, pitch: 46, bearing: -18, padding: { top: 0, bottom: 0, left: 0, right: 0 }, duration, essential: true, curve: 1.5 });
+  }
+
+  /**
+   * Where the Earth's edge meets the sky at the top of the view, on screen; null once
+   * the view is too close for there to be a horizon. Found by walking from the centre
+   * of the view towards the far edge until the ground drops out of sight.
+   */
+  horizonTop(): { x: number; y: number } | null {
+    if (this.map.getZoom() > 6.2) return null;
+    const rad = Math.PI / 180;
+    const seen = this.visibility();
+    const c = this.map.getCenter();
+    const bearing = this.map.getBearing() * rad;
+    const lat1 = c.lat * rad;
+    let last: [number, number] | null = null;
+    for (let deg = 0; deg <= 90; deg += 0.5) {
+      const d = deg * rad;
+      const lat2 = Math.asin(Math.sin(lat1) * Math.cos(d) + Math.cos(lat1) * Math.sin(d) * Math.cos(bearing));
+      const lng2 = c.lng * rad + Math.atan2(Math.sin(bearing) * Math.sin(d) * Math.cos(lat1), Math.cos(d) - Math.sin(lat1) * Math.sin(lat2));
+      if (seen(lng2 / rad, lat2 / rad) <= 0) break;
+      last = [lng2 / rad, lat2 / rad];
+    }
+    if (!last) return null;
+    const p = this.map.project(last);
+    return { x: p.x, y: p.y };
   }
 
   /** Where a point on the Earth currently sits on screen. */

@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import GlobeCanvas from "@/components/globe/GlobeCanvas";
 import type { GlobeController, Hit } from "@/components/globe/GlobeController";
 import Celebration from "@/components/celebration/Celebration";
+import Hologram from "@/components/Hologram";
+import HologramClip, { CLIP_PAGE } from "@/components/HologramClip";
 import Counter from "@/components/ui/Counter";
 import Timeline from "@/components/ui/Timeline";
 import VenuePanel from "@/components/ui/VenuePanel";
@@ -71,7 +73,7 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
   const [focusVenue, setFocusVenue] = useState<string | null>(null);
   const [pinned, setPinned] = useState<number | null>(null);
   const [listHover, setListHover] = useState<number | null>(null);
-  const [view, setView] = useState({ zoom: 1.5, bloom: 0 });
+  const [view, setView] = useState<{ zoom: number; bloom: number; horizon: { x: number; y: number } | null }>({ zoom: 1.5, bloom: 0, horizon: null });
   const [team, setTeam] = useState<TeamKey | null>(null);
   const [error, setError] = useState<string | null>(null);
   const box = useViewport();
@@ -290,8 +292,11 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
 
   // Zooming into a stadium by hand opens its list too.
   const onView = useCallback(
-    (v: { zoom: number; bloom: number }) => {
-      setView((prev) => (Math.abs(prev.zoom - v.zoom) > 0.02 || prev.bloom !== v.bloom ? v : prev));
+    (v: { zoom: number; bloom: number; horizon: { x: number; y: number } | null }) => {
+      setView((prev) => {
+        const moved = !prev.horizon !== !v.horizon || (prev.horizon && v.horizon && Math.hypot(prev.horizon.x - v.horizon.x, prev.horizon.y - v.horizon.y) > 1.5);
+        return Math.abs(prev.zoom - v.zoom) > 0.02 || prev.bloom !== v.bloom || moved ? v : prev;
+      });
       const c = ctrl.current;
       if (!c) return;
       if (v.bloom < 0.3) return setFocusVenue((f) => (f && !c.map.isMoving() ? null : f));
@@ -344,6 +349,25 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
     for (const g of world.goals) m.set(g.team, (m.get(g.team) ?? 0) + 1);
     return m;
   }, [world]);
+  // The hologram stands where the Earth meets the sky, as tall as the sky above it
+  // allows, and fades as the view closes in. (?holo=0 switches it off.)
+  // It is Panini's animation, played from GIPHY. If that cannot be reached, or the
+  // visitor has asked for less motion, a figure drawn by the page stands in.
+  const calm = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const [clipFailed, setClipFailed] = useState(false);
+  const useClip = !calm && !clipFailed && query?.get("holo") !== "drawn";
+  const holo = useMemo(() => {
+    const h = view.horizon;
+    // The celebration has the sky to itself.
+    if (!h || !controller || query?.get("holo") === "0" || phase === "loading" || phase === "celebrate") return null;
+    // Shorter than the sky above the horizon, so the jump stays on the page.
+    const height = Math.min(box.h * 0.4, (h.y - (narrow ? 6 : 14)) * 0.8);
+    if (height < 90) return null;
+    const far = 1 - Math.min(1, Math.max(0, (view.zoom - 3.3) / 1.1));
+    const strength = far * (phase === "intro" ? 0.5 : narrow ? 0.5 : 0.78);
+    return { x: h.x, y: h.y + height * 0.02, height, strength };
+  }, [view, controller, query, phase, box.h, narrow]);
+
   const thousandth = world.pointByN.get(TARGET) ?? null;
   const newest = arrival ? (world.pointByN.get(arrival.to)?.goal ?? null) : null;
   const hud = phase === "explore";
@@ -362,6 +386,14 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
           onError={setError}
         />
       )}
+
+      {/* the hologram: standing on the horizon while there is sky to stand in */}
+      {holo && (useClip ? (
+        // A little larger than the drawn figure, standing just this side of the horizon.
+        <HologramClip x={holo.x} y={holo.y + holo.height * 0.12} height={holo.height * 1.07} strength={holo.strength} onFail={() => setClipFailed(true)} />
+      ) : (
+        <Hologram x={holo.x} y={holo.y} height={holo.height} strength={holo.strength} calm={calm} />
+      ))}
 
       {/* depth: darker corners and a little film grain */}
       <div className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 75% 70% at 50% 46%, rgba(4,6,11,0) 55%, rgba(4,6,11,0.72) 100%)" }} />
@@ -468,6 +500,11 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
           <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[10px] tracking-wide text-faint">
             <span>
               Unofficial fan tribute. Not affiliated with Cristiano Ronaldo or any club.{" "}
+              {holo && useClip && (
+                <a href={CLIP_PAGE} target="_blank" rel="noreferrer" className="pointer-events-auto underline-offset-2 hover:underline">
+                  Hologram animation: Panini America, via GIPHY.
+                </a>
+              )}{" "}
               {atPresent && (
                 <span className="text-dim">
                   Latest: No. {world.total}, {longDate(world.goals[world.goals.length - 1].date)}.
@@ -479,7 +516,13 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
                 </button>
               )}
             </span>
-            <span>{view.zoom > 6 ? "Map data © OpenStreetMap contributors · OpenFreeMap" : touch ? "Tap a light to fly in · drag to turn the Earth" : "Hover a light · click to fly in · drag to turn the Earth"}</span>
+            <span>
+              <a href="https://github.com/aesthytik" target="_blank" rel="noreferrer" className="pointer-events-auto text-dim underline-offset-2 hover:text-gold hover:underline">
+                Made by @aesthytik on GitHub
+              </a>
+              {" · "}
+              {view.zoom > 6 ? "Map data © OpenStreetMap contributors · OpenFreeMap" : touch ? "Tap a light to fly in · drag to turn the Earth" : "Hover a light · click to fly in · drag to turn the Earth"}
+            </span>
           </div>
         </footer>
       </div>
