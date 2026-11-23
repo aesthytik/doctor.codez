@@ -123,16 +123,7 @@ body {
   animation: rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* The hologram: scan lines that drift upwards, and a faint flicker. */
-.hologram-lines {
-  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0) 0 2px, rgba(0, 0, 0, 0.55) 2px 4px);
-  animation: hologram-drift 0.9s linear infinite;
-}
-@keyframes hologram-drift {
-  to {
-    background-position: 0 -4px;
-  }
-}
+/* The hologram: a faint flicker, and a gold ring from each landing. */
 .hologram-landing {
   animation: hologram-landing 1.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -152,25 +143,25 @@ body {
 @keyframes hologram-flicker {
   0%,
   100% {
-    opacity: 1;
+    filter: drop-shadow(0 0 7px rgba(110, 200, 255, 0.55)) brightness(1);
   }
   7% {
-    opacity: 0.82;
+    filter: drop-shadow(0 0 7px rgba(110, 200, 255, 0.55)) brightness(0.8);
   }
   9% {
-    opacity: 1;
+    filter: drop-shadow(0 0 7px rgba(110, 200, 255, 0.55)) brightness(1);
   }
   43% {
-    opacity: 0.9;
+    filter: drop-shadow(0 0 7px rgba(110, 200, 255, 0.55)) brightness(0.9);
   }
   45% {
-    opacity: 1;
+    filter: drop-shadow(0 0 7px rgba(110, 200, 255, 0.55)) brightness(1);
   }
   78% {
-    opacity: 0.76;
+    filter: drop-shadow(0 0 7px rgba(110, 200, 255, 0.55)) brightness(0.74);
   }
   80% {
-    opacity: 0.96;
+    filter: drop-shadow(0 0 7px rgba(110, 200, 255, 0.55)) brightness(0.96);
   }
 }
 
@@ -193,7 +184,6 @@ body {
   .celebrate-rise,
   .intro-line,
   .notice-in,
-  .hologram-lines,
   .hologram-flicker {
     animation: none;
   }

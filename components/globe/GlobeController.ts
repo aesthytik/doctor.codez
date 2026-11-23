@@ -295,8 +295,13 @@ export class GlobeController {
   private homeView(container: HTMLElement): { center: [number, number]; zoom: number; pitch: number; padding: { top: number; bottom: number; left: number; right: number } } {
     const box = container.getBoundingClientRect();
     if (box.width < 720) {
-      // Tall screens: a smaller Earth, lifted clear of the timeline, so Madrid and Riyadh both stay in frame.
-      return { center: [19, 33], zoom: Math.log2((1.75 * box.width * Math.PI) / 512), pitch: 32, padding: { top: 0, bottom: 0.2 * box.height, left: 0, right: 0 } };
+      // Tall screens: a smaller Earth with Madrid and Riyadh both in frame above the timeline.
+      // Its top edge is set a fixed way below the header (which is the same height on every
+      // phone), so there is sky for the hologram to stand in however short the screen is.
+      const horizon = 135 + 0.15 * box.height;
+      const centre = horizon + 0.367 * box.width; // the top edge sits this far above the middle of the view
+      const shift = 2 * centre - box.height;
+      return { center: [19, 33], zoom: Math.log2((1.75 * box.width * Math.PI) / 512), pitch: 32, padding: { top: Math.max(0, shift), bottom: Math.max(0, -shift), left: 0, right: 0 } };
     }
     const diameter = Math.max(0.97 * box.width, 1.12 * box.height);
     return { center: [15, 39], zoom: Math.log2((diameter * Math.PI) / 512), pitch: 45, padding: { top: 0, bottom: 0, left: 0, right: 0 } };
