@@ -516,7 +516,13 @@ export default function Experience({ goals: builtGoals, venues: builtVenues, ver
                 </button>
               )}
             </span>
-            <span>{view.zoom > 6 ? "Map data © OpenStreetMap contributors · OpenFreeMap" : touch ? "Tap a light to fly in · drag to turn the Earth" : "Hover a light · click to fly in · drag to turn the Earth"}</span>
+            <span>
+              <a href="https://github.com/aesthytik" target="_blank" rel="noreferrer" className="pointer-events-auto text-dim underline-offset-2 hover:text-gold hover:underline">
+                Made by @aesthytik on GitHub
+              </a>
+              {" · "}
+              {view.zoom > 6 ? "Map data © OpenStreetMap contributors · OpenFreeMap" : touch ? "Tap a light to fly in · drag to turn the Earth" : "Hover a light · click to fly in · drag to turn the Earth"}
+            </span>
           </div>
         </footer>
       </div>
