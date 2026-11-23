@@ -69,8 +69,6 @@ export type Venue = {
 };
 
 export type Dataset = {
-  /** ISO timestamp of the build. */
-  generatedAt: string;
   /** Date of the most recent goal included. */
   asOf: string;
   total: number;

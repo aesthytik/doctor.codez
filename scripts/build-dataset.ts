@@ -379,7 +379,8 @@ for (const g of goals) byTeam[g.team] = (byTeam[g.team] ?? 0) + 1;
 
 await writeFile(
   path.join(root, "data/goals.json"),
-  JSON.stringify({ generatedAt: new Date().toISOString(), asOf: goals[goals.length - 1]?.date ?? null, total: goals.length, goals }, null, 1) + "\n",
+  // No timestamp: the file changes only when the data does, so each commit to it means something.
+  JSON.stringify({ asOf: goals[goals.length - 1]?.date ?? null, total: goals.length, goals }, null, 1) + "\n",
 );
 await writeFile(
   path.join(root, "data/source/reconcile-report.json"),
