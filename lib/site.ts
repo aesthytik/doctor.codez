@@ -5,7 +5,7 @@ import type { CareerFacts } from "./data/facts";
 export const SITE_NAME = "A Thousand Lights";
 export const TAGLINE = "Every Cristiano Ronaldo goal, where it happened.";
 
-const DEFAULT_URL = "https://a-thousand-lights.vercel.app";
+const DEFAULT_URL = "https://a-thousand-lights.aesthytik.dev";
 const vercelDomain = process.env.VERCEL_PROJECT_PRODUCTION_URL;
 /**
  * Where the site is published, without a trailing slash. Set SITE_URL to move it to a
