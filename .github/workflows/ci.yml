@@ -1,7 +1,7 @@
 name: CI
 
-# Checks every pull request and every push to main: the dataset must validate,
-# and the site must lint, type-check and build.
+# Checks every pull request and every push to main: the dataset must validate, the
+# counting rules must pass their tests, and the site must lint, type-check and build.
 on:
   pull_request:
   push:
@@ -15,13 +15,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
+      # The same Node version Vercel builds the site with.
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 26
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Validate the dataset
         run: pnpm validate
+      - name: Test the counting and update rules
+        run: pnpm test
+      # Not a gate: it only shows whether the match feed answers from GitHub's machines.
+      - name: Ask the match feed whether anything is new
+        continue-on-error: true
+        run: node scripts/update-latest.ts --check
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm build

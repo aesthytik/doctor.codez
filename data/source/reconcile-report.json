@@ -12,6 +12,7 @@
  "expectedTotal": 986,
  "countDisputed": true,
  "disputedLeftOut": [],
+ "superseded": [],
  "explainedDifferences": [
   "alnassr 2026–27 league: dataset 9, reference 8 (disputed goal 982, counted by rule)"
  ],

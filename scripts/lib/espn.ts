@@ -1,6 +1,6 @@
 // Thin, polite client for the public ESPN soccer feed.
 // Every response is trimmed and cached on disk so a rerun costs no requests.
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 export const SITE = "https://site.api.espn.com/apis/site/v2/sports/soccer";
@@ -49,10 +49,12 @@ export async function cached<T>(
   key: string,
   url: string,
   trim: (raw: any) => T,
-  opts: { refresh?: boolean } = {},
+  opts: { refresh?: boolean; maxAgeMs?: number } = {},
 ): Promise<T | null> {
   const file = path.join(CACHE_DIR, `${key}.json`);
-  if (!opts.refresh) {
+  // With maxAgeMs, a copy on disk is trusted only while it is that fresh.
+  const tooOld = opts.maxAgeMs !== undefined && Date.now() - (await stat(file).then((s) => s.mtimeMs, () => 0)) > opts.maxAgeMs;
+  if (!opts.refresh && !tooOld) {
     try {
       const hit = JSON.parse(await readFile(file, "utf8"));
       stats.cached++;
@@ -243,6 +245,44 @@ export function trimSummary(raw: any): FeedSummary {
   };
 }
 
+/** A match still to be played. */
+export type FeedFixture = {
+  id: string;
+  kickoff: string;
+  league: string | null;
+  state: string | null;
+  venue: string | null;
+  competitors: { id: string; name: string; homeAway: "home" | "away" }[];
+};
+
+export function trimFixtures(raw: any): FeedFixture[] {
+  return (raw.events ?? []).map((e: any): FeedFixture => {
+    const c = e.competitions?.[0] ?? {};
+    return {
+      id: String(e.id),
+      kickoff: e.date,
+      league: e.league?.slug ?? null,
+      state: c.status?.type?.state ?? null,
+      venue: c.venue?.fullName ?? null,
+      competitors: (c.competitors ?? []).map((t: any) => ({ id: String(t.team?.id ?? t.id), name: t.team?.displayName ?? "", homeAway: t.homeAway })),
+    };
+  });
+}
+
+/** The feed's own count of one player's goals and appearances in a competition this season. */
+export type FeedSeasonTotal = { season: string | null; goals: number | null; appearances: number | null };
+
+export const trimSeasonTotal =
+  (athleteId: string) =>
+  (raw: any): FeedSeasonTotal => {
+    const a = (raw.athletes ?? []).find((x: any) => String(x.id) === athleteId);
+    const values = new Map<string, number>();
+    for (const cat of a?.statistics?.splits?.categories ?? []) for (const s of cat.stats ?? []) values.set(s.name, Number(s.value));
+    const pick = (name: string) => (values.has(name) && Number.isFinite(values.get(name)) ? values.get(name)! : null);
+    return { season: raw.season?.displayName ?? null, goals: pick("totalGoals"), appearances: pick("appearances") };
+  };
+
+export const rosterUrl = (league: string, team: string) => `${SITE}/${league}/teams/${team}/roster`;
 export const scheduleUrl = (league: string, team: string, season: number, fixtures = false) =>
   `${SITE}/${league}/teams/${team}/schedule?season=${season}${fixtures ? "&fixture=true" : ""}`;
 export const eventUrl = (league: string, id: string) => `${SITE}/${league}/scoreboard/${id}`;

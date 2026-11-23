@@ -13,23 +13,52 @@ import { withPreviewGoals } from "@/lib/data/preview";
 import { STINTS, buildClock, ms } from "@/lib/data/timeline";
 import { TEAMS, type Goal, type TeamKey, type Venue } from "@/lib/data/types";
 import { useLocationSearch, useMediaQuery, useViewport } from "@/lib/hooks";
+import { useLive, type Live } from "@/lib/live";
 
-type Props = { goals: Goal[]; venues: Venue[] };
+type Props = {
+  goals: Goal[];
+  venues: Venue[];
+  /** Version stamp of this data, compared with the published status file to spot newer data. */
+  version: string;
+  /** "hold" keeps the goal-1,000 celebration from playing. */
+  celebration: "auto" | "hold";
+};
 type Phase = "loading" | "intro" | "explore" | "celebrate";
+type Anim = { kind: "intro" | "play" | "arrive"; from: number; to: number; t0: number; dur: number; pulse?: number[] };
 
 const TARGET = 1000;
 const INTRO_MS = 9500;
 const PLAY_MS = 52_000;
+/** How long the notice of a new goal stays up. */
+const NOTICE_MS = 45_000;
+
+// Remembered in the browser: the opening and the celebration each greet a visitor once.
+const SEEN_INTRO = "atl:intro";
+const SEEN_THOUSAND = "atl:thousand";
+const once = (key: string): boolean => {
+  try {
+    const first = window.localStorage.getItem(key) === null;
+    window.localStorage.setItem(key, "1");
+    return first;
+  } catch {
+    return true;
+  }
+};
 const TEAM_ORDER: TeamKey[] = ["sporting", "manutd", "realmadrid", "juventus", "alnassr", "portugal"];
 const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
-export default function Experience({ goals: realGoals, venues }: Props) {
+export default function Experience({ goals: builtGoals, venues: builtVenues, version, celebration }: Props) {
   // The address bar can ask for a rehearsal (?preview=1000) or a fixed view for screenshots.
   const search = useLocationSearch();
   const query = useMemo(() => (search === null ? null : new URLSearchParams(search)), [search]);
   const preview = query?.get("preview") === String(TARGET);
 
-  const world = useMemo(() => buildWorld(preview ? withPreviewGoals(realGoals, TARGET) : realGoals, venues), [realGoals, venues, preview]);
+  // The data the page was built with, replaced by newer data as it is published.
+  const built = useMemo<Live>(() => ({ v: version, goals: builtGoals, venues: builtVenues, celebration }), [version, builtGoals, builtVenues, celebration]);
+  const live = useLive(built, query !== null && !preview);
+  const holding = live.celebration === "hold";
+
+  const world = useMemo(() => buildWorld(preview ? withPreviewGoals(live.goals, TARGET) : live.goals, live.venues), [live.goals, live.venues, preview]);
   const clock = useMemo(() => buildClock(world.goals), [world]);
   const lastTime = clock.times[clock.times.length - 1];
 
@@ -48,15 +77,31 @@ export default function Experience({ goals: realGoals, venues }: Props) {
   const box = useViewport();
   const touch = useMediaQuery("(hover: none)");
 
+  // Newer data has arrived while the page was open: a new goal, a correction, or the
+  // celebration being held or released. (Worked out while rendering, from what this
+  // page last saw, as React recommends for state that follows other state.)
+  const [seen, setSeen] = useState({ total: world.total, holding });
+  const [arrival, setArrival] = useState<{ from: number; to: number } | null>(null);
+  if (query && !preview && (seen.total !== world.total || seen.holding !== holding)) {
+    setSeen({ total: world.total, holding });
+    const due = world.total >= TARGET && !holding;
+    const wasDue = seen.total >= TARGET && !seen.holding;
+    if (due && !wasDue && (phase === "explore" || phase === "intro")) {
+      setArrival(null);
+      setPhase("celebrate");
+    } else if (world.total > seen.total) setArrival({ from: seen.total, to: world.total });
+    else if (world.total < seen.total) setArrival(null);
+  }
+
   const count = Math.min(world.total, clock.countAt(time));
-  const live = !playing && phase === "explore" && time >= lastTime;
+  const atPresent = !playing && phase === "explore" && time >= lastTime;
   const zoomedIn = view.bloom > 0.45;
   const venue = focusVenue ? (world.venueById.get(focusVenue) ?? null) : null;
   const pinnedPoint = pinned ? (world.pointByN.get(pinned) ?? null) : null;
   const narrow = box.w < 720;
 
   // ---------- one animation loop for the opening and for "play" ----------
-  const anim = useRef<{ kind: "intro" | "play"; from: number; to: number; t0: number; dur: number } | null>(null);
+  const anim = useRef<Anim | null>(null);
   useEffect(() => {
     let raf = 0;
     let lastPaint = 0;
@@ -76,6 +121,7 @@ export default function Experience({ goals: realGoals, venues }: Props) {
           setTime(lastTime);
           setPlaying(false);
           if (a.kind === "intro") setPhase("explore");
+          if (a.pulse) ctrl.current?.pulse(a.pulse);
         }
       }
       raf = requestAnimationFrame(loop);
@@ -83,6 +129,33 @@ export default function Experience({ goals: realGoals, venues }: Props) {
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
   }, [clock, lastTime, world.total]);
+
+  // What the visitor is looking at right now, for the effects below.
+  const now = useRef({ time, phase, playing });
+  useEffect(() => {
+    now.current = { time, phase, playing };
+  });
+
+  // A new goal: if the visitor is looking at the present, run the clock forward to it
+  // and make its stadium throb. Someone exploring the past is left where they are.
+  useEffect(() => {
+    if (!arrival) return;
+    const numbers = Array.from({ length: arrival.to - arrival.from }, (_, i) => arrival.from + 1 + i);
+    const from = clock.timeOf(arrival.from);
+    const view = now.current;
+    if (view.phase === "explore" && !view.playing && !anim.current && view.time >= from) {
+      anim.current = { kind: "arrive", from, to: lastTime, t0: performance.now() + 600, dur: 1400, pulse: numbers };
+    }
+    const timer = window.setTimeout(() => setArrival(null), NOTICE_MS);
+    return () => window.clearTimeout(timer);
+  }, [arrival, clock, lastTime]);
+
+  // The celebration owns the globe while it runs, and greets each browser once.
+  useEffect(() => {
+    if (phase !== "celebrate") return;
+    anim.current = null;
+    if (!preview) once(SEEN_THOUSAND);
+  }, [phase, preview]);
 
   const stopAnim = useCallback(() => {
     anim.current = null;
@@ -143,13 +216,32 @@ export default function Experience({ goals: realGoals, venues }: Props) {
       c.flyToVenue(id, 10);
       return setPhase("explore");
     }
+    // He has reached 1,000: a visitor arriving afterwards sees the celebration once.
+    if (world.total >= TARGET && !holding && !cam && once(SEEN_THOUSAND)) return setPhase("celebrate");
     const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (query.get("intro") === "0" || calm || cam) return setPhase("explore");
+    const wantIntro = query.get("intro");
+    // The opening plays on a first visit (or with ?intro=1); after that the globe is simply there.
+    if (wantIntro === "0" || calm || cam || (wantIntro !== "1" && !once(SEEN_INTRO))) return setPhase("explore");
     c.setCursor(0);
     setTime(clock.start);
     setPhase("intro");
     anim.current = { kind: "intro", from: clock.start, to: lastTime, t0: performance.now() + 1700, dur: INTRO_MS };
-  }, [query, preview, clock, lastTime, world]);
+  }, [query, preview, clock, lastTime, world, holding]);
+
+  const showArrival = useCallback(() => {
+    if (!arrival) return;
+    const point = world.pointByN.get(arrival.to);
+    setArrival(null);
+    if (!point) return;
+    anim.current = null;
+    setPlaying(false);
+    setTime(lastTime);
+    ctrl.current?.setCursor(world.total);
+    ctrl.current?.pulse([arrival.to]);
+    setFocusVenue(point.venue.id);
+    setPinned(arrival.to);
+    ctrl.current?.flyToVenue(point.venue.id);
+  }, [arrival, world, lastTime]);
 
   // ---------- picking ----------
   const onSelect = useCallback(
@@ -253,6 +345,7 @@ export default function Experience({ goals: realGoals, venues }: Props) {
     return m;
   }, [world]);
   const thousandth = world.pointByN.get(TARGET) ?? null;
+  const newest = arrival ? (world.pointByN.get(arrival.to)?.goal ?? null) : null;
   const hud = phase === "explore";
 
   return (
@@ -322,7 +415,7 @@ export default function Experience({ goals: realGoals, venues }: Props) {
         </header>
 
         <div className="absolute right-4 top-3 sm:right-8 sm:top-5">
-          <Counter value={count} total={world.total} target={TARGET} live={live} compact={narrow || (zoomedIn && Boolean(venue))} />
+          <Counter value={count} total={world.total} target={TARGET} live={atPresent} compact={narrow || (zoomedIn && Boolean(venue))} />
         </div>
 
         {venue && zoomedIn && (
@@ -340,6 +433,34 @@ export default function Experience({ goals: realGoals, venues }: Props) {
         {hover?.kind === "venue" && !zoomedIn && <VenueCard venue={hover.venue} lit={team ? hover.venue.goals.filter((g) => g.team === team && g.n <= count).length : countAt(hover.venue, count)} style={floating(hover, 290, 330)} />}
         {hover?.kind === "goal" && hover.point.goal.n !== pinned && <GoalCard goal={hover.point.goal} venue={hover.point.venue} style={floating(hover, 320, 330)} />}
 
+        {arrival && newest && (
+          // Top centre where there is room beside the big number; otherwise just above the
+          // timeline (or under the header on a phone, when a stadium's list fills the bottom).
+          <div
+            className={`absolute inset-x-3 flex justify-center sm:inset-x-8 sm:justify-start xl:inset-x-3 xl:bottom-auto xl:top-7 xl:justify-center ${narrow && venue && zoomedIn ? "top-[142px]" : "bottom-[178px] sm:bottom-[156px]"}`}
+            role="status"
+            aria-live="polite"
+          >
+            <div className="notice-in pointer-events-auto flex max-w-full items-center gap-3 rounded-full border border-gold/60 bg-[rgba(8,12,21,0.88)] py-2 pl-4 pr-2 shadow-[0_18px_60px_rgba(0,0,0,0.6),0_0_34px_rgba(242,193,78,0.22)] backdrop-blur-xl">
+              <span className="relative flex h-2.5 w-2.5 shrink-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-70" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-gold" />
+              </span>
+              <span className="min-w-0 truncate text-[12px] tracking-wide text-text sm:text-[13px]">
+                <span className="mr-2 font-semibold uppercase tracking-[0.12em] text-gold sm:tracking-[0.22em]">{arrival.to - arrival.from > 1 ? `${arrival.to - arrival.from} new goals` : "New goal"}</span>
+                No. {arrival.to.toLocaleString("en-GB")} · v {newest.opponent}
+                <span className="hidden sm:inline"> · {longDate(newest.date)}</span>
+              </span>
+              <button type="button" onClick={showArrival} className="shrink-0 rounded-full bg-gold px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink transition hover:bg-gold-hi">
+                Show
+              </button>
+              <button type="button" onClick={() => setArrival(null)} aria-label="Dismiss" className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-dim transition hover:text-text">
+                ×
+              </button>
+            </div>
+          </div>
+        )}
+
         <footer className="absolute inset-x-4 bottom-3 sm:inset-x-8 sm:bottom-5">
           <div className="pointer-events-auto">
             <Timeline clock={clock} time={time} count={count} playing={playing} onScrub={scrub} onTogglePlay={togglePlay} />
@@ -347,10 +468,15 @@ export default function Experience({ goals: realGoals, venues }: Props) {
           <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[10px] tracking-wide text-faint">
             <span>
               Unofficial fan tribute. Not affiliated with Cristiano Ronaldo or any club.{" "}
-              {live && (
+              {atPresent && (
                 <span className="text-dim">
                   Latest: No. {world.total}, {longDate(world.goals[world.goals.length - 1].date)}.
                 </span>
+              )}
+              {thousandth && !thousandth.goal.preview && !holding && phase === "explore" && (
+                <button type="button" onClick={() => setPhase("celebrate")} className="pointer-events-auto ml-2 text-gold underline-offset-2 hover:underline">
+                  Replay goal 1,000
+                </button>
               )}
             </span>
             <span>{view.zoom > 6 ? "Map data © OpenStreetMap contributors · OpenFreeMap" : touch ? "Tap a light to fly in · drag to turn the Earth" : "Hover a light · click to fly in · drag to turn the Earth"}</span>
@@ -362,6 +488,7 @@ export default function Experience({ goals: realGoals, venues }: Props) {
         <Celebration
           controller={controller}
           target={TARGET}
+          settleAt={world.total}
           place={thousandth ? `${thousandth.venue.name}, ${thousandth.venue.city}` : ""}
           dateLabel={thousandth ? longDate(thousandth.goal.date) : ""}
           simulated={Boolean(thousandth?.goal.preview)}

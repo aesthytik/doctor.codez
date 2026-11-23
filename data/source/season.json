@@ -1,0 +1,225 @@
+{
+ "note": "Written by scripts/update-latest.ts: the matches of the current season it has read. Not edited by hand.",
+ "team": "alnassr",
+ "season": 2026,
+ "matches": [
+  {
+   "id": "401900402",
+   "date": "2026-08-15",
+   "league": "ksa.1",
+   "opponent": "Al Fateh",
+   "ha": "H",
+   "score": [
+    3,
+    0
+   ],
+   "goals": 0
+  },
+  {
+   "id": "401873749",
+   "date": "2026-08-18",
+   "league": "ksa.kings.cup",
+   "opponent": "Al Diriyah",
+   "ha": "A",
+   "score": [
+    4,
+    1
+   ],
+   "goals": 0
+  },
+  {
+   "id": "401900400",
+   "date": "2026-08-21",
+   "league": "ksa.1",
+   "opponent": "Al Riyadh",
+   "ha": "A",
+   "score": [
+    4,
+    0
+   ],
+   "goals": 1
+  },
+  {
+   "id": "401900388",
+   "date": "2026-08-25",
+   "league": "ksa.1",
+   "opponent": "Al Ettifaq",
+   "ha": "A",
+   "score": [
+    3,
+    2
+   ],
+   "goals": 0
+  },
+  {
+   "id": "401900381",
+   "date": "2026-08-28",
+   "league": "ksa.1",
+   "opponent": "Al Taawoun",
+   "ha": "H",
+   "score": [
+    2,
+    1
+   ],
+   "goals": 1
+  },
+  {
+   "id": "401900366",
+   "date": "2026-09-05",
+   "league": "ksa.1",
+   "opponent": "Al Ittihad",
+   "ha": "A",
+   "score": [
+    1,
+    2
+   ],
+   "goals": 0
+  },
+  {
+   "id": "401900357",
+   "date": "2026-09-09",
+   "league": "ksa.1",
+   "opponent": "Abha",
+   "ha": "H",
+   "score": [
+    2,
+    1
+   ],
+   "goals": 1
+  },
+  {
+   "id": "401900921",
+   "date": "2026-09-12",
+   "league": "ksa.1",
+   "opponent": "Al Khaleej",
+   "ha": "A",
+   "score": [
+    1,
+    1
+   ],
+   "goals": 0
+  },
+  {
+   "id": "401912656",
+   "date": "2026-09-15",
+   "league": "afc.champions",
+   "opponent": "Al Ain",
+   "ha": "A",
+   "score": [
+    0,
+    4
+   ],
+   "goals": 0
+  },
+  {
+   "id": "401900907",
+   "date": "2026-10-09",
+   "league": "ksa.1",
+   "opponent": "Al Diriyah",
+   "ha": "H",
+   "score": [
+    3,
+    0
+   ],
+   "goals": 1
+  },
+  {
+   "id": "401912627",
+   "date": "2026-10-12",
+   "league": "afc.champions",
+   "opponent": "Neftchi Fergana",
+   "ha": "H",
+   "score": [
+    3,
+    1
+   ],
+   "goals": 1
+  },
+  {
+   "id": "401900446",
+   "date": "2026-10-20",
+   "league": "ksa.1",
+   "opponent": "Neom SC",
+   "ha": "H",
+   "score": [
+    1,
+    0
+   ],
+   "goals": 0
+  },
+  {
+   "id": "401900444",
+   "date": "2026-10-23",
+   "league": "ksa.1",
+   "opponent": "Al Faisaly",
+   "ha": "A",
+   "score": [
+    3,
+    1
+   ],
+   "goals": 0
+  },
+  {
+   "id": "401900881",
+   "date": "2026-10-29",
+   "league": "ksa.1",
+   "opponent": "Al Kholood",
+   "ha": "H",
+   "score": [
+    5,
+    3
+   ],
+   "goals": 3
+  },
+  {
+   "id": "401912631",
+   "date": "2026-11-02",
+   "league": "afc.champions",
+   "opponent": "Pakhtakor",
+   "ha": "A",
+   "score": [
+    6,
+    2
+   ],
+   "goals": 0
+  },
+  {
+   "id": "401900905",
+   "date": "2026-11-20",
+   "league": "ksa.1",
+   "opponent": "Al Ahli",
+   "ha": "A",
+   "score": [
+    1,
+    3
+   ],
+   "goals": 1
+  }
+ ],
+ "next": [
+  {
+   "id": "401912584",
+   "kickoff": "2026-11-24T18:15Z",
+   "league": "afc.champions",
+   "opponent": "Al Sadd",
+   "ha": "H",
+   "venue": "Al-Awwal Park"
+  },
+  {
+   "id": "401900442",
+   "kickoff": "2026-11-28T12:15Z",
+   "league": "ksa.1",
+   "opponent": "Al Hazem",
+   "ha": "A",
+   "venue": "King Abdullah Sport City Stadium"
+  },
+  {
+   "id": "401900441",
+   "kickoff": "2026-12-04T17:30Z",
+   "league": "ksa.1",
+   "opponent": "Al Qadsiah",
+   "ha": "H",
+   "venue": "Al-Awwal Park"
+  }
+ ]
+}

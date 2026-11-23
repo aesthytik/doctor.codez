@@ -1,0 +1,121 @@
+name: Update goals
+
+# Reads Al-Nassr's results after each match and adds any new Cristiano Ronaldo goal.
+# A change is committed straight to main; the site then rebuilds itself.
+#
+# Most runs find nothing new and stop after one request to the match feed.
+# The rules and safety checks are in scripts/update-latest.ts.
+on:
+  schedule:
+    # Every half hour through the hours Al-Nassr's matches finish (times are UTC).
+    - cron: "10,40 14-21 * * *"
+    # Once a night: re-read the whole season, to pick up late corrections.
+    - cron: "37 2 * * *"
+  workflow_dispatch:
+    inputs:
+      full:
+        description: Re-read every match of the season
+        type: boolean
+        default: false
+      allow_decrease:
+        description: Allow a lower count (only after checking why it fell)
+        type: boolean
+        default: false
+      max_new:
+        description: Most new goals to accept in one run
+        default: "6"
+      dry_run:
+        description: Work it out but change nothing
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+# One job at a time may change the goal data.
+concurrency:
+  group: goal-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NIGHTLY: ${{ github.event.schedule == '37 2 * * *' }}
+      MANUAL: ${{ github.event_name == 'workflow_dispatch' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+
+      - name: Is there anything new?
+        id: check
+        run: |
+          if [ "$NIGHTLY" = "true" ] || [ "$MANUAL" = "true" ]; then
+            echo "work=true" >> "$GITHUB_OUTPUT"
+          else
+            node scripts/update-latest.ts --check
+          fi
+
+      - uses: pnpm/action-setup@v4
+        if: steps.check.outputs.work == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.check.outputs.work == 'true'
+        with:
+          node-version: 26
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+        if: steps.check.outputs.work == 'true'
+
+      - name: Update the dataset
+        id: update
+        if: steps.check.outputs.work == 'true'
+        env:
+          FULL: ${{ inputs.full }}
+          ALLOW_DECREASE: ${{ inputs.allow_decrease }}
+          MAX_NEW: ${{ inputs.max_new }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          flags=()
+          if [ "$NIGHTLY" = "true" ] || [ "$FULL" = "true" ]; then flags+=(--full); fi
+          if [ "$ALLOW_DECREASE" = "true" ]; then flags+=(--allow-decrease); fi
+          if [ "$DRY_RUN" = "true" ]; then flags+=(--dry-run); fi
+          if [[ "$MAX_NEW" =~ ^[0-9]+$ ]]; then flags+=("--max-new=$MAX_NEW"); fi
+          node scripts/update-latest.ts "${flags[@]}"
+
+      - name: Publish the change
+        if: steps.update.outputs.changed == 'true'
+        env:
+          TITLE: ${{ steps.update.outputs.title }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then echo "Nothing to publish."; exit 0; fi
+          git commit -m "$TITLE" -m "Automatic update from the match feed: $RUN_URL"
+          for attempt in 1 2 3 4; do
+            if git push; then exit 0; fi
+            sleep $((attempt * 3))
+            git pull --rebase
+          done
+          exit 1
+
+      # Anything a person should look at becomes one issue, not one per run.
+      - name: Raise what needs a look
+        if: always() && steps.update.outputs.alert != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ALERT: ${{ steps.update.outputs.alert }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          key=$(printf '%s' "$ALERT" | sha256sum | cut -c1-16)
+          open=$(gh issue list --state open --limit 100 --json number,body --jq "map(select(.body | contains(\"$key\"))) | .[0].number // empty")
+          if [ -n "$open" ]; then echo "Already raised in issue #$open."; exit 0; fi
+          printf '%s\n\nRaised by the automatic goal updater: %s\n\nTo enter a goal by hand, run the "Add a goal by hand" workflow. To hold the goal-1,000 celebration, run "Match-night controls".\n\n<!-- %s -->\n' "$ALERT" "$RUN_URL" "$key" > "$RUNNER_TEMP/issue.md"
+          gh label create goal-updater --color FBCA04 --description "Raised by the automatic goal updater" 2>/dev/null || true
+          gh issue create --title "Goal updater: something needs a look" --label goal-updater --body-file "$RUNNER_TEMP/issue.md" \
+            || gh issue create --title "Goal updater: something needs a look" --body-file "$RUNNER_TEMP/issue.md"

@@ -1,0 +1,1770 @@
+{
+ "401900905": {
+  "match": {
+   "id": "401900905",
+   "date": "2026-11-20T17:30Z",
+   "league": "ksa.1",
+   "seasonName": "2026-27 Saudi Pro League",
+   "round": "2026-27 Saudi Pro League",
+   "completed": true,
+   "statusDetail": "FT",
+   "neutral": false,
+   "venue": {
+    "name": "King Abdullah Sports City",
+    "city": "Jeddah",
+    "country": "Saudi Arabia"
+   },
+   "competitors": [
+    {
+     "id": "8346",
+     "name": "Al Ahli",
+     "homeAway": "home",
+     "score": 3,
+     "shootout": null
+    },
+    {
+     "id": "817",
+     "name": "Al Nassr",
+     "homeAway": "away",
+     "score": 1,
+     "shootout": null
+    }
+   ],
+   "teamKey": "alnassr",
+   "espnTeam": "817"
+  },
+  "event": {
+   "id": "401900905",
+   "date": "2026-11-20T17:30Z",
+   "seasonYear": 2026,
+   "seasonSlug": "2026-27-saudi-pro-league",
+   "note": "Saudi Pro League",
+   "notes": [],
+   "statusName": "STATUS_FULL_TIME",
+   "statusDetail": "FT",
+   "completed": true,
+   "neutral": null,
+   "venue": {
+    "id": "10659",
+    "name": "King Abdullah Sports City",
+    "city": "Jeddah",
+    "country": "Saudi Arabia"
+   },
+   "competitors": [
+    {
+     "id": "8346",
+     "name": "Al Ahli",
+     "homeAway": "home",
+     "score": 3,
+     "shootout": null
+    },
+    {
+     "id": "817",
+     "name": "Al Nassr",
+     "homeAway": "away",
+     "score": 1,
+     "shootout": null
+    }
+   ],
+   "details": [
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "14'",
+     "clockValue": 781,
+     "team": "817",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "22774",
+       "name": "Cristiano Ronaldo"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "23'",
+     "clockValue": 1330,
+     "team": "8346",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "307806",
+       "name": "Eduard Spertsyan"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "40'",
+     "clockValue": 2400,
+     "team": "8346",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "307639",
+       "name": "Saad Balobaid"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "45'+1'",
+     "clockValue": 2700,
+     "team": "8346",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "259732",
+       "name": "Galeno"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "48'",
+     "clockValue": 2875,
+     "team": "817",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "379993",
+       "name": "Awad Aman"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "61'",
+     "clockValue": 3633,
+     "team": "8346",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "259732",
+       "name": "Galeno"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "61'",
+     "clockValue": 3635,
+     "team": "817",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "294239",
+       "name": "Abdullah Al-Hamdan"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "69'",
+     "clockValue": 4090,
+     "team": "817",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "165562",
+       "name": "Iñigo Martínez"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "69'",
+     "clockValue": 4095,
+     "team": "817",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "277306",
+       "name": "Mohamed Simakan"
+      }
+     ]
+    },
+    {
+     "typeId": "98",
+     "type": "Penalty - Scored",
+     "clock": "71'",
+     "clockValue": 4203,
+     "team": "8346",
+     "scoring": true,
+     "shootout": false,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "180639",
+       "name": "Ivan Toney"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "75'",
+     "clockValue": 4480,
+     "team": "8346",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "259835",
+       "name": "Roger Ibañez"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "90'+1'",
+     "clockValue": 5400,
+     "team": "8346",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "306692",
+       "name": "Ziyad Al-Johani"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "90'+3'",
+     "clockValue": 5400,
+     "team": "8346",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "349151",
+       "name": "Zakaria Al Hawsawi"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "90'+7'",
+     "clockValue": 5400,
+     "team": "8346",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "259835",
+       "name": "Roger Ibañez"
+      }
+     ]
+    }
+   ]
+  },
+  "summary": {
+   "league": "ksa.1",
+   "seasonName": "2026-27 Saudi Pro League",
+   "goals": [
+    {
+     "type": "Goal",
+     "clock": "14'",
+     "period": 1,
+     "text": "Cristiano Ronaldo (Al Nassr) Goal at 14'",
+     "team": "817",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "22774",
+       "name": "Cristiano Ronaldo"
+      }
+     ]
+    },
+    {
+     "type": "Goal",
+     "clock": "45'+1'",
+     "period": 1,
+     "text": "Galeno (Al Ahli) Goal at 45'+1'",
+     "team": "8346",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "259732",
+       "name": "Galeno"
+      }
+     ]
+    },
+    {
+     "type": "Penalty - Scored",
+     "clock": "71'",
+     "period": 2,
+     "text": "Ivan Toney (Al Ahli) Penalty - Scored at 71'",
+     "team": "8346",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "180639",
+       "name": "Ivan Toney"
+      }
+     ]
+    },
+    {
+     "type": "Goal",
+     "clock": "75'",
+     "period": 2,
+     "text": "Roger Ibañez (Al Ahli) Goal at 75'",
+     "team": "8346",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "259835",
+       "name": "Roger Ibañez"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "756138": {
+  "match": {
+   "id": "756138",
+   "date": "2026-04-03T18:00Z",
+   "league": "ksa.1",
+   "seasonName": "2025-26 Saudi Pro League",
+   "round": "2025-26 Saudi Pro League",
+   "completed": true,
+   "statusDetail": "FT",
+   "neutral": false,
+   "venue": {
+    "name": "Al-Awwal Park",
+    "city": "King Fahd International Stadium",
+    "country": "Saudi Arabia"
+   },
+   "competitors": [
+    {
+     "id": "817",
+     "name": "Al Nassr",
+     "homeAway": "home",
+     "score": 5,
+     "shootout": null
+    },
+    {
+     "id": "22023",
+     "name": "Al Najma",
+     "homeAway": "away",
+     "score": 2,
+     "shootout": null
+    }
+   ],
+   "teamKey": "alnassr",
+   "espnTeam": "817"
+  },
+  "event": {
+   "id": "756138",
+   "date": "2026-04-03T18:00Z",
+   "seasonYear": 2025,
+   "seasonSlug": "2025-26-saudi-pro-league",
+   "note": "Saudi Pro League",
+   "notes": [],
+   "statusName": "STATUS_FULL_TIME",
+   "statusDetail": "FT",
+   "completed": true,
+   "neutral": null,
+   "venue": {
+    "id": "10675",
+    "name": "Al-Awwal Park",
+    "city": "King Fahd International Stadium",
+    "country": "Saudi Arabia"
+   },
+   "competitors": [
+    {
+     "id": "817",
+     "name": "Al Nassr",
+     "homeAway": "home",
+     "score": 5,
+     "shootout": null
+    },
+    {
+     "id": "22023",
+     "name": "Al Najma",
+     "homeAway": "away",
+     "score": 2,
+     "shootout": null
+    }
+   ],
+   "details": [
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "20'",
+     "clockValue": 1200,
+     "team": "22023",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "337326",
+       "name": "Rakan Altulayhi"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "44'",
+     "clockValue": 2640,
+     "team": "22023",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "337326",
+       "name": "Rakan Altulayhi"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "45'+8'",
+     "clockValue": 2700,
+     "team": "817",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "294239",
+       "name": "Abdullah Al-Hamdan"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "45'+9'",
+     "clockValue": 2700,
+     "team": "817",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "169797",
+       "name": "Sadio Mané"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "47'",
+     "clockValue": 2820,
+     "team": "22023",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "269498",
+       "name": "Felippe Cardoso"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "52'",
+     "clockValue": 3120,
+     "team": "22023",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "373089",
+       "name": "Nasser Al Haleel"
+      }
+     ]
+    },
+    {
+     "typeId": "98",
+     "type": "Penalty - Scored",
+     "clock": "56'",
+     "clockValue": 3360,
+     "team": "817",
+     "scoring": true,
+     "shootout": false,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "22774",
+       "name": "Cristiano Ronaldo"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "58'",
+     "clockValue": 3480,
+     "team": "817",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "178383",
+       "name": "Marcelo Brozovic"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "73'",
+     "clockValue": 4380,
+     "team": "817",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "22774",
+       "name": "Cristiano Ronaldo"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "85'",
+     "clockValue": 5100,
+     "team": "817",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "270415",
+       "name": "Abdulrahman Ghareeb"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "90'+5'",
+     "clockValue": 5400,
+     "team": "817",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "169797",
+       "name": "Sadio Mané"
+      }
+     ]
+    }
+   ]
+  },
+  "summary": {
+   "league": "ksa.1",
+   "seasonName": "2025-26 Saudi Pro League",
+   "goals": [
+    {
+     "type": "Goal",
+     "clock": "44'",
+     "period": 1,
+     "text": "Rakan Altulayhi (Al Najma) Goal at 44'",
+     "team": "22023",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "337326",
+       "name": "Rakan Altulayhi"
+      }
+     ]
+    },
+    {
+     "type": "Goal",
+     "clock": "45'+8'",
+     "period": 1,
+     "text": "Abdullah Al-Hamdan (Al Nassr) Goal at 53'",
+     "team": "817",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "294239",
+       "name": "Abdullah Al-Hamdan"
+      }
+     ]
+    },
+    {
+     "type": "Goal",
+     "clock": "45'+9'",
+     "period": 1,
+     "text": "Sadio Mané (Al Nassr) Goal at 54'",
+     "team": "817",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "169797",
+       "name": "Sadio Mané"
+      }
+     ]
+    },
+    {
+     "type": "Goal",
+     "clock": "47'",
+     "period": 2,
+     "text": "Felippe Cardoso (Al Najma) Goal at 47'",
+     "team": "22023",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "269498",
+       "name": "Felippe Cardoso"
+      }
+     ]
+    },
+    {
+     "type": "Penalty - Scored",
+     "clock": "56'",
+     "period": 2,
+     "text": "Cristiano Ronaldo (Al Nassr) Penalty - Scored at 56'",
+     "team": "817",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "22774",
+       "name": "Cristiano Ronaldo"
+      }
+     ]
+    },
+    {
+     "type": "Goal",
+     "clock": "73'",
+     "period": 2,
+     "text": "Cristiano Ronaldo (Al Nassr) Goal at 73'",
+     "team": "817",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "22774",
+       "name": "Cristiano Ronaldo"
+      }
+     ]
+    },
+    {
+     "type": "Goal",
+     "clock": "90'+5'",
+     "period": 2,
+     "text": "Sadio Mané (Al Nassr) Goal at 95'",
+     "team": "817",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "169797",
+       "name": "Sadio Mané"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "240721": {
+  "match": {
+   "id": "240721",
+   "date": "2008-05-21T18:45Z",
+   "league": "uefa.champions",
+   "seasonName": "2007/08 UEFA Champions League",
+   "round": "Final",
+   "completed": true,
+   "statusDetail": "FT-Pens",
+   "neutral": false,
+   "venue": {
+    "name": "Luzhniki Stadium",
+    "city": "Moscow",
+    "country": "Russia"
+   },
+   "competitors": [
+    {
+     "id": "360",
+     "name": "Manchester United",
+     "homeAway": "home",
+     "score": 1,
+     "shootout": 6
+    },
+    {
+     "id": "363",
+     "name": "Chelsea",
+     "homeAway": "away",
+     "score": 1,
+     "shootout": 5
+    }
+   ],
+   "teamKey": "manutd",
+   "espnTeam": "360"
+  },
+  "event": {
+   "id": "240721",
+   "date": "2008-05-21T18:45Z",
+   "seasonYear": 2007,
+   "seasonSlug": "final",
+   "note": "UEFA Champions League, Final",
+   "notes": [
+    "Chelsea win 6-5 on penalties"
+   ],
+   "statusName": "STATUS_FINAL_PEN",
+   "statusDetail": "FT-Pens",
+   "completed": true,
+   "neutral": null,
+   "venue": {
+    "id": "1224",
+    "name": "Luzhniki Stadium",
+    "city": "Moscow",
+    "country": "Russia"
+   },
+   "competitors": [
+    {
+     "id": "360",
+     "name": "Manchester United",
+     "homeAway": "home",
+     "score": 1,
+     "shootout": 6
+    },
+    {
+     "id": "363",
+     "name": "Chelsea",
+     "homeAway": "away",
+     "score": 1,
+     "shootout": 5
+    }
+   ],
+   "details": [
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "21'",
+     "clockValue": 1255,
+     "team": "363",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "11816",
+       "name": "Claude Makelele"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "22'",
+     "clockValue": 1268,
+     "team": "360",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "8860",
+       "name": "Paul Scholes"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "26'",
+     "clockValue": 1554,
+     "team": "360",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "22774",
+       "name": "Cristiano Ronaldo"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "43'",
+     "clockValue": 2564,
+     "team": "360",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "7825",
+       "name": "Rio Ferdinand"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "45'",
+     "clockValue": 2690,
+     "team": "363",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "8941",
+       "name": "Frank Lampard"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "45'+2'",
+     "clockValue": 2700,
+     "team": "363",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "12668",
+       "name": "Ricardo Carvalho"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "111'",
+     "clockValue": 6650,
+     "team": "360",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "24529",
+       "name": "Nemanja Vidić"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "116'",
+     "clockValue": 6912,
+     "team": "363",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "12641",
+       "name": "Michael Ballack"
+      }
+     ]
+    },
+    {
+     "typeId": "93",
+     "type": "Red Card",
+     "clock": "116'",
+     "clockValue": 6920,
+     "team": "363",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "18727",
+       "name": "Didier Drogba"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "116'",
+     "clockValue": 6936,
+     "team": "360",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "72490",
+       "name": "Carlos Tevez"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "118'",
+     "clockValue": 7041,
+     "team": "363",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "9799",
+       "name": "Michael Essien"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'+1'",
+     "clockValue": 7200,
+     "team": "360",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "72490",
+       "name": "Carlos Tevez"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'+1'",
+     "clockValue": 7200,
+     "team": "363",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "12641",
+       "name": "Michael Ballack"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'+2'",
+     "clockValue": 7200,
+     "team": "360",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "7971",
+       "name": "Michael Carrick"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'+3'",
+     "clockValue": 7200,
+     "team": "363",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "2741",
+       "name": "Juliano Belletti"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'+4'",
+     "clockValue": 7200,
+     "team": "363",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "8941",
+       "name": "Frank Lampard"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'+5'",
+     "clockValue": 7200,
+     "team": "360",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "12654",
+       "name": "Owen Hargreaves"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'+6'",
+     "clockValue": 7200,
+     "team": "363",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "8054",
+       "name": "Ashley Cole"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'+6'",
+     "clockValue": 7200,
+     "team": "360",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "67716",
+       "name": "Nani"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'+8'",
+     "clockValue": 7200,
+     "team": "360",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "88360",
+       "name": "Anderson"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'+9'",
+     "clockValue": 7200,
+     "team": "363",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "39964",
+       "name": "Salomon Kalou"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'+9'",
+     "clockValue": 7200,
+     "team": "360",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "8853",
+       "name": "Ryan Giggs"
+      }
+     ]
+    }
+   ]
+  },
+  "summary": {
+   "league": "uefa.champions",
+   "seasonName": "2007/08 UEFA Champions League, Final",
+   "goals": [
+    {
+     "type": "Goal",
+     "clock": "26'",
+     "period": 1,
+     "text": null,
+     "team": "360",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "22774",
+       "name": "Cristiano Ronaldo"
+      }
+     ]
+    },
+    {
+     "type": "Goal",
+     "clock": "45'",
+     "period": 1,
+     "text": null,
+     "team": "363",
+     "shootout": false,
+     "participants": [
+      {
+       "id": "8941",
+       "name": "Frank Lampard"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "447229": {
+  "match": {
+   "id": "447229",
+   "date": "2016-05-28T18:45Z",
+   "league": "uefa.champions",
+   "seasonName": "2015-16 UEFA Champions League",
+   "round": "Final",
+   "completed": true,
+   "statusDetail": "FT-Pens",
+   "neutral": false,
+   "venue": {
+    "name": "Stadio Giuseppe Meazza",
+    "city": "Milano",
+    "country": "Italy"
+   },
+   "competitors": [
+    {
+     "id": "86",
+     "name": "Real Madrid",
+     "homeAway": "home",
+     "score": 1,
+     "shootout": 5
+    },
+    {
+     "id": "1068",
+     "name": "Atlético Madrid",
+     "homeAway": "away",
+     "score": 1,
+     "shootout": 3
+    }
+   ],
+   "teamKey": "realmadrid",
+   "espnTeam": "86"
+  },
+  "event": {
+   "id": "447229",
+   "date": "2016-05-28T18:45Z",
+   "seasonYear": 2015,
+   "seasonSlug": "final",
+   "note": "UEFA Champions League, Final",
+   "notes": [
+    "Real Madrid win 5-3 on penalties"
+   ],
+   "statusName": "STATUS_FINAL_PEN",
+   "statusDetail": "FT-Pens",
+   "completed": true,
+   "neutral": null,
+   "venue": {
+    "id": "1642",
+    "name": "Stadio Giuseppe Meazza",
+    "city": "Milano",
+    "country": "Italy"
+   },
+   "competitors": [
+    {
+     "id": "86",
+     "name": "Real Madrid",
+     "homeAway": "home",
+     "score": 1,
+     "shootout": 5
+    },
+    {
+     "id": "1068",
+     "name": "Atlético Madrid",
+     "homeAway": "away",
+     "score": 1,
+     "shootout": 3
+    }
+   ],
+   "details": [
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "11'",
+     "clockValue": 609,
+     "team": "86",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "168531",
+       "name": "Dani Carvajal"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "15'",
+     "clockValue": 867,
+     "team": "86",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "41579",
+       "name": "Sergio Ramos"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "47'",
+     "clockValue": 2807,
+     "team": "86",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "73247",
+       "name": "Keylor Navas"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "61'",
+     "clockValue": 3606,
+     "team": "1068",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "24257",
+       "name": "Fernando Torres"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "79'",
+     "clockValue": 4691,
+     "team": "86",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "173666",
+       "name": "Casemiro"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "79'",
+     "clockValue": 4723,
+     "team": "1068",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "174893",
+       "name": "Yannick Carrasco"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "90'+3'",
+     "clockValue": 5400,
+     "team": "86",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "41579",
+       "name": "Sergio Ramos"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "90'+3'",
+     "clockValue": 5400,
+     "team": "1068",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "41789",
+       "name": "Gabi"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "93'",
+     "clockValue": 5530,
+     "team": "86",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "170369",
+       "name": "Danilo"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "111'",
+     "clockValue": 6660,
+     "team": "86",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "52767",
+       "name": "Pepe"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'",
+     "clockValue": 7200,
+     "team": "86",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "174967",
+       "name": "Lucas Vázquez"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'",
+     "clockValue": 7200,
+     "team": "86",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "77641",
+       "name": "Marcelo"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'",
+     "clockValue": 7200,
+     "team": "1068",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "140416",
+       "name": "Antoine Griezmann"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'",
+     "clockValue": 7200,
+     "team": "1068",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "41789",
+       "name": "Gabi"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'",
+     "clockValue": 7200,
+     "team": "86",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "77653",
+       "name": "Gareth Bale"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'",
+     "clockValue": 7200,
+     "team": "1068",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "172269",
+       "name": "Saúl Ñíguez"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'",
+     "clockValue": 7200,
+     "team": "86",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "41579",
+       "name": "Sergio Ramos"
+      }
+     ]
+    },
+    {
+     "typeId": "104",
+     "type": "Penalty - Scored",
+     "clock": "120'",
+     "clockValue": 7200,
+     "team": "86",
+     "scoring": true,
+     "shootout": true,
+     "penalty": true,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "22774",
+       "name": "Cristiano Ronaldo"
+      }
+     ]
+    }
+   ]
+  },
+  "summary": null
+ },
+ "401900444": {
+  "match": {
+   "id": "401900444",
+   "date": "2026-10-23T13:30Z",
+   "league": "ksa.1",
+   "seasonName": "2026-27 Saudi Pro League",
+   "round": "2026-27 Saudi Pro League",
+   "completed": true,
+   "statusDetail": "FT",
+   "neutral": false,
+   "venue": {
+    "name": "Al Majma'a Sport City Stadium",
+    "city": "Al Majma'ah",
+    "country": "Saudi Arabia"
+   },
+   "competitors": [
+    {
+     "id": "21446",
+     "name": "Al Faisaly",
+     "homeAway": "home",
+     "score": 1,
+     "shootout": null
+    },
+    {
+     "id": "817",
+     "name": "Al Nassr",
+     "homeAway": "away",
+     "score": 3,
+     "shootout": null
+    }
+   ],
+   "teamKey": "alnassr",
+   "espnTeam": "817"
+  },
+  "event": {
+   "id": "401900444",
+   "date": "2026-10-23T13:30Z",
+   "seasonYear": 2026,
+   "seasonSlug": "2026-27-saudi-pro-league",
+   "note": "Saudi Pro League",
+   "notes": [],
+   "statusName": "STATUS_FULL_TIME",
+   "statusDetail": "FT",
+   "completed": true,
+   "neutral": null,
+   "venue": {
+    "id": "10674",
+    "name": "Al Majma'a Sport City Stadium",
+    "city": "Al Majma'ah",
+    "country": "Saudi Arabia"
+   },
+   "competitors": [
+    {
+     "id": "21446",
+     "name": "Al Faisaly",
+     "homeAway": "home",
+     "score": 1,
+     "shootout": null
+    },
+    {
+     "id": "817",
+     "name": "Al Nassr",
+     "homeAway": "away",
+     "score": 3,
+     "shootout": null
+    }
+   ],
+   "details": [
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "4'",
+     "clockValue": 228,
+     "team": "817",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "294239",
+       "name": "Abdullah Al-Hamdan"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "14'",
+     "clockValue": 815,
+     "team": "817",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "379993",
+       "name": "Awad Aman"
+      }
+     ]
+    },
+    {
+     "typeId": "94",
+     "type": "Yellow Card",
+     "clock": "24'",
+     "clockValue": 1408,
+     "team": "817",
+     "scoring": false,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "183466",
+       "name": "Samú Costa"
+      }
+     ]
+    },
+    {
+     "typeId": "97",
+     "type": "Own Goal",
+     "clock": "49'",
+     "clockValue": 2896,
+     "team": "817",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": true,
+     "athletes": [
+      {
+       "id": "186952",
+       "name": "Andrei Girotto"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "66'",
+     "clockValue": 3947,
+     "team": "21446",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "182337",
+       "name": "Théo Bongonda"
+      }
+     ]
+    },
+    {
+     "typeId": "70",
+     "type": "Goal",
+     "clock": "79'",
+     "clockValue": 4704,
+     "team": "817",
+     "scoring": true,
+     "shootout": false,
+     "penalty": false,
+     "ownGoal": false,
+     "athletes": [
+      {
+       "id": "309275",
+       "name": "Ângelo Gabriel"
+      }
+     ]
+    }
+   ]
+  },
+  "summary": null
+ }
+}

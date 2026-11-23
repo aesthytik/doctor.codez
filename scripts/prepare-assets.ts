@@ -1,10 +1,12 @@
-// Copies the files the globe needs into public/ before dev and build:
+// Writes the files the site needs into public/ before dev and build:
 //   - the MapLibre worker (it must be served as its own file)
 //   - a world outline (Natural Earth, public domain) so the globe needs no tile server
+//   - the dataset and a tiny status file, for pages that are already open (lib/live.ts)
 import { copyFile, mkdir, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { feature, mesh } from "topojson-client";
+import { celebrationSetting, forBrowser, versionOf, type Status } from "../lib/data/publish.ts";
 
 const require = createRequire(import.meta.url);
 const root = path.resolve(import.meta.dirname, "..");
@@ -78,4 +80,21 @@ await writeFile(
   path.join(root, "lib", "vendor.generated.ts"),
   `// Written by scripts/prepare-assets.ts. Do not edit.\nexport const MAPLIBRE_WORKER_URL = "/vendor/maplibre-gl-worker-${mlPkg.version}.mjs";\n`,
 );
-console.log(`assets ready (maplibre worker ${mlPkg.version}, world outline)`);
+// 3. The dataset as files. An open page asks for status.json every minute and fetches
+// data.json when the version stamp has moved on.
+const json = async (rel: string) => JSON.parse(await readFile(path.join(root, rel), "utf8"));
+const goalsFile = await json("data/goals.json");
+const data = forBrowser(goalsFile.goals, (await json("data/venues.json")).venues);
+const season = await json("data/source/season.json").catch(() => null);
+const status: Status = {
+  v: versionOf(data),
+  total: goalsFile.total,
+  asOf: goalsFile.asOf,
+  celebration: celebrationSetting(await json("data/overrides.json")),
+  next: (season?.next ?? []).map((f: { kickoff: string }) => f.kickoff),
+};
+await mkdir(pub("live"), { recursive: true });
+await writeFile(pub("live", "data.json"), JSON.stringify({ v: status.v, ...data }));
+await writeFile(pub("live", "status.json"), JSON.stringify(status));
+
+console.log(`assets ready (maplibre worker ${mlPkg.version}, world outline, data ${status.v} with ${status.total} goals)`);

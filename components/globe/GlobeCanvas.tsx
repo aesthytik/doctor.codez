@@ -20,12 +20,20 @@ export default function GlobeCanvas({ world, controller, options, ...events }: P
     latest.current = events;
   });
 
+  // The map is built once, with the dataset of the moment. Newer data is handed to the
+  // controller afterwards (setWorld), so a new goal never rebuilds the map.
+  const worldNow = useRef(world);
+  useEffect(() => {
+    worldNow.current = world;
+    controller.current?.setWorld(world);
+  }, [world, controller]);
+
   useEffect(() => {
     let dead = false;
     let made: GlobeController | null = null;
     GlobeController.create(
       el.current!,
-      world,
+      worldNow.current,
       {
         onHover: (h) => latest.current.onHover?.(h),
         onSelect: (h) => latest.current.onSelect?.(h),
@@ -38,6 +46,7 @@ export default function GlobeCanvas({ world, controller, options, ...events }: P
       .then((c) => {
         if (dead) return c.destroy();
         made = c;
+        c.setWorld(worldNow.current);
         controller.current = c;
       })
       .catch((err) => latest.current.onError?.(String(err)));
@@ -46,9 +55,9 @@ export default function GlobeCanvas({ world, controller, options, ...events }: P
       made?.destroy();
       controller.current = null;
     };
-    // The map is built once per dataset; options are read at creation.
+    // Built once; options are read at creation.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [world]);
+  }, []);
 
   // MapLibre's stylesheet sets position: relative on the container, so size it inline.
   return <div ref={el} style={{ position: "absolute", inset: 0 }} aria-label="Globe showing where each goal was scored" role="application" />;

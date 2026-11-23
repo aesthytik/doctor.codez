@@ -2,179 +2,30 @@
 // Run on every change; the build must not ship if this fails.
 //
 //   node scripts/validate.ts
-import { existsSync, readFileSync } from "node:fs";
-import { readFile } from "node:fs/promises";
-import { createRequire } from "node:module";
-import path from "node:path";
-import { feature } from "topojson-client";
-import type { Goal, Venue } from "../lib/data/types.ts";
+//
+// The checks live in scripts/lib/checks.ts; this file reads the files and reports.
+import { validateDataset } from "./lib/checks.ts";
+import { FILES, loadCountries, readJson, type GoalsFile, type VenueFile } from "./lib/files.ts";
 
-const root = path.resolve(import.meta.dirname, "..");
-const read = async <T>(rel: string): Promise<T> => JSON.parse(await readFile(path.join(root, rel), "utf8")) as T;
+const { goals, total } = await readJson<GoalsFile>(FILES.goals);
+const venues = (await readJson<VenueFile>(FILES.venues, { venues: [] })).venues;
+const overrides = await readJson<{ countDisputed: boolean }>(FILES.overrides);
+const ref = await readJson<Parameters<typeof validateDataset>[0]["ref"]>(FILES.reference);
 
-const errors: string[] = [];
-const warnings: string[] = [];
-const fail = (msg: string) => errors.push(msg);
-const warn = (msg: string) => warnings.push(msg);
-
-const { goals, total } = await read<{ goals: Goal[]; total: number }>("data/goals.json");
-const venues = existsSync(path.join(root, "data/venues.json")) ? (await read<{ venues: Venue[] }>("data/venues.json")).venues : [];
-const overrides = await read<{ countDisputed: boolean }>("data/overrides.json");
-const ref = await read<{
-  club: { team: string; season: string; total: number }[];
-  portugalByYear: Record<string, number>;
-  careerTotal: number;
-}>("data/reference/season-totals.json");
-
-const TEAMS = new Set(["sporting", "manutd", "realmadrid", "juventus", "alnassr", "portugal"]);
-const DEBUT = "2002-10-07";
-
-// ---- shape and order ----
-if (total !== goals.length) fail(`total says ${total} but there are ${goals.length} goals`);
-const ids = new Set<string>();
-goals.forEach((g, i) => {
-  const at = `goal ${g.n} (${g.date} v ${g.opponent})`;
-  if (g.n !== i + 1) fail(`${at}: numbered ${g.n}, expected ${i + 1}`);
-  if (ids.has(g.id)) fail(`${at}: duplicate id ${g.id}`);
-  ids.add(g.id);
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(g.date)) fail(`${at}: bad date`);
-  if (g.date < DEBUT) fail(`${at}: before his first senior goal`);
-  if (i > 0 && g.date < goals[i - 1].date) fail(`${at}: out of date order`);
-  if (!TEAMS.has(g.team)) fail(`${at}: unknown team ${g.team}`);
-  if (!g.opponent || !g.comp || !g.compKey || !g.season) fail(`${at}: missing opponent, competition or season`);
-  if (!["H", "A", "N"].includes(g.ha)) fail(`${at}: bad home/away value`);
-  if (!Number.isInteger(g.minute) || g.minute < 1 || g.minute > 120) fail(`${at}: minute ${g.minute} is outside 1–120`);
-  if (g.added !== undefined && (g.added < 1 || g.added > 20)) fail(`${at}: stoppage time ${g.added} looks wrong`);
-  if (g.minute > 90 && !g.added && g.decided === undefined && g.minute !== 90) {
-    // A goal after 90 without stoppage time means extra time was played.
-    warn(`${at}: scored in minute ${g.minute} but the match is not marked as going to extra time`);
-  }
-  if (typeof g.penalty !== "boolean") fail(`${at}: penalty flag missing`);
-  if (g.score) {
-    const [us, them] = g.score;
-    if (us < 1) fail(`${at}: his team cannot have 0 straight after he scored`);
-    if (us > g.final[0] || them > g.final[1]) fail(`${at}: score after the goal (${us}–${them}) exceeds the final score (${g.final.join("–")})`);
-  } else warn(`${at}: no score at the time`);
-  if (!g.src?.length) fail(`${at}: no source recorded`);
-  if (g.preview) fail(`${at}: a rehearsal goal has leaked into the real dataset`);
+const { errors, warnings, disputed } = validateDataset({
+  goals,
+  total,
+  venues,
+  countDisputed: overrides.countDisputed,
+  ref,
+  countries: await loadCountries(),
 });
-
-// ---- no two goals in the same match at the same instant ----
-const instants = new Map<string, number>();
-for (const g of goals) {
-  const key = `${g.date}|${g.team}|${g.opponent}|${g.minute}|${g.added ?? 0}`;
-  if (instants.has(key)) warn(`goals ${instants.get(key)} and ${g.n} share a match and a minute: check they are two goals, not one entered twice`);
-  instants.set(key, g.n);
-}
-
-// ---- running score within a match must climb by one each time ----
-const byMatch = new Map<string, Goal[]>();
-for (const g of goals) {
-  const k = `${g.date}|${g.team}|${g.opponent}`;
-  byMatch.set(k, [...(byMatch.get(k) ?? []), g]);
-}
-for (const [k, list] of byMatch) {
-  for (let i = 1; i < list.length; i++) {
-    const a = list[i - 1].score;
-    const b = list[i].score;
-    if (a && b && b[0] <= a[0]) fail(`${k}: goal ${list[i].n} does not raise his team's score above goal ${list[i - 1].n}`);
-  }
-  const finals = new Set(list.map((g) => g.final.join("–")));
-  if (finals.size > 1) fail(`${k}: goals in one match disagree on the final score`);
-}
-
-// ---- totals against the reference ----
-const disputed = goals.filter((g) => g.disputed);
-if (!overrides.countDisputed && disputed.length) fail("disputed goals are present although countDisputed is off");
-const expected = ref.careerTotal + disputed.length;
-if (goals.length < expected) fail(`dataset has ${goals.length} goals; the reference (as of its date) implies at least ${expected}`);
-const lastRefDate = "2026-11-20";
-const upToRef = goals.filter((g) => g.date <= lastRefDate).length;
-if (upToRef !== expected) fail(`up to ${lastRefDate} the dataset has ${upToRef} goals; reference plus counted disputed goals is ${expected}`);
-
-for (const row of ref.club) {
-  const mine = goals.filter((g) => g.team === row.team && g.season === row.season && g.date <= lastRefDate);
-  const allowed = mine.filter((g) => g.disputed).length;
-  if (mine.length - allowed !== row.total) fail(`${row.team} ${row.season}: dataset ${mine.length - allowed} (excluding disputed), reference ${row.total}`);
-}
-for (const [year, n] of Object.entries(ref.portugalByYear)) {
-  const mine = goals.filter((g) => g.team === "portugal" && g.date.startsWith(year)).length;
-  if (mine !== n) fail(`Portugal ${year}: dataset ${mine}, reference ${n}`);
-}
-
-// ---- venues ----
-if (venues.length === 0) warn("data/venues.json is missing: goals cannot be placed on the map yet");
-else {
-  const byId = new Map(venues.map((v) => [v.id, v]));
-  for (const g of goals) {
-    const v = byId.get(g.venue);
-    if (!v) fail(`goal ${g.n}: venue "${g.venue}" is not in venues.json`);
-  }
-  // Each stadium must sit inside the country it is listed under (Natural Earth outlines).
-  const require = createRequire(import.meta.url);
-  const atlas = JSON.parse(readFileSync(require.resolve("world-atlas/countries-10m.json"), "utf8"));
-  const countries = (feature(atlas, atlas.objects.countries) as unknown as GeoJSON.FeatureCollection<GeoJSON.Polygon | GeoJSON.MultiPolygon, { name: string }>).features;
-  const ATLAS_NAME: Record<string, string> = {
-    England: "United Kingdom",
-    Wales: "United Kingdom",
-    Scotland: "United Kingdom",
-    "Northern Ireland": "United Kingdom",
-    "United States": "United States of America",
-    "Bosnia and Herzegovina": "Bosnia and Herz.",
-    "Faroe Islands": "Faeroe Is.",
-    "Czech Republic": "Czechia",
-  };
-  const inRing = (pt: [number, number], ring: number[][]) => {
-    let inside = false;
-    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-      const [xi, yi] = ring[i];
-      const [xj, yj] = ring[j];
-      if (yi > pt[1] !== yj > pt[1] && pt[0] < ((xj - xi) * (pt[1] - yi)) / (yj - yi) + xi) inside = !inside;
-    }
-    return inside;
-  };
-  const inPolygon = (pt: [number, number], poly: number[][][]) => inRing(pt, poly[0]) && !poly.slice(1).some((hole) => inRing(pt, hole));
-  // The outlines are coarse at the shoreline, so a waterfront stadium may fall just outside.
-  // A point within about 3 km of the country's outline is accepted.
-  const nearOutline = (pt: [number, number], poly: number[][][], km: number) => {
-    const kx = 111.32 * Math.cos((pt[1] * Math.PI) / 180);
-    const ky = 110.57;
-    for (const ring of poly) {
-      for (let i = 1; i < ring.length; i++) {
-        const ax = (ring[i - 1][0] - pt[0]) * kx;
-        const ay = (ring[i - 1][1] - pt[1]) * ky;
-        const bx = (ring[i][0] - pt[0]) * kx;
-        const by = (ring[i][1] - pt[1]) * ky;
-        const dx = bx - ax;
-        const dy = by - ay;
-        const t = Math.max(0, Math.min(1, -(ax * dx + ay * dy) / (dx * dx + dy * dy || 1)));
-        if (Math.hypot(ax + t * dx, ay + t * dy) <= km) return true;
-      }
-    }
-    return false;
-  };
-  const inCountry = (pt: [number, number], name: string): boolean | null => {
-    const f = countries.find((c) => c.properties.name === name);
-    if (!f) return null;
-    const polys = f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
-    return polys.some((p) => inPolygon(pt, p)) || polys.some((p) => nearOutline(pt, p, 3));
-  };
-  for (const v of venues) {
-    if (!Number.isFinite(v.lat) || !Number.isFinite(v.lng) || Math.abs(v.lat) > 90 || Math.abs(v.lng) > 180) fail(`venue ${v.id}: bad coordinates`);
-    if (!v.reviewed) warn(`venue ${v.id} (${v.name}) has not been reviewed to stadium precision`);
-    const where = inCountry([v.lng, v.lat], ATLAS_NAME[v.country] ?? v.country);
-    if (where === null) warn(`venue ${v.id}: no outline for "${v.country}", position not checked`);
-    else if (!where) fail(`venue ${v.id} (${v.name}): ${v.lat}, ${v.lng} is not inside ${v.country}`);
-  }
-  const used = new Set(goals.map((g) => g.venue));
-  for (const v of venues) if (!used.has(v.id)) warn(`venue ${v.id} is not used by any goal`);
-}
 
 for (const w of warnings.slice(0, 40)) console.log("warning:", w);
 if (warnings.length > 40) console.log(`… and ${warnings.length - 40} more warnings`);
 for (const e of errors) console.error("ERROR:", e);
 console.log(
   `\n${goals.length} goals, ${venues.length} venues. ${errors.length} error(s), ${warnings.length} warning(s).` +
-    (disputed.length ? ` ${disputed.length} disputed goal(s) counted.` : ""),
+    (disputed ? ` ${disputed} disputed goal(s) counted.` : ""),
 );
 if (errors.length) process.exit(1);
