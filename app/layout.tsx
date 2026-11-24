@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Big_Shoulders, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { facts } from "@/lib/data/career";
 import { GOOGLE_VERIFICATION, MAKER, OG_ALT, OG_IMAGE, SITE_NAME, SITE_URL, headline, summary } from "@/lib/site";
@@ -45,7 +46,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable} ${display.variable} ${serif.variable} h-full antialiased`}>
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        {children}
+        {/* Counts page views on Vercel, without cookies. Sends nothing in development. */}
+        <Analytics />
+      </body>
     </html>
   );
 }
