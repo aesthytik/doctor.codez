@@ -1,6 +1,6 @@
 {
- "asOf": "2026-11-20",
- "total": 986,
+ "asOf": "2026-11-24",
+ "total": 987,
  "goals": [
   {
    "n": 1,
@@ -28518,6 +28518,37 @@
    "penalty": false,
    "src": [
     "espn:401900905"
+   ]
+  },
+  {
+   "n": 987,
+   "id": "2026-11-24-alnassr-al-sadd-1",
+   "date": "2026-11-24",
+   "team": "alnassr",
+   "opponent": "Al Sadd",
+   "comp": "AFC Champions League",
+   "compKey": "afc.champions",
+   "season": "2026–27",
+   "round": "League stage",
+   "ha": "H",
+   "venue": "al-awwal-park",
+   "minute": 13,
+   "score": [
+    1,
+    0
+   ],
+   "final": [
+    2,
+    1
+   ],
+   "penalty": true,
+   "body": "right",
+   "placement": {
+    "height": "top",
+    "side": "left"
+   },
+   "src": [
+    "espn:401912584"
    ]
   }
  ]

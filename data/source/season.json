@@ -194,17 +194,21 @@
     3
    ],
    "goals": 1
-  }
- ],
- "next": [
+  },
   {
    "id": "401912584",
-   "kickoff": "2026-11-24T18:15Z",
+   "date": "2026-11-24",
    "league": "afc.champions",
    "opponent": "Al Sadd",
    "ha": "H",
-   "venue": "Al-Awwal Park"
-  },
+   "score": [
+    2,
+    1
+   ],
+   "goals": 1
+  }
+ ],
+ "next": [
   {
    "id": "401900442",
    "kickoff": "2026-11-28T12:15Z",
@@ -220,6 +224,14 @@
    "opponent": "Al Qadsiah",
    "ha": "H",
    "venue": "Al-Awwal Park"
+  },
+  {
+   "id": "401912567",
+   "kickoff": "2026-12-08T16:00Z",
+   "league": "afc.champions",
+   "opponent": "Al-Gharafa",
+   "ha": "A",
+   "venue": "Thani bin Jassim Stadium"
   }
  ]
 }

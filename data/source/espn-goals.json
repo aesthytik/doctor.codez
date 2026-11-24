@@ -47756,5 +47756,58 @@
   "seq": 1,
   "assist": null,
   "text": null
+ },
+ {
+  "eventId": "401912584",
+  "league": "afc.champions",
+  "team": "alnassr",
+  "kickoff": "2026-11-24T18:15Z",
+  "seasonName": "2026-27 AFC Champions League Elite",
+  "round": "League Stage",
+  "note": "AFC Champions League Elite, West Region",
+  "opponent": {
+   "id": "7135",
+   "name": "Al Sadd"
+  },
+  "designated": "home",
+  "venue": {
+   "id": "10675",
+   "name": "Al-Awwal Park",
+   "city": "King Fahd International Stadium",
+   "country": "Saudi Arabia"
+  },
+  "clock": "13'",
+  "minute": 13,
+  "added": 0,
+  "typeRaw": "Penalty - Scored",
+  "penalty": true,
+  "scoreBefore": [
+   0,
+   0
+  ],
+  "scoreAfter": [
+   1,
+   0
+  ],
+  "final": [
+   2,
+   1
+  ],
+  "shootout": null,
+  "statusDetail": "FT",
+  "seq": 1,
+  "assist": null,
+  "text": {
+   "body": "right",
+   "zone": "penalty spot",
+   "side": null,
+   "placement": {
+    "height": "top",
+    "side": "left"
+   },
+   "situation": "penalty",
+   "assisted": false,
+   "assistType": null
+  }
  }
 ]

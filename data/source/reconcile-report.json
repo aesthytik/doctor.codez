@@ -1,12 +1,12 @@
 {
- "total": 986,
+ "total": 987,
  "byTeam": {
   "sporting": 5,
   "manutd": 145,
   "portugal": 146,
   "realmadrid": 450,
   "juventus": 101,
-  "alnassr": 139
+  "alnassr": 140
  },
  "referenceTotal": 985,
  "expectedTotal": 986,
@@ -16,7 +16,9 @@
  "explainedDifferences": [
   "alnassr 2026–27 league: dataset 9, reference 8 (disputed goal 982, counted by rule)"
  ],
- "differences": [],
+ "differences": [
+  "alnassr 2026–27 continental: dataset 2, reference 1"
+ ],
  "excluded": [],
  "missingVenues": [],
  "neutralReview": [
